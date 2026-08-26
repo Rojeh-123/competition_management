@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Certificate extends Model
 {
-    public const UPDATED_AT = null; // table has no updated_at column
+    public const UPDATED_AT = null;
 
     protected $fillable = [
         'participant_id',
