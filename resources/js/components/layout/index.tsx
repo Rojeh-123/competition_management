@@ -520,16 +520,8 @@ export function Footer() {
             {/* Social / icon links row */}
             <div className="flex items-center gap-2 mt-1">
               <a
-                href="#"
-                aria-label="Twitter"
-                className="flex h-8 w-8 items-center justify-center rounded-md border border-border/60 text-muted-foreground hover:text-foreground hover:border-border hover:bg-muted/60 transition-all duration-200"
-              >
-                <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.847L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a
-                href="#"
+                href="https://github.com/Rojeh-123/competition_management"
+                target='_blank'
                 aria-label="GitHub"
                 className="flex h-8 w-8 items-center justify-center rounded-md border border-border/60 text-muted-foreground hover:text-foreground hover:border-border hover:bg-muted/60 transition-all duration-200"
               >
