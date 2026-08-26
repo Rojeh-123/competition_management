@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Certificate extends Model
 {
-    use HasFactory;
-
-    public const CREATED_AT = 'issued_at';
-    public const UPDATED_AT = null;
+    public const UPDATED_AT = null; // table has no updated_at column
 
     protected $fillable = [
         'participant_id',
@@ -19,6 +16,7 @@ class Certificate extends Model
         'winner_id',
         'certificate_code',
         'certificate_url',
+        'issued_at',
     ];
 
     protected function casts(): array
@@ -28,11 +26,13 @@ class Certificate extends Model
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
+    protected static function booted(): void
+    {
+        static::creating(function (Certificate $certificate) {
+            $certificate->certificate_code ??= (string) Str::uuid();
+            $certificate->issued_at ??= now();
+        });
+    }
 
     public function participant(): BelongsTo
     {
@@ -49,19 +49,8 @@ class Certificate extends Model
         return $this->belongsTo(CompetitionWinner::class, 'winner_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Helpers
-    |--------------------------------------------------------------------------
-    */
-
     public function isWinnerCertificate(): bool
     {
-        return ! is_null($this->winner_id);
-    }
-
-    public function isParticipationCertificate(): bool
-    {
-        return is_null($this->winner_id);
+        return $this->winner_id !== null;
     }
 }

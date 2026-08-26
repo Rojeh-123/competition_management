@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Swords, Trophy, Menu, Moon, Sun, Bell, User, Mail, LogOut, LayoutDashboard, ChevronRight, Home, Search, Image, Award, Info, Users, FileText, Shield, Gavel, FolderOpen, Tag, Megaphone, Clock, MessageSquare, Globe, Check, PanelLeft } from 'lucide-react';
+import { Swords, Trophy, Menu, Moon, Sun, Bell, User, Mail, LogOut, LayoutDashboard, ChevronRight, Home, Search, Image, Award, Info, Users, FileText, Shield, Gavel, FolderOpen, Tag, Megaphone, Clock, MessageSquare, Globe, Check, PanelLeft, AwardIcon } from 'lucide-react';
 import { useTranslation, LANGUAGES } from '@/lib/i18n';
 
 // Language selector
@@ -352,6 +352,7 @@ export function DashboardSidebar({ collapsed = false }: { collapsed?: boolean })
     { route: 'participant.competitions', path: route('participant.competitions'), label: t('sidebar.myCompetitions'), icon: Trophy },
     { route: 'participant.teams', path: route('participant.teams'), label: t('sidebar.myTeams'), icon: Swords },
     { route: 'notifications', path: route('notifications'), label: t('sidebar.notifications'), icon: Bell },
+    // { route: 'certificates', path: route('participant.certificates'), label: t('sidebar.certificates'), icon: AwardIcon },
   ];
 
   const judgeLinks = [
