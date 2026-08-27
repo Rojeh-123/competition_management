@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\Competition;
 use App\Models\User;
-use App\Support\AwardsBadges;
+use App\Helpers\AwardsBadges;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Helpers\AuditLogger;

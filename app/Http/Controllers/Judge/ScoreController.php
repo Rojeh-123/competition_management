@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Judge;
 use App\Http\Controllers\Controller;
 use App\Models\Submission;
 use App\Models\Score;
+use App\Helpers\EnsuresJudgeAssignment;
 use Illuminate\Http\Request;
 use App\Helpers\AuditLogger;
 use Illuminate\Support\Facades\Auth;
 
 class ScoreController extends Controller
 {
+    use EnsuresJudgeAssignment;
+
     public function saveDraft(Request $request)
     {
         $request->validate([
@@ -29,6 +32,9 @@ class ScoreController extends Controller
                 'min:0'
             ],
         ]);
+
+        $submission = Submission::with('competition')->findOrFail($request->submission_id);
+        $this->assertJudgeAssignedToCompetition($submission->competition);
 
         $alreadyLocked = Score::where(
             'submission_id',
@@ -60,8 +66,6 @@ class ScoreController extends Controller
             );
         }
 
-        $submission = Submission::find($request->submission_id);
-
         AuditLogger::log(
             action: 'CREATE',
             table: 'scores',
@@ -86,6 +90,9 @@ class ScoreController extends Controller
             'scores.*.criterion_id' => ['required', 'exists:competition_score_criteria,id'],
             'scores.*.score' => ['required', 'numeric', 'min:0'],
         ]);
+
+        $submission = Submission::with('competition')->findOrFail($request->submission_id);
+        $this->assertJudgeAssignedToCompetition($submission->competition);
 
         $alreadyLocked = Score::where(
             'submission_id',
@@ -115,8 +122,6 @@ class ScoreController extends Controller
                 ]
             );
         }
-
-        $submission = Submission::find($request->submission_id);
 
         AuditLogger::log(
             action: 'SUBMIT',

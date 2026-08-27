@@ -205,7 +205,7 @@ function LoginPage() {
                                             {loginProcessing ? t('auth.signingIn') : t('auth.signIn')}
                                         </Button>
 
-                                        <div className="relative my-4">
+                                        {/* <div className="relative my-4">
                                             <div className="absolute inset-0 flex items-center">
                                                 <div className="w-full border-t" />
                                             </div>
@@ -243,7 +243,7 @@ function LoginPage() {
                                                 />
                                             </svg>
                                             {t('auth.continueGoogle')}
-                                        </Button>
+                                        </Button> */}
 
                                     </form>
                                 </TabsContent>

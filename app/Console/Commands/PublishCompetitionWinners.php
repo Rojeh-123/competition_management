@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Competition;
 use App\Models\CompetitionWinner;
 use App\Models\User;
-use App\Support\AwardsBadges;
+use App\Helpers\AwardsBadges;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;

@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Score;
 use App\Models\Submission;
 use App\Models\JudgeAssignment;
+use App\Helpers\EnsuresJudgeAssignment;
 
 class CompetitionController extends Controller
 {
+    use EnsuresJudgeAssignment;
+
     public function dashboard()
     {
         $user = Auth::user();
@@ -72,7 +75,7 @@ class CompetitionController extends Controller
             ? round(($completedJudgingEvaluations / $totalJudgingSubmissions) * 100)
             : 0;
 
-        if($assignedCompetitionIds->count() == 0){
+        if ($assignedCompetitionIds->count() == 0) {
             $completionPercentage = 100;
         }
 
@@ -108,6 +111,8 @@ class CompetitionController extends Controller
         $competition = Competition::with(['submissions.participant'])
             ->findOrFail($id);
 
+        $this->assertJudgeAssignedToCompetition($competition);
+
         $submissions = $competition->submissions()
             ->with([
                 'scores' => function ($query) use ($user) {
@@ -125,7 +130,7 @@ class CompetitionController extends Controller
             })
             ->latest()
             ->get()
-            ->map(fn ($submission) => [
+            ->map(fn($submission) => [
                 'id' => $submission->id,
                 'title' => $submission->title,
                 'description' => $submission->description,

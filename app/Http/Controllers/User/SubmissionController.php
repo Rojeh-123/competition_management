@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Competition;
 use App\Models\Submission;
 use App\Models\User;
+use App\Models\Team;
 use App\Models\SubmissionFile;
-use App\Support\AwardsBadges;
+use App\Helpers\AwardsBadges;
 use App\Helpers\AuditLogger;
 
 class SubmissionController extends Controller
@@ -20,6 +21,28 @@ class SubmissionController extends Controller
     public function create(Int $competitionId, ?Int $teamId = null)
     {
         $competition = Competition::findOrFail($competitionId);
+
+        $isParticipant = $competition->participants()
+            ->where('participant_id', Auth::id())
+            ->exists();
+
+        if (!$isParticipant) {
+            abort(403, 'You are not registered in this competition.');
+        }
+
+        if ($teamId) {
+            $isTeamMember = Team::where('id', $teamId)
+                ->where('competition_id', $competitionId)
+                ->whereHas('members', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })
+                ->exists();
+
+            if (!$isTeamMember) {
+                abort(403, 'You are not a member of this team.');
+            }
+        }
+
         return Inertia::render('participant/SubmitEntryPage', [
             'competition' => $competition,
             'teamId' => $teamId,

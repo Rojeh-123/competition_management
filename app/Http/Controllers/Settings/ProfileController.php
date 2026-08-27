@@ -21,14 +21,6 @@ use App\Helpers\AuditLogger;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request): Response
-    {
-        return Inertia::render('settings/profile', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => $request->session()->get('status'),
-        ]);
-    }
-
     public function updateProfile(Request $request): RedirectResponse
     {
         $validated = $request->validate($this->profileRules($request));
@@ -144,12 +136,16 @@ class ProfileController extends Controller
     {
         $shownUser = User::findOrFail($id);
 
-        return match ($shownUser->role) {
-            'participant' => $this->participantProfile($shownUser),
-            'judge' => $this->judgeProfile($shownUser),
-            'admin' => $this->adminProfile($shownUser),
-            default => abort(404),
-        };
+        if(Auth::id() == $shownUser->id || Auth::user()->role == 'admin'){
+            return match ($shownUser->role) {
+                'participant' => $this->participantProfile($shownUser),
+                'judge' => $this->judgeProfile($shownUser),
+                'admin' => $this->adminProfile($shownUser),
+                default => abort(404),
+            };
+        }else{
+            abort(403, 'You don’t have permission to access this page.');
+        }
     }
 
     private function participantProfile(User $shownUser)

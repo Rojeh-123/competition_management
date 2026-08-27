@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace App\Helpers;
 
 use App\Models\Badge;
 use App\Models\Notification;

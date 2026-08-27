@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Submission;
 use App\Models\Score;
 use App\Models\CompetitionScoreCriterion;
+use App\Helpers\EnsuresJudgeAssignment;
 
 class SubmissionController extends Controller
 {
+    use EnsuresJudgeAssignment;
+
     public function review($id)
     {
         $user = Auth::user();
@@ -26,10 +29,12 @@ class SubmissionController extends Controller
             },
         ])->findOrFail($id);
 
+        $this->assertJudgeAssignedToCompetition($submission->competition);
+
         $draftComment = Score::where(
-                'submission_id',
-                $submission->id
-            )
+            'submission_id',
+            $submission->id
+        )
             ->where('judge_id', $user->id)
             ->where('status', 'In Draft')
             ->whereNotNull('comment')

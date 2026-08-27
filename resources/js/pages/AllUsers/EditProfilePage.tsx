@@ -37,7 +37,6 @@ function EditProfilePage() {
             username: string;
             age: number;
             image: null;
-            oldPassword: string;
         };
         errors: Record<string, string>;
     };
@@ -64,7 +63,7 @@ function EditProfilePage() {
         country: user.country || "",
         age: user.age || "",
         bio: user.bio || "",
-        oldPassword: user.oldPassword || "",
+        oldPassword: "",
         password: "",
         password_confirmation: "",
         image: null,
