@@ -1,10 +1,11 @@
+import { useState, useMemo } from "react";
 import { route } from "ziggy-js";
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Save, Trophy, Users } from 'lucide-react';
+import { Save, Trophy, Users, Search } from 'lucide-react';
 import { PageHeader, Navbar, Footer, DashboardSidebar } from '@/components/layout';
 import { Head, useForm } from '@inertiajs/react';
 import { cn } from '@/lib/utils';
@@ -66,6 +67,18 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
         put(route('admin.teams.update', { team: team.id }));
     };
 
+    const [memberSearch, setMemberSearch] = useState("");
+
+    const filteredParticipants = useMemo(() => {
+        const q = memberSearch.trim().toLowerCase();
+        if (!q) return participants;
+        return participants.filter(
+            (p) =>
+                p.full_name.toLowerCase().includes(q) ||
+                p.username.toLowerCase().includes(q)
+        );
+    }, [participants, memberSearch]);
+
     return (
         <div className="flex min-h-screen flex-col">
             <Head title="Teams – Edit Team" />
@@ -125,8 +138,17 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                                             <Users className="h-3.5 w-3.5 text-muted-foreground" />
                                             Members (participants)
                                         </Label>
+                                        <div className="relative mt-1.5">
+                                            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+                                            <Input
+                                                value={memberSearch}
+                                                onChange={(e) => setMemberSearch(e.target.value)}
+                                                placeholder="Search participants..."
+                                                className="pl-8 h-8 text-sm"
+                                            />
+                                        </div>
                                         <div className="mt-1.5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 border rounded-md p-3 max-h-56 overflow-y-auto">
-                                            {participants.map((p) => (
+                                            {filteredParticipants.map((p) => (
                                                 <label
                                                     key={p.id}
                                                     className={cn(
@@ -142,6 +164,11 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                                                     {p.full_name} <span className="text-muted-foreground">({p.username})</span>
                                                 </label>
                                             ))}
+                                            {filteredParticipants.length === 0 && (
+                                                <p className="col-span-full text-sm text-muted-foreground text-center py-2">
+                                                    No participants found.
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
 

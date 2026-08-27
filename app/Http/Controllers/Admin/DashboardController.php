@@ -28,12 +28,12 @@ class DashboardController extends Controller
 
         $upcomingCompetitions = Competition::where(
             'status',
-            'Upcoming'
+            'upcoming'
         )->count();
 
         $judgingCompetitions = Competition::where(
             'status',
-            'Judging'
+            'judging'
         )->count();
 
         $winnersAnnounced = Competition::where(
@@ -50,10 +50,10 @@ class DashboardController extends Controller
 
         $pendingSubmissions = Submission::where(
             'status',
-            'Pending'
+            'pending'
         )->count();
 
-        $totalJudges = User::where('role', 'Judge')->count();
+        $totalJudges = User::where('role', 'judge')->count();
 
         $newUsersThisMonth = User::whereMonth(
             'created_at',
@@ -151,10 +151,8 @@ class DashboardController extends Controller
             ->map(function ($submission) {
 
                 return [
-                    'message' =>
-                        $submission->participant?->name .
-                        ' submitted to ' .
-                        $submission->competition?->title,
+                    'message' => ($submission->participant?->full_name ?? $submission->participant?->username ?? 'Someone')
+                        . ' submitted to ' . ($submission->competition?->title ?? 'a competition'),
 
                     'date' => $submission
                         ->created_at

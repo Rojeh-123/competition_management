@@ -270,6 +270,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'Discover featured submissions',
     'error.viewChampions': 'View competition champions',
     'error.supportHelp': 'Still having trouble? Contact our support team.',
+
+    // 403 Page
+    'error.403Title': 'Access Denied',
+    'error.403Desc': "You don't have permission to access this page. If you believe this is a mistake, please contact support.",
+    'error.403GoBack': 'Go back',
+    'error.403GoHome': 'Return to homepage',
   },
   ar: {
     // Navigation
@@ -456,6 +462,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'تصفح الأعمال المميزة',
     'error.viewChampions': 'شاهد أبطال المسابقات',
     'error.supportHelp': 'ما زلت تواجه مشكلة؟ تواصل مع فريق الدعم لدينا.',
+
+    // 403 Page
+    'error.403Title': 'تم رفض الوصول',
+    'error.403Desc': 'ليس لديك إذن للوصول إلى هذه الصفحة. إذا كنت تعتقد أن هذا خطأ، يرجى التواصل مع الدعم.',
+    'error.403GoBack': 'العودة',
+    'error.403GoHome': 'العودة إلى الصفحة الرئيسية',
   },
   de: {
     // Navigation
@@ -642,6 +654,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'Vorgestellte Einreichungen entdecken',
     'error.viewChampions': 'Wettbewerbssieger ansehen',
     'error.supportHelp': 'Benötigen Sie Hilfe? Kontaktieren Sie unser Support-Team.',
+
+    // 403 Page
+    'error.403Title': 'Zugriff verweigert',
+    'error.403Desc': 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen. Wenn Sie glauben, dass dies ein Fehler ist, kontaktieren Sie bitte den Support.',
+    'error.403GoBack': 'Zurück',
+    'error.403GoHome': 'Zur Startseite',
   },
   fr: {
     // Navigation
@@ -828,6 +846,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'Découvrir les soumissions en vedette',
     'error.viewChampions': 'Voir les champions de la compétition',
     'error.supportHelp': 'Vous rencontrez toujours des problèmes ? Contactez notre équipe de support.',
+
+    // 403 Page
+    'error.403Title': 'Accès refusé',
+    'error.403Desc': "Vous n'avez pas la permission d'accéder à cette page. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le support.",
+    'error.403GoBack': 'Retour',
+    'error.403GoHome': "Retour à l'accueil",
   },
   es: {
     // Navigation
@@ -1014,6 +1038,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'Descubrir envíos destacados',
     'error.viewChampions': 'Ver campeones de competiciones',
     'error.supportHelp': '¿Sigues teniendo problemas? Contacta a nuestro equipo de soporte.',
+
+    // 403 Page
+    'error.403Title': 'Acceso Denegado',
+    'error.403Desc': 'No tienes permiso para acceder a esta página. Si crees que esto es un error, por favor contacta a soporte.',
+    'error.403GoBack': 'Volver',
+    'error.403GoHome': 'Volver al inicio',
   },
   it: {
     // Navigation
@@ -1200,6 +1230,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'Scopri i migliori progetti',
     'error.viewChampions': 'Visualizza i campioni',
     'error.supportHelp': 'Hai ancora problemi? Contatta il nostro team di supporto.',
+
+    // 403 Page
+    'error.403Title': 'Accesso Negato',
+    'error.403Desc': 'Non hai il permesso di accedere a questa pagina. Se ritieni che si tratti di un errore, contatta il supporto.',
+    'error.403GoBack': 'Indietro',
+    'error.403GoHome': 'Torna alla home',
   },
   pt: {
     // Navigation
@@ -1386,6 +1422,12 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.discoverSubmissions': 'Descobrir submissões em destaque',
     'error.viewChampions': 'Ver campeões da competição',
     'error.supportHelp': 'Ainda com problemas? Entre em contato com nossa equipe de suporte.',
+
+    // 403 Page
+    'error.403Title': 'Acesso Negado',
+    'error.403Desc': 'Você não tem permissão para acessar esta página. Se você acredita que isso é um erro, entre em contato com o suporte.',
+    'error.403GoBack': 'Voltar',
+    'error.403GoHome': 'Voltar para a página inicial',
   },
 };
 
@@ -1434,7 +1476,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (langDict && key in langDict) {
       return langDict[key];
     }
-    // Fallback to English
     const enDict = TRANSLATIONS.en;
     if (enDict && key in enDict) {
       return enDict[key];
@@ -1442,10 +1483,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     return defaultText ?? key;
   };
 
-  /**
-   * Returns the name of a given language in the CURRENTLY SELECTED language.
-   * E.g. If current language is German ('de'), getLanguageName('de') -> 'Deutsch', getLanguageName('en') -> 'Englisch'.
-   */
   const getLanguageName = (code: Language): string => {
     return LANGUAGE_NAMES[language]?.[code] || LANGUAGE_NAMES.en[code] || code;
   };

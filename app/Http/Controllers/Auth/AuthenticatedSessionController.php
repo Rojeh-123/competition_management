@@ -15,8 +15,16 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function create(Request $request): Response
+    public function create(Request $request): Response|RedirectResponse
     {
+        if (Auth::check()) {
+            return match (Auth::user()->role) {
+                'admin' => redirect()->route('admin.dashboard'),
+                'judge' => redirect()->route('judge.dashboard'),
+                default => redirect()->route('participant.dashboard'),
+            };
+        }
+
         return Inertia::render('AuthPages');
     }
 

@@ -64,8 +64,6 @@ function ProfilePage() {
   const [openDelete, setOpenDelete] = useState(false);
   const [password, setPassword] = useState("");
 
-  console.log(shownUser.badges);
-
   const handleDelete = () => {
     router.delete(route("profile.delete"), {
       data: { password },

@@ -61,10 +61,7 @@ class CompetitionController extends Controller
 
             // Options
             'visibility' => ['required', 'in:public,private'],
-            'is_featured' => ['boolean'],
             'team_allowed' => ['boolean'],
-            'certificate_enabled' => ['boolean'],
-            'requires_approval' => ['boolean'],
 
             // Age
             'min_age' => ['nullable', 'integer', 'min:0'],

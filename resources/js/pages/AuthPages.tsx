@@ -26,7 +26,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
 
-function LoginPage({ onLogin }: { onLogin: (role: 'participant' | 'judge' | 'admin') => void }) {
+function LoginPage() {
     const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [activeTab, setActiveTab] = useState('login');
@@ -90,7 +90,7 @@ function LoginPage({ onLogin }: { onLogin: (role: 'participant' | 'judge' | 'adm
 
     useEffect(() => {
         setPasswordsDontMatch(data.password !== data.password_confirmation);
-    });
+    }, [data.password, data.password_confirmation]);
 
     return (
         <>

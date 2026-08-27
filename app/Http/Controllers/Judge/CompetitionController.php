@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Score;
 use App\Models\Submission;
+use App\Models\JudgeAssignment;
 
 class CompetitionController extends Controller
 {
@@ -17,36 +18,63 @@ class CompetitionController extends Controller
 
         $assignedCompetitions = $user->judgingCompetitions()->count();
 
-        $totalAssignedSubmissions = Submission::whereHas(
-            'competition.judges',
-            function ($query) use ($user) {
-                $query->where('judge_id', $user->id);
-            }
-        )
+        $judgeableStatuses = ['submission_closed', 'judging'];
+
+        $assignedCompetitionIds = $user->judgingCompetitions()
+            ->whereIn('status', $judgeableStatuses)
+            ->pluck('competitions.id');
+
+        $judgingCompetitionIds = $user->judgingCompetitions()
+            ->where('status', 'judging')
+            ->pluck('competitions.id');
+
+        $totalAssignedSubmissions = Submission::whereIn('competition_id', $assignedCompetitionIds)
+            ->where('status', 'approved')
+            ->count();
+
+        $totalJudgingSubmissions = Submission::whereIn('competition_id', $judgingCompetitionIds)
             ->where('status', 'approved')
             ->count();
 
         $completedEvaluations = Score::where('judge_id', $user->id)
             ->where('status', 'Locked')
+            ->whereIn('submission_id', function ($query) use ($assignedCompetitionIds) {
+                $query->select('id')
+                    ->from('submissions')
+                    ->whereIn('competition_id', $assignedCompetitionIds);
+            })
+            ->distinct()
+            ->count('submission_id');
+
+        $completedJudgingEvaluations = Score::where('judge_id', $user->id)
+            ->where('status', 'Locked')
+            ->whereIn('submission_id', function ($query) use ($judgingCompetitionIds) {
+                $query->select('id')
+                    ->from('submissions')
+                    ->whereIn('competition_id', $judgingCompetitionIds);
+            })
             ->distinct()
             ->count('submission_id');
 
         $draftEvaluations = Score::where('judge_id', $user->id)
             ->where('status', 'In Draft')
+            ->whereIn('submission_id', function ($query) use ($assignedCompetitionIds) {
+                $query->select('id')
+                    ->from('submissions')
+                    ->whereIn('competition_id', $assignedCompetitionIds);
+            })
             ->distinct()
             ->count('submission_id');
 
-        $pendingReviews = max(
-            0,
-            $totalAssignedSubmissions -
-            ($completedEvaluations + $draftEvaluations)
-        );
+        $pendingReviews = max(0, $totalAssignedSubmissions - ($completedEvaluations + $draftEvaluations));
 
-        $completionPercentage = $totalAssignedSubmissions > 0
-            ? round(
-                ($completedEvaluations / $totalAssignedSubmissions) * 100
-            )
+        $completionPercentage = $totalJudgingSubmissions > 0
+            ? round(($completedJudgingEvaluations / $totalJudgingSubmissions) * 100)
             : 0;
+
+        if($assignedCompetitionIds->count() == 0){
+            $completionPercentage = 100;
+        }
 
         return Inertia::render('judge/JudgeDashboard', [
             'stats' => [
@@ -61,7 +89,13 @@ class CompetitionController extends Controller
 
     public function index()
     {
-        $competitions = Competition::with("judges")->get();
+        $competitionIds = JudgeAssignment::where('judge_id', Auth::id())
+            ->pluck('competition_id');
+
+        $competitions = Competition::with('judges')
+            ->whereIn('id', $competitionIds)
+            ->get();
+
         return Inertia::render('judge/JudgeCompetitionsPage', [
             'competitions' => $competitions,
         ]);

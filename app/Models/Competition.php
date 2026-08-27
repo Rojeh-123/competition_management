@@ -167,17 +167,15 @@ class Competition extends Model
     public function computeStatus(): string
     {
         $today = Carbon::today();
+        $startDate = Carbon::parse($this->start_date);
+        $submissionDeadline = Carbon::parse($this->submission_deadline);
 
-        if ($today->lt(Carbon::parse($this->start_date))) {
+        if ($today->lt($startDate)) {
             return 'upcoming';
         }
 
-        if ($today->lte(Carbon::parse($this->registration_deadline))) {
+        if ($today->lte($submissionDeadline)) {
             return 'open';
-        }
-
-        if ($today->lte(Carbon::parse($this->submission_deadline))) {
-            return 'submission_closed';
         }
 
         if (
@@ -198,6 +196,6 @@ class Competition extends Model
             return 'results_published';
         }
 
-        return 'archived';
+        return 'submission_closed';
     }
 }

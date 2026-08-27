@@ -50,12 +50,6 @@ type PageProps = {
   judges: User[];
 };
 
-/**
- * Self-contained searchable country dropdown.
- * Deliberately avoids Radix Popover/Command so it doesn't fight
- * with a parent Radix Dialog's focus trap (that conflict is what
- * was blocking typing in the search input).
- */
 function CountryCombobox({
   id,
   value,

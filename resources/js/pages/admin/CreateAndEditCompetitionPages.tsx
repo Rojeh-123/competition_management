@@ -279,7 +279,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                       <div>
                         <Label htmlFor="visibility">Visibility</Label>
@@ -305,6 +305,20 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                             {errors.visibility}
                           </p>
                         )}
+                      </div>
+
+
+                      <div className="flex items-center gap-2 self-center mt-5">
+                        <Checkbox
+                          id="team_allowed"
+                          checked={data.team_allowed}
+                          onCheckedChange={(checked) =>
+                            setData("team_allowed", !!checked)
+                          }
+                        />
+                        <Label htmlFor="team_allowed" className="cursor-pointer">
+                          Allow Team Participation
+                        </Label>
                       </div>
 
                     </div>
@@ -606,68 +620,6 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                   {/* Competition Options */}
                   <div className="space-y-4">
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="team_allowed"
-                          checked={data.team_allowed}
-                          onCheckedChange={(checked) =>
-                            setData("team_allowed", !!checked)
-                          }
-                        />
-                        <Label htmlFor="team_allowed" className="cursor-pointer">
-                          Allow Team Participation
-                        </Label>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="certificate_enabled"
-                          checked={data.certificate_enabled}
-                          onCheckedChange={(checked) =>
-                            setData("certificate_enabled", !!checked)
-                          }
-                        />
-                        <Label htmlFor="certificate_enabled" className="cursor-pointer">
-                          Generate Certificates
-                        </Label>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="requires_approval"
-                          checked={data.requires_approval}
-                          onCheckedChange={(checked) =>
-                            setData("requires_approval", !!checked)
-                          }
-                        />
-                        <Label htmlFor="requires_approval" className="cursor-pointer">
-                          Require Admin Approval
-                        </Label>
-                      </div>
-
-                      <div className="flex items-end">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="is_featured"
-                            checked={data.is_featured}
-                            onCheckedChange={(checked) =>
-                              setData("is_featured", !!checked)
-                            }
-                          />
-
-                          <Label
-                            htmlFor="is_featured"
-                            className="cursor-pointer"
-                          >
-                            Featured Competition
-                          </Label>
-                        </div>
-                      </div>
-
-                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 

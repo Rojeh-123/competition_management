@@ -51,8 +51,6 @@ function NotificationsPage() {
   const selectedCount = selectedIds.size;
   const isSelecting = selectedCount > 0;
 
-  // Unread first, read at the bottom. Order within each group is preserved
-  // as sent from the backend (priority, then recency).
   const sortedItems = [...items].sort((a, b) => Number(a.is_read) - Number(b.is_read));
 
   const toggleSelected = (id: number) => {

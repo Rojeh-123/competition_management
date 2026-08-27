@@ -354,7 +354,7 @@ class ProfileController extends Controller
                 'role' => $shownUser->role,
                 'country' => $shownUser->country,
                 'bio' => $shownUser->bio,
-                'image' => $shownUser->avatar_url,
+                'image' => $shownUser->image,
 
                 'competitions_created' => Competition::where(
                     'created_by',

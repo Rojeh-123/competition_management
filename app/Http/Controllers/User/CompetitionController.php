@@ -21,8 +21,8 @@ class CompetitionController extends Controller
         $activeCompetitionsQuery = $user->participatingCompetitions()
             ->with('category')
             ->whereIn('competitions.status', [
-                'Open',
-                'Judging',
+                'open',
+                'judging',
             ]);
 
         $activeCompetitionsCount = (clone $activeCompetitionsQuery)->count();

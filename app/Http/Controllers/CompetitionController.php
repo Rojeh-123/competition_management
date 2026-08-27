@@ -12,7 +12,6 @@ use App\Models\CompetitionParticipant;
 
 class CompetitionController extends Controller
 {
-
     public function home()
     {
 

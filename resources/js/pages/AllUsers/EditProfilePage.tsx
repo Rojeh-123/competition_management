@@ -338,6 +338,7 @@ function EditProfilePage() {
                                     <Button
                                         variant="outline"
                                         className="cursor-pointer"
+                                        type="button"
                                         onClick={() => router.visit(route("profile", { id: user.id }))}
                                     >
                                         Cancel

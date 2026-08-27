@@ -56,9 +56,6 @@ function GalleryPage() {
   });
 
   const [votingId, setVotingId] = useState<number | null>(null);
-
-  // Local, optimistic per-submission vote state. Falls back to the
-  // server-provided props until the user interacts with a card.
   const [voteState, setVoteState] = useState<Record<number, VoteState>>({});
 
   const getVoteState = (submission: Submission): VoteState => {
@@ -80,8 +77,6 @@ function GalleryPage() {
 
     setVotingId(submission.id);
 
-    // Optimistic update: flip the heart and adjust the count immediately,
-    // no Inertia visit / prop reload involved.
     setVoteState((prev) => ({
       ...prev,
       [submission.id]: {
@@ -96,8 +91,6 @@ function GalleryPage() {
         action,
       })
       .then(({ data }) => {
-        // Reconcile with the authoritative server counts, in case of
-        // a race with another vote or a stale local count.
         if (data && typeof data.votes === 'number') {
           setVoteState((prev) => ({
             ...prev,
@@ -109,7 +102,6 @@ function GalleryPage() {
         }
       })
       .catch(() => {
-        // Revert on failure
         setVoteState((prev) => ({
           ...prev,
           [submission.id]: current,

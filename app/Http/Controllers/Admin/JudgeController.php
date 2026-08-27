@@ -42,6 +42,10 @@ class JudgeController extends Controller
             ->withCount('submissions')
             ->withCount('judges as assignedJudges')
             ->with('category:id,name')
+            ->whereIn('status', ['submission_closed', 'open', 'judging', 'upcoming'])
+            ->whereDoesntHave('judges', function ($query) use ($user) {
+                $query->where('users.id', $user->id);
+            })
             ->get()
             ->map(fn ($competition) => [
                 'id' => $competition->id,
@@ -64,10 +68,10 @@ class JudgeController extends Controller
             'competitions.*' => ['exists:competitions,id'],
         ]);
 
-        $user->judgingCompetitions()->sync($validated['competitions']);
+        $user->judgingCompetitions()->syncWithoutDetaching($validated['competitions']);
 
         AuditLogger::log(
-            action: 'UPDATE',
+            action: 'CREATE',
             table: 'judge_assignments',
             recordId: $user->id,
             details: "Assigned judge '{$user->full_name}' to " . count($validated['competitions']) . " competition(s)",

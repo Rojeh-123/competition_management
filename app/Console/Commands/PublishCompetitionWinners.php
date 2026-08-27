@@ -5,14 +5,15 @@ namespace App\Console\Commands;
 use App\Models\Competition;
 use App\Models\CompetitionWinner;
 use App\Models\User;
+use App\Support\AwardsBadges;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\Notification;
-use App\Models\Badge;
 
 class RefreshCompetitionStatuses extends Command
 {
+    use AwardsBadges;
+
     protected $signature = 'app:refresh-competition-statuses';
 
     protected $description = 'Recompute each competition\'s status based on today\'s date, publishing winners when results go live';
@@ -94,7 +95,7 @@ class RefreshCompetitionStatuses extends Command
             $numberOfWinners = (int) $competition->number_of_winners;
             $winners = $rankedSubmissions->take($numberOfWinners);
 
-            $maxPossibleScore = $competition->criteria()->sum('max_score');
+            $maxPossibleScore = $competition->scoreCriteria()->sum('max_score');
 
             foreach ($winners as $index => $winner) {
                 $submission = $winner['submission'];
@@ -113,89 +114,17 @@ class RefreshCompetitionStatuses extends Command
                 );
 
                 $user = User::findOrFail($submission->participant_id);
-                $champion = Badge::where('slug', 'champion')->firstOrFail();
-                $podium_finisher = Badge::where('slug', 'podium-finisher')->firstOrFail();
-                $perfect_score = Badge::where('slug', 'perfect-score')->firstOrFail();
 
                 if ($rankPosition === 1) {
-                    $existing = $user->badges()->where('badge_id', 2)->first();
-
-                    if ($existing) {
-                        $user->badges()->updateExistingPivot(2, [
-                            'count'          => $existing->pivot->count + 1,
-                            'last_earned_at' => now(),
-                        ]);
-                    } else {
-                        $user->badges()->attach(2, [
-                            'count'           => 1,
-                            'first_earned_at' => now(),
-                            'last_earned_at'  => now(),
-                        ]);
-                    }
-
-                    Notification::create([
-                        'user_id' => $user->id,
-                        'title' => 'Achievement Unlocked: ' . $champion->name,
-                        'message' => $champion->description,
-                        'priority' => 1,
-                        'is_read' => false,
-                        'image' => $champion->icon,
-                        'created_at' => now(),
-                    ]);
+                    $this->awardBadge($user, 'champion');
                 }
 
-                if (($rankPosition === 2) || ($rankPosition === 3)) {
-                    $existing = $user->badges()->where('badge_id', 3)->first();
-
-                    if ($existing) {
-                        $user->badges()->updateExistingPivot(3, [
-                            'count'          => $existing->pivot->count + 1,
-                            'last_earned_at' => now(),
-                        ]);
-                    } else {
-                        $user->badges()->attach(3, [
-                            'count'           => 1,
-                            'first_earned_at' => now(),
-                            'last_earned_at'  => now(),
-                        ]);
-                    }
-
-                    Notification::create([
-                        'user_id' => $user->id,
-                        'title' => 'Achievement Unlocked: ' . $podium_finisher->name,
-                        'message' => $podium_finisher->description,
-                        'priority' => 1,
-                        'is_read' => false,
-                        'image' => $podium_finisher->icon,
-                        'created_at' => now(),
-                    ]);
+                if ($rankPosition === 2 || $rankPosition === 3) {
+                    $this->awardBadge($user, 'podium-finisher');
                 }
 
                 if ($maxPossibleScore > 0 && $winner['final_score'] == $maxPossibleScore) {
-                    $existing = $user->badges()->where('badge_id', 4)->first();
-
-                    if ($existing) {
-                        $user->badges()->updateExistingPivot(4, [
-                            'count'          => $existing->pivot->count + 1,
-                            'last_earned_at' => now(),
-                        ]);
-                    } else {
-                        $user->badges()->attach(4, [
-                            'count'           => 1,
-                            'first_earned_at' => now(),
-                            'last_earned_at'  => now(),
-                        ]);
-                    }
-
-                    Notification::create([
-                        'user_id' => $user->id,
-                        'title' => 'Achievement Unlocked: ' . $perfect_score->name,
-                        'message' => $perfect_score->description,
-                        'priority' => 1,
-                        'is_read' => false,
-                        'image' => $perfect_score->icon,
-                        'created_at' => now(),
-                    ]);
+                    $this->awardBadge($user, 'perfect-score');
                 }
             }
 
