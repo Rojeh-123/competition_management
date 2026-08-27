@@ -38,7 +38,7 @@ class CompetitionController extends Controller
         )->count();
 
         $pendingSubmissions = $user->participatingCompetitions()
-            ->where('competitions.status', 'Open')
+            ->where('competitions.status', 'open')
             ->whereDoesntHave('submissions', function ($query) use ($user) {
                 $query->where('participant_id', $user->id);
             })
@@ -69,7 +69,7 @@ class CompetitionController extends Controller
             });
 
         $upcomingDeadlines = $user->participatingCompetitions()
-            ->where('competitions.status', 'Open')
+            ->where('competitions.status', 'open')
             ->orderBy('competitions.submission_deadline')
             ->take(3)
             ->get()
