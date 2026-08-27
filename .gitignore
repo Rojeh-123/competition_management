@@ -18,6 +18,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+/client_secret_692176036791-ckp8d0drnl6ju6lltkuk0nbmjhc4gv64.apps.googleusercontent.com.json
 auth.json
 Homestead.json
 Homestead.yaml

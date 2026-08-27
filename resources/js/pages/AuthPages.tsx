@@ -136,7 +136,7 @@ function LoginPage() {
                                         </div>
 
                                         <div>
-                                            <div className="flex items-center justify-between">
+                                            {/* <div className="flex items-center justify-between">
                                                 <Label htmlFor="login_password">{t('auth.password')}</Label>
                                                 <button
                                                     type="button"
@@ -144,7 +144,7 @@ function LoginPage() {
                                                 >
                                                     {t('auth.forgotPassword')}
                                                 </button>
-                                            </div>
+                                            </div> */}
 
                                             <div className="relative mt-1.5">
                                                 <Input

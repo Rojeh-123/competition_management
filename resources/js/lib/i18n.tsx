@@ -261,6 +261,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Create Account',
     'auth.creatingAccount': 'Creating Account...',
     'auth.signingIn': 'Signing In...',
+    'auth.returnHome': 'Return Home',
+    'auth.emailAddress': 'Email Address',
 
     // 404 Page
     'error.404Title': 'Oops! Page Not Found',
@@ -453,6 +455,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'إنشاء الحساب',
     'auth.creatingAccount': 'جارٍ إنشاء الحساب...',
     'auth.signingIn': 'جارٍ تسجيل الدخول...',
+    'auth.returnHome': 'العودة إلى الرئيسية',
+    'auth.emailAddress': 'البريد الإلكتروني',
 
     // 404 Page
     'error.404Title': 'عذراً! الصفحة غير موجودة',
@@ -645,6 +649,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Konto erstellen',
     'auth.creatingAccount': 'Konto wird erstellt...',
     'auth.signingIn': 'Anmeldung läuft...',
+    'auth.returnHome': 'Zurück zur Startseite',
+    'auth.emailAddress': 'E-Mail-Adresse',
 
     // 404 Page
     'error.404Title': 'Hoppla! Seite nicht gefunden',
@@ -837,6 +843,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Créer un compte',
     'auth.creatingAccount': 'Création du compte...',
     'auth.signingIn': 'Connexion en cours...',
+    'auth.returnHome': "Retour à l'accueil",
+    'auth.emailAddress': 'Adresse e-mail',
 
     // 404 Page
     'error.404Title': 'Oups ! Page introuvable',
@@ -1029,6 +1037,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Crear Cuenta',
     'auth.creatingAccount': 'Creando cuenta...',
     'auth.signingIn': 'Iniciando sesión...',
+    'auth.returnHome': 'Volver al Inicio',
+    'auth.emailAddress': 'Correo Electrónico',
 
     // 404 Page
     'error.404Title': '¡Ups! Página No Encontrada',
@@ -1221,6 +1231,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Crea account',
     'auth.creatingAccount': 'Creazione account in corso...',
     'auth.signingIn': 'Accesso in corso...',
+    'auth.returnHome': 'Torna alla Home',
+    'auth.emailAddress': 'Indirizzo Email',
 
     // 404 Page
     'error.404Title': 'Ops! Pagina non trovata',
@@ -1413,6 +1425,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Criar Conta',
     'auth.creatingAccount': 'Criando conta...',
     'auth.signingIn': 'Entrando...',
+    'auth.returnHome': 'Voltar ao Início',
+    'auth.emailAddress': 'Endereço de E-mail',
 
     // 404 Page
     'error.404Title': 'Ops! Página Não Encontrada',
