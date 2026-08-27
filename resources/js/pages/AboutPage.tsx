@@ -2,7 +2,6 @@ import { Footer, Navbar, PageHeader } from '@/components/layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Award, Shield, Trophy, Users } from 'lucide-react';
 import { Head } from '@inertiajs/react';
-import profileImage from '@/assets/images/rojeh.jpg';
 import { useTranslation } from '@/lib/i18n';
 
 function AboutPage() {
@@ -63,7 +62,7 @@ function AboutPage() {
                                 <div className="text-center">
                                     <div className="bg-primary/10 mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full">
                                         <img
-                                            src={profileImage}
+                                            src={`/competition_management/public/storage/profile_images/rojeh.jpg`}
                                             alt="Rojeh Samy"
                                             className="h-20 w-20 rounded-full object-cover"
                                         />
@@ -91,4 +90,4 @@ function AboutPage() {
   );
 }
 
-export default AboutPage;
+export default AboutPage;

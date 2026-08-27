@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Mail, Phone, MessageCircle } from "lucide-react";
 import { PageHeader, Navbar, Footer } from "@/components/layout";
-import profileImage from "@/assets/images/rojeh.jpg";
 import { Head, useForm } from "@inertiajs/react";
 import { useTranslation } from "@/lib/i18n";
 
@@ -126,7 +125,7 @@ function ContactPage() {
                   <CardContent className="pt-6 pb-8 space-y-4">
                     <div className="flex justify-center mb-4">
                       <img
-                        src={profileImage}
+                        src={`/competition_management/public/storage/profile_images/rojeh.jpg`}
                         alt="Rojeh Samy"
                         className="h-24 w-24 rounded-full object-cover"
                       />
