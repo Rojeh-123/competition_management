@@ -34,6 +34,7 @@ trait AwardsBadges
             'priority'   => 1,
             'is_read'    => false,
             'image'      => $badge->icon,
+            'source'     => 'badge',
             'created_at' => now(),
         ]);
     }

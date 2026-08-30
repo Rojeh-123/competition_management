@@ -4,13 +4,14 @@ namespace App\Console\Commands;
 
 use App\Models\Competition;
 use App\Models\CompetitionWinner;
+use App\Models\Notification;
 use App\Models\User;
 use App\Helpers\AwardsBadges;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class RefreshCompetitionStatuses extends Command
+class PublishCompetitionWinners extends Command
 {
     use AwardsBadges;
 
@@ -42,6 +43,8 @@ class RefreshCompetitionStatuses extends Command
                         $competition->update(['status' => $newStatus]);
                     }
 
+                    $this->notifyParticipantsOfStatusChange($competition, $newStatus);
+
                     if (Carbon::today()->gt(Carbon::parse($competition->submission_deadline))) {
                         $this->resetMissedStreaks($competition);
                     }
@@ -55,6 +58,49 @@ class RefreshCompetitionStatuses extends Command
             : 'No competition statuses needed updating.');
 
         return Command::SUCCESS;
+    }
+
+    protected function notifyParticipantsOfStatusChange(Competition $competition, string $newStatus): void
+    {
+        $participantIds = $competition->participants()
+            ->pluck('users.id');
+
+        if ($participantIds->isEmpty()) {
+            return;
+        }
+
+        [$title, $message] = $this->statusChangeNotificationContent($competition, $newStatus);
+
+        $now = now();
+
+        $rows = $participantIds->map(fn($userId) => [
+            'user_id'    => $userId,
+            'title'      => $title,
+            'message'    => $message,
+            'priority'   => 1,
+            'source'     => 'status_change',
+            'is_read'    => false,
+            'image'      => null,
+            'created_at' => $now,
+        ])->all();
+
+        foreach (array_chunk($rows, 500) as $chunk) {
+            Notification::insert($chunk);
+        }
+    }
+
+    protected function statusChangeNotificationContent(Competition $competition, string $newStatus): array
+    {
+        return match ($newStatus) {
+            'results_published' => [
+                'Results Published: ' . $competition->title,
+                'Results for "' . $competition->title . '" are now available. Check your rank.',
+            ],
+            default => [
+                'Competition Update: ' . $competition->title,
+                '"' . $competition->title . '" is now ' . str($newStatus)->replace('_', ' ') . '.',
+            ],
+        };
     }
 
     protected function resetMissedStreaks(Competition $competition): void
@@ -76,44 +122,80 @@ class RefreshCompetitionStatuses extends Command
     protected function publishResults(Competition $competition): void
     {
         DB::transaction(function () use ($competition) {
-            $submissions = $competition->submissions()->with('scores')->get();
+            if ($competition->has_question_bank) {
+                $questionBank = $competition->questionBank;
 
-            $rankedSubmissions = $submissions
-                ->map(function ($submission) {
-                    $finalScore = $submission->scores
-                        ->where('status', 'Locked')
-                        ->sum('score');
+                if ($questionBank) {
+                    $competition->examAttempts()
+                        ->where('status', 'in_progress')
+                        ->get()
+                        ->each(function ($attempt) use ($questionBank) {
+                            if ($attempt->hasExpired($questionBank->duration_minutes)) {
+                                $attempt->finalize('expired');
+                            }
+                        });
+                }
+            }
+
+            $submissions = $competition->submissions()
+                ->with('scores')
+                ->get()
+                ->keyBy('participant_id');
+
+            $examAttempts = $competition->has_question_bank
+                ? $competition->examAttempts()
+                ->whereIn('status', ['submitted', 'expired'])
+                ->get()
+                ->keyBy('participant_id')
+                : collect();
+
+            $participantIds = $submissions->keys()
+                ->merge($examAttempts->keys())
+                ->unique();
+
+            $maxJudgingScore = $competition->scoreCriteria()->sum('max_score');
+
+            $ranked = $participantIds
+                ->map(function ($participantId) use ($submissions, $examAttempts) {
+
+                    $submission = $submissions->get($participantId);
+
+                    $judgingScore = $submission
+                        ? $submission->scores->where('status', 'Locked')->sum('score')
+                        : 0;
+
+                    $examAttempt = $examAttempts->get($participantId);
+
+                    $examScore = $examAttempt ? (float) $examAttempt->score : 0;
+                    $examMaxScore = $examAttempt ? (float) $examAttempt->max_score : 0;
 
                     return [
+                        'participant_id' => $participantId,
                         'submission' => $submission,
-                        'final_score' => $finalScore,
+                        'exam_max_score' => $examMaxScore,
+                        'final_score' => $judgingScore + $examScore,
                     ];
                 })
                 ->sortByDesc('final_score')
                 ->values();
 
             $numberOfWinners = (int) $competition->number_of_winners;
-            $winners = $rankedSubmissions->take($numberOfWinners);
+            $winners = $ranked->take($numberOfWinners);
 
-            $maxPossibleScore = $competition->scoreCriteria()->sum('max_score');
+            CompetitionWinner::where('competition_id', $competition->id)->delete();
 
             foreach ($winners as $index => $winner) {
-                $submission = $winner['submission'];
                 $rankPosition = $index + 1;
 
-                CompetitionWinner::updateOrCreate(
-                    [
-                        'competition_id' => $competition->id,
-                        'submission_id' => $submission->id,
-                    ],
-                    [
-                        'participant_id' => $submission->participant_id,
-                        'rank_position' => $rankPosition,
-                        'final_score' => $winner['final_score'],
-                    ]
-                );
+                CompetitionWinner::create([
+                    'competition_id' => $competition->id,
+                    'participant_id' => $winner['participant_id'],
+                    'submission_id' => $winner['submission']?->id,
+                    'rank_position' => $rankPosition,
+                    'final_score' => $winner['final_score'],
+                ]);
 
-                $user = User::findOrFail($submission->participant_id);
+                $user = User::findOrFail($winner['participant_id']);
 
                 if ($rankPosition === 1) {
                     $this->awardBadge($user, 'champion');
@@ -122,6 +204,8 @@ class RefreshCompetitionStatuses extends Command
                 if ($rankPosition === 2 || $rankPosition === 3) {
                     $this->awardBadge($user, 'podium-finisher');
                 }
+
+                $maxPossibleScore = $maxJudgingScore + $winner['exam_max_score'];
 
                 if ($maxPossibleScore > 0 && $winner['final_score'] == $maxPossibleScore) {
                     $this->awardBadge($user, 'perfect-score');

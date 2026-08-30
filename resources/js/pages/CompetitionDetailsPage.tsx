@@ -57,6 +57,34 @@ type Winner = {
     } | null;
 };
 
+type Question = {
+    id?: number;
+    question_bank_id?: number;
+    question_text: string;
+
+    choices: {
+        A: string;
+        B: string;
+        C: string;
+        D: string;
+    };
+
+    correct_answer: "A" | "B" | "C" | "D";
+
+    points: number;
+    sort_order: number;
+};
+
+type QuestionBank = {
+    id: number;
+    competition_id: number;
+
+    number_of_questions: number;
+    duration_minutes: number;
+
+    questions: Question[];
+};
+
 type Competition = {
     id: number;
     title: string;
@@ -64,12 +92,16 @@ type Competition = {
     rules: string;
     status: string;
     visibility: string;
+
+    has_question_bank: boolean;
+
     number_of_winners: number;
     prize_description: string;
     max_file_size_mb: number;
     allowed_file_types: string;
     start_date: string;
     submission_deadline: string;
+    registration_deadline: string;
     end_date: string;
     winner_announced_at?: string | null;
 
@@ -88,6 +120,8 @@ type Competition = {
     }[];
 
     winners?: Winner[];
+
+    question_bank?: QuestionBank | null;
 };
 
 type User = {
@@ -98,14 +132,29 @@ type User = {
     role: string;
 };
 
+type ExamAttempt = {
+    id: number;
+    status: "in_progress" | "submitted" | "expired";
+    score?: number | null;
+    max_score?: number | null;
+};
+
 type PageProps = {
     user: User;
     competition: Competition;
-    isJoined: boolean;
+
+    questionBank: {
+        id: number;
+        number_of_questions: number;
+        duration_minutes: number;
+        questions_count: number;
+    };
+
+    attempt: ExamAttempt | null;
 };
 
 function ManageCompetitionDetailsPage() {
-    const { user, competition, isJoined } =
+    const { user, competition, isJoined, attempt } =
         usePage<PageProps>().props;
 
     const [now, setNow] = useState(Date.now());
@@ -240,6 +289,15 @@ function ManageCompetitionDetailsPage() {
         );
     };
 
+    const startExam = () => {
+        router.visit(
+            route(
+                "participant.competitions.question-bank",
+                competition.id
+            )
+        );
+    };
+
     return (
         <>
             <Head title={`${competition.title} – Competition Details`} />
@@ -291,35 +349,41 @@ function ManageCompetitionDetailsPage() {
                                     <div className="overflow-x-auto pb-1 max-w-full">
                                         <TabsList className="inline-flex w-auto min-w-full justify-start">
 
-                                        <TabsTrigger value="overview">
-                                            Overview
-                                        </TabsTrigger>
-
-                                        <TabsTrigger value="rules">
-                                            Rules & Guidelines
-                                        </TabsTrigger>
-
-                                        <TabsTrigger value="judging">
-                                            Judging Criteria
-                                        </TabsTrigger>
-
-                                        <TabsTrigger value="prizes">
-                                            Prizes
-                                        </TabsTrigger>
-
-                                        <TabsTrigger value="timeline">
-                                            Timeline
-                                        </TabsTrigger>
-
-                                        {isWinnersAnnounced && (
-                                            <TabsTrigger value="winners">
-                                                Winners
+                                            <TabsTrigger value="overview">
+                                                Overview
                                             </TabsTrigger>
-                                        )}
+
+                                            <TabsTrigger value="rules">
+                                                Rules & Guidelines
+                                            </TabsTrigger>
+
+                                            <TabsTrigger value="judging">
+                                                Judging Criteria
+                                            </TabsTrigger>
+
+                                            <TabsTrigger value="prizes">
+                                                Prizes
+                                            </TabsTrigger>
+
+                                            <TabsTrigger value="timeline">
+                                                Timeline
+                                            </TabsTrigger>
+
+                                            {isWinnersAnnounced && (
+                                                <TabsTrigger value="winners">
+                                                    Winners
+                                                </TabsTrigger>
+                                            )}
+
+                                            {competition.has_question_bank && (
+                                                <TabsTrigger value="question-bank">
+                                                    Question Bank
+                                                </TabsTrigger>
+                                            )}
 
                                         </TabsList>
                                     </div>
-                                    
+
                                     {/* OVERVIEW TAB */}
 
                                     <TabsContent
@@ -725,6 +789,139 @@ function ManageCompetitionDetailsPage() {
                                         </TabsContent>
                                     )}
 
+                                    {competition.has_question_bank &&
+                                        user?.role === "admin" && (
+                                            <TabsContent
+                                                value="question-bank"
+                                                className="mt-6"
+                                            >
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>
+                                                            Question Bank Management
+                                                        </CardTitle>
+                                                    </CardHeader>
+
+                                                    <CardContent>
+                                                        {(competition.status === "upcoming") ?
+                                                            (
+                                                                <Button
+                                                                    className="cursor-pointer"
+                                                                    onClick={() =>
+                                                                        router.visit(
+                                                                            route(
+                                                                                "admin.competitions.question-bank.edit",
+                                                                                competition.id
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Manage Question Bank
+                                                                </Button>
+                                                            ) : (
+                                                                <div className="rounded-lg border border-muted bg-muted/30 p-4">
+                                                                    <div className="mb-1 font-medium">
+                                                                        Question Bank Locked
+                                                                    </div>
+
+                                                                    <p className="text-sm text-muted-foreground">
+                                                                        The question bank can only be managed before the competition
+                                                                        starts. Once the competition begins, you will no longer be able
+                                                                        to add, edit, or remove questions.
+                                                                    </p>
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </CardContent>
+                                                </Card>
+                                            </TabsContent>
+                                        )}
+
+                                    {competition.has_question_bank &&
+                                        user?.role === "participant" && (
+                                            <TabsContent
+                                                value="question-bank"
+                                                className="mt-6"
+                                            >
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>
+                                                            Competition Exam
+                                                        </CardTitle>
+                                                    </CardHeader>
+
+                                                    <CardContent className="space-y-6">
+
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                                                            <div className="rounded-lg border p-4">
+                                                                <p className="text-sm text-muted-foreground">
+                                                                    Number of Questions
+                                                                </p>
+
+                                                                <p className="text-2xl font-bold">
+                                                                    {
+                                                                        competition
+                                                                            .question_bank
+                                                                            ?.number_of_questions
+                                                                    }
+                                                                </p>
+                                                            </div>
+
+                                                            <div className="rounded-lg border p-4">
+                                                                <p className="text-sm text-muted-foreground">
+                                                                    Duration
+                                                                </p>
+
+                                                                <p className="text-2xl font-bold">
+                                                                    {
+                                                                        competition
+                                                                            .question_bank
+                                                                            ?.duration_minutes
+                                                                    }{" "}
+                                                                    minutes
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+                                                    {competition.status === "open" ? (
+                                                        attempt ? (
+                                                            <div className="rounded-lg border p-5">
+                                                                <p className="font-semibold">
+                                                                    You have already attempted this exam.
+                                                                </p>
+
+                                                                <p className="mt-1 text-sm text-muted-foreground">
+                                                                    You cannot attempt this exam again.
+                                                                </p>
+
+                                                                {attempt.score !== null && (
+                                                                    <p className="mt-4 text-lg font-bold">
+                                                                        Score: {attempt.score} / {attempt.max_score}
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        ) : (
+                                                            <Button
+                                                                onClick={startExam}
+                                                                className="cursor-pointer"
+                                                            >
+                                                                Start Exam
+                                                            </Button>
+                                                        )
+                                                    ) : (
+                                                        <div className="rounded-lg border p-5">
+                                                            <p className="font-semibold">
+                                                                This exam is not currently available.
+                                                            </p>
+                                                        </div>
+                                                    )}
+
+                                                    </CardContent>
+                                                </Card>
+                                            </TabsContent>
+                                        )}
+
                                 </Tabs>
 
                             </div>
@@ -752,22 +949,22 @@ function ManageCompetitionDetailsPage() {
                                                 <>
                                                     {competition.status ===
                                                         "upcoming" && (
-                                                        <Button
-                                                            className="w-full cursor-pointer"
-                                                            variant="outline"
-                                                            onClick={() =>
-                                                                router.visit(
-                                                                    route(
-                                                                        "admin.competitions.edit",
-                                                                        competition.id
+                                                            <Button
+                                                                className="w-full cursor-pointer"
+                                                                variant="outline"
+                                                                onClick={() =>
+                                                                    router.visit(
+                                                                        route(
+                                                                            "admin.competitions.edit",
+                                                                            competition.id
+                                                                        )
                                                                     )
-                                                                )
-                                                            }
-                                                        >
-                                                            <Pencil className="mr-2 h-4 w-4" />
-                                                            Update Competition
-                                                        </Button>
-                                                    )}
+                                                                }
+                                                            >
+                                                                <Pencil className="mr-2 h-4 w-4" />
+                                                                Update Competition
+                                                            </Button>
+                                                        )}
 
                                                     <Button
                                                         variant="destructive"
@@ -795,35 +992,30 @@ function ManageCompetitionDetailsPage() {
 
                                             {(
                                                 user &&
-                                                (
-                                                    competition.status ===
-                                                        "upcoming" ||
-                                                    competition.status ===
-                                                        "open"
-                                                ) &&
+                                                new Date() < new Date(competition.registration_deadline) &&
                                                 !isJoined &&
                                                 user.role === "participant"
                                             ) && (
-                                                <Button
-                                                    className="w-full mt-4 cursor-pointer"
-                                                    size="lg"
-                                                    onClick={() =>
-                                                        router.visit(
-                                                            route(
-                                                                "participant.competitions.join",
+                                                    <Button
+                                                        className="w-full mt-4 cursor-pointer"
+                                                        size="lg"
+                                                        onClick={() =>
+                                                            router.visit(
+                                                                route(
+                                                                    "participant.competitions.join",
+                                                                    {
+                                                                        id: competition.id,
+                                                                    }
+                                                                ),
                                                                 {
-                                                                    id: competition.id,
+                                                                    method: "post",
                                                                 }
-                                                            ),
-                                                            {
-                                                                method: "post",
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    Join Competition
-                                                </Button>
-                                            )}
+                                                            )
+                                                        }
+                                                    >
+                                                        Join Competition
+                                                    </Button>
+                                                )}
 
                                         </div>
 

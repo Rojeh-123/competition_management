@@ -44,12 +44,12 @@ createInertiaApp({
                     position="bottom-right"
                     toastOptions={{
                         style: {
-                            '--success-bg': '#212d9b',
-                            '--success-text': '#ffffff',
-                            '--success-border': '#000f9a',
-                            '--error-bg': '#842029',
-                            '--error-text': '#ffffff',
-                            '--error-border': '#842029',
+                            '--success-bg': 'var(--primary)',
+                            '--success-text': 'var(--primary-foreground)',
+                            '--success-border': 'var(--primary)',
+                            '--error-bg': 'var(--destructive)',
+                            '--error-text': 'var(--destructive-foreground)',
+                            '--error-border': 'var(--destructive)',
                         } as React.CSSProperties,
                     }}
                 />

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\SubmissionFile;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\AuditLogger;
 
@@ -103,6 +104,17 @@ class SubmissionController extends Controller
             'status' => 'approved'
         ]);
 
+        Notification::create([
+            'user_id'    => $submission->participant_id,
+            'title'      => 'Submission Approved: ' . $submission->title,
+            'message'    => 'Your submission "' . $submission->title . '" has been approved and sent to the judging queue.',
+            'priority'   => 1,
+            'source'     => 'submission_status',
+            'is_read'    => false,
+            'image'      => null,
+            'created_at' => now(),
+        ]);
+
         AuditLogger::log(
             action: 'UPDATE',
             table: 'submissions',
@@ -125,7 +137,16 @@ class SubmissionController extends Controller
             'status' => 'rejected'
         ]);
 
-        // send the reason to a notification
+        Notification::create([
+            'user_id'    => $submission->participant_id,
+            'title'      => 'Submission Rejected: ' . $submission->title,
+            'message'    => 'Your submission "' . $submission->title . '" was rejected. Reason: ' . $request->reason,
+            'priority'   => 1,
+            'source'     => 'submission_status',
+            'is_read'    => false,
+            'image'      => null,
+            'created_at' => now(),
+        ]);
 
         AuditLogger::log(
             action: 'UPDATE',

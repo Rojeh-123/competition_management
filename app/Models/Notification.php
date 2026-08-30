@@ -18,6 +18,7 @@ class Notification extends Model
         'title',
         'message',
         'priority',
+        'source',
         'is_read',
         'image',
     ];

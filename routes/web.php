@@ -16,6 +16,7 @@ use App\Http\Controllers\User\CompetitionController as UserCompetitionController
 use App\Http\Controllers\User\SubmissionController as UserSubmissionController;
 use App\Http\Controllers\User\CertificateController as UserCertificateController;
 use App\Http\Controllers\User\TeamController as UserTeamController;
+use App\Http\Controllers\User\ExamController;
 
 // Judge Controllers
 use App\Http\Controllers\Judge\CompetitionController as JudgeCompetitionController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AuditLogController;
+use App\Http\Controllers\Admin\QuestionBankController;
 
 // Settings Controllers
 use App\Http\Controllers\Settings\ProfileController;
@@ -213,6 +215,24 @@ Route::middleware(['auth', 'status'])->group(function () {
             Route::get('/teams/{team}', [UserTeamController::class, 'show'])
                 ->name('teams.show');
 
+
+            /*|--------------------------------------------------------------------------
+            | Question Bank ROUTES
+            |--------------------------------------------------------------------------
+            */
+
+            Route::get('/participant/competitions/{competition}/question-bank', [ExamController::class, 'questionBank'])
+                ->name('competitions.question-bank');
+
+            Route::get('/participant/competitions/{competition}/exam', [ExamController::class, 'showExam'])
+                ->name('competitions.exam');
+
+            Route::post('/participant/competitions/{competition}/exam/save', [ExamController::class, 'saveAnswers'])
+                ->name('competitions.exam.save');
+
+            Route::post('/participant/competitions/{competition}/exam/submit', [ExamController::class, 'submit'])
+                ->name('competitions.exam.submit');
+
             /*|--------------------------------------------------------------------------
             | Certificates ROUTES
             |--------------------------------------------------------------------------
@@ -379,8 +399,14 @@ Route::middleware(['auth', 'status'])->group(function () {
             Route::get('/announcements', [AnnouncementController::class, 'index'])
                 ->name('announcements');
 
+            Route::get('/announcements/create', [AnnouncementController::class, 'create'])
+                ->name('announcements.create');
+
             Route::post('/announcements', [AnnouncementController::class, 'store'])
                 ->name('announcements.store');
+
+            Route::delete('/announcements', [AnnouncementController::class, 'destroy'])
+                ->name('announcements.destroy');
 
             /*
             |--------------------------------------------------------------------------
@@ -420,6 +446,18 @@ Route::middleware(['auth', 'status'])->group(function () {
 
             Route::delete('/teams/{team}/destroy', [AdminTeamController::class, 'destroy'])
                 ->name('teams.destroy');
+
+
+            /*|--------------------------------------------------------------------------
+            | Question Bank ROUTES
+            |--------------------------------------------------------------------------
+            */
+
+            Route::get('/admin/competitions/{competition}/question-bank', [QuestionBankController::class, 'edit'])
+                ->name('competitions.question-bank.edit');
+
+            Route::put('/admin/competitions/{competition}/question-bank', [QuestionBankController::class, 'sync'])
+                ->name('competitions.question-bank.sync');
 
 
             /*|--------------------------------------------------------------------------
@@ -470,7 +508,7 @@ Route::middleware(['auth', 'status'])->group(function () {
                 ->name('save-draft');
 
             Route::post('/evaluations/submit', [JudgeScoreController::class, 'submit'])
-                ->name('submit-score'); 
+                ->name('submit-score');
 
             /*|--------------------------------------------------------------------------
             | History ROUTES
@@ -480,7 +518,7 @@ Route::middleware(['auth', 'status'])->group(function () {
             Route::get('/history', [JudgeSubmissionController::class, 'history'])
                 ->name('history');
         });
-    });
+});
 
 /*
 |--------------------------------------------------------------------------

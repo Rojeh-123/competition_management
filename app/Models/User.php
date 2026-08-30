@@ -57,16 +57,6 @@ class User extends Authenticatable
         ->withPivot(['status', 'joined_at']);
     }
 
-    public function favoriteCompetitions(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Competition::class,
-            'favorite_competitions'
-        )
-        ->using(FavoriteCompetition::class)
-        ->withPivot('created_at');
-    }
-
     public function judgingCompetitions(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -87,16 +77,6 @@ class User extends Authenticatable
     public function scores(): HasMany
     {
         return $this->hasMany(Score::class, 'judge_id');
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class, 'judge_id');
-    }
-
-    public function achievements(): HasMany
-    {
-        return $this->hasMany(Achievement::class);
     }
 
     public function certificates(): HasMany
@@ -127,21 +107,6 @@ class User extends Authenticatable
     public function auditLogs(): HasMany
     {
         return $this->hasMany(AuditLog::class);
-    }
-
-    public function judgeComments(): HasMany
-    {
-        return $this->hasMany(Comment::class, 'judge_id');
-    }
-
-    public function publicComments(): HasMany
-    {
-        return $this->hasMany(PublicComment::class);
-    }
-
-    public function receivedAchievements(): HasMany
-    {
-        return $this->hasMany(Achievement::class);
     }
 
     public function captainedTeams(): HasMany

@@ -57,6 +57,7 @@ type CompetitionForm = {
   visibility: "public" | "private";
   is_featured: boolean;
   team_allowed: boolean;
+  has_question_bank: boolean; // Added field to form state
   certificate_enabled: boolean;
   requires_approval: boolean;
 
@@ -92,14 +93,14 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
     description: competition?.description ?? "",
     rules: competition?.rules ?? "",
 
-  start_date: formatDateTimeLocal(competition?.start_date),
-  registration_deadline: formatDateTimeLocal(competition?.registration_deadline),
-  submission_deadline: formatDateTimeLocal(competition?.submission_deadline),
-  judging_start_date: formatDateTimeLocal(competition?.judging_start_date),
-  judging_end_date: formatDateTimeLocal(competition?.judging_end_date),
-  end_date: formatDateTimeLocal(competition?.end_date),
-  published_at: formatDateTimeLocal(competition?.published_at),
-  winner_announced_at: formatDateTimeLocal(competition?.winner_announced_at),
+    start_date: formatDateTimeLocal(competition?.start_date),
+    registration_deadline: formatDateTimeLocal(competition?.registration_deadline),
+    submission_deadline: formatDateTimeLocal(competition?.submission_deadline),
+    judging_start_date: formatDateTimeLocal(competition?.judging_start_date),
+    judging_end_date: formatDateTimeLocal(competition?.judging_end_date),
+    end_date: formatDateTimeLocal(competition?.end_date),
+    published_at: formatDateTimeLocal(competition?.published_at),
+    winner_announced_at: formatDateTimeLocal(competition?.winner_announced_at),
 
     max_file_size_mb: competition?.max_file_size_mb?.toString() ?? "",
     allowed_file_types: competition?.allowed_file_types ?? "",
@@ -109,6 +110,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
     visibility: competition?.visibility ?? "public",
     is_featured: competition?.is_featured ?? false,
     team_allowed: competition?.team_allowed ?? false,
+    has_question_bank: competition?.has_question_bank ?? false, // Initialized property
     certificate_enabled: competition?.certificate_enabled ?? true,
     requires_approval: competition?.requires_approval ?? false,
 
@@ -251,7 +253,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                             </p>
                           )}
                         </div>
-                        
+
                         {/* Current Image */}
                         <div>
                           <Label className="text-sm text-muted-foreground">
@@ -307,18 +309,33 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                         )}
                       </div>
 
+                      <div className="flex flex-col justify-center gap-3 mt-5">
+                        <div className="flex items-center gap-2 mt-2">
+                          <Checkbox
+                            id="team_allowed"
+                            checked={data.team_allowed}
+                            onCheckedChange={(checked) =>
+                              setData("team_allowed", !!checked)
+                            }
+                          />
+                          <Label htmlFor="team_allowed" className="cursor-pointer">
+                            Allow Team Participation
+                          </Label>
+                        </div>
 
-                      <div className="flex items-center gap-2 self-center mt-5">
-                        <Checkbox
-                          id="team_allowed"
-                          checked={data.team_allowed}
-                          onCheckedChange={(checked) =>
-                            setData("team_allowed", !!checked)
-                          }
-                        />
-                        <Label htmlFor="team_allowed" className="cursor-pointer">
-                          Allow Team Participation
-                        </Label>
+                        {/* Added Question Bank Checkbox */}
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id="has_question_bank"
+                            checked={data.has_question_bank}
+                            onCheckedChange={(checked) =>
+                              setData("has_question_bank", !!checked)
+                            }
+                          />
+                          <Label htmlFor="has_question_bank" className="cursor-pointer">
+                            Enable Question Bank
+                          </Label>
+                        </div>
                       </div>
 
                     </div>
@@ -733,8 +750,8 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                           ? "Updating..."
                           : "Creating..."
                         : isEditing
-                        ? "Update Competition"
-                        : "Create Competition"}
+                          ? "Update Competition"
+                          : "Create Competition"}
                     </Button>
                   </div>
                 </form>

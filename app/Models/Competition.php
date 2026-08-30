@@ -39,6 +39,7 @@ class Competition extends Model
         'status',
         'is_featured',
         'team_allowed',
+        'has_question_bank',
         'certificate_enabled',
         'requires_approval',
 
@@ -62,6 +63,7 @@ class Competition extends Model
 
         'is_featured' => 'boolean',
         'team_allowed' => 'boolean',
+        'has_question_bank' => 'boolean',
         'certificate_enabled' => 'boolean',
         'requires_approval' => 'boolean',
 
@@ -98,35 +100,9 @@ class Competition extends Model
         ->withPivot('assigned_at');
     }
 
-    public function favorites(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            User::class,
-            'favorite_competitions'
-        )
-        ->using(FavoriteCompetition::class)
-        ->withPivot('created_at');
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function sponsors(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Sponsor::class,
-            'competition_sponsors'
-        )->withTimestamps();
-    }
-
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Tag::class,
-            'competition_tags'
-        )->withTimestamps();
     }
 
     public function submissions(): HasMany
@@ -191,11 +167,21 @@ class Competition extends Model
 
         if (
             ! empty($this->winner_announced_at) &&
-            $today->gte(Carbon::parse($this->winner_announced_at))
+            now()->gte(Carbon::parse($this->winner_announced_at))
         ) {
             return 'results_published';
         }
 
         return 'submission_closed';
+    }
+
+    public function questionBank()
+    {
+        return $this->hasOne(QuestionBank::class);
+    }
+
+    public function examAttempts()
+    {
+        return $this->hasMany(ExamAttempt::class);
     }
 }

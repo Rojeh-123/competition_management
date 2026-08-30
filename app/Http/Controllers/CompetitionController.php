@@ -136,12 +136,17 @@ class CompetitionController extends Controller
             'winners.participant',
             'winners.submission.participant',
             'scoreCriteria',
+            'questionBank.questions',
         ])
-            ->withCount([
-                'participants',
-                'submissions',
-            ])
-            ->findOrFail($id);
+        ->withCount([
+            'participants',
+            'submissions',
+        ])
+        ->findOrFail($id);
+
+        if ($competition->visibility === 'private' && !$competition->participants->contains('id', Auth::id()) && Auth::user()->role != 'admin') {
+            abort(403, 'This Competition is private and you are not authorized to view it.');
+        }
 
         $isJoined = CompetitionParticipant::where('participant_id', Auth::id())
             ->where('competition_id', $id)

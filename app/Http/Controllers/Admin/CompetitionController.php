@@ -62,6 +62,7 @@ class CompetitionController extends Controller
             // Options
             'visibility' => ['required', 'in:public,private'],
             'team_allowed' => ['boolean'],
+            'has_question_bank' => ['boolean'],
 
             // Age
             'min_age' => ['nullable', 'integer', 'min:0'],
@@ -83,6 +84,7 @@ class CompetitionController extends Controller
         // Checkbox defaults
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['team_allowed'] = $request->boolean('team_allowed');
+        $validated['has_question_bank'] = $request->boolean('has_question_bank');
         $validated['certificate_enabled'] = $request->boolean('certificate_enabled');
         $validated['requires_approval'] = $request->boolean('requires_approval');
 
@@ -118,12 +120,13 @@ class CompetitionController extends Controller
             'winners.participant',
             'winners.submission.participant',
             'scoreCriteria',
+            'questionBank.questions',
         ])
-            ->withCount([
-                'participants',
-                'submissions',
-            ])
-            ->findOrFail($id);
+        ->withCount([
+            'participants',
+            'submissions',
+        ])
+        ->findOrFail($id);
 
         $isJoined = CompetitionParticipant::where('participant_id', Auth::id())
             ->where('competition_id', $id)
@@ -177,6 +180,7 @@ class CompetitionController extends Controller
             'team_allowed' => ['boolean'],
             'certificate_enabled' => ['boolean'],
             'requires_approval' => ['boolean'],
+            'has_question_bank' => ['boolean'],
 
             // Age
             'min_age' => ['nullable', 'integer', 'min:0'],
@@ -208,6 +212,7 @@ class CompetitionController extends Controller
         // Checkbox defaults
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['team_allowed'] = $request->boolean('team_allowed');
+        $validated['has_question_bank'] = $request->boolean('has_question_bank');
         $validated['certificate_enabled'] = $request->boolean('certificate_enabled');
         $validated['requires_approval'] = $request->boolean('requires_approval');
 
