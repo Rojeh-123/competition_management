@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { route } from "ziggy-js";
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -35,24 +36,25 @@ interface PageProps {
 }
 
 function MyTeamsPage({ teams }: IndexProps) {
+  const { t } = useTranslation();
+
     const { user } = usePage<PageProps>().props;
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="My Teams" />
+            <Head title={t('sidebar.myTeams')} />
             <Navbar />
             <div className="flex flex-1">
                 <DashboardSidebar />
                 <main className="flex-1 overflow-auto">
                     <div className="p-6">
-                        <PageHeader title="My Teams" description="Teams you've been assigned to by an admin" />
+                        <PageHeader title={t('sidebar.myTeams')} description={t('participant.teams.index.teamsYouveBeenAssignedTo')} />
 
                         {teams.length === 0 ? (
                             <Card>
                                 <CardContent className="pt-6">
                                     <p className="text-sm text-muted-foreground text-center py-8">
-                                        You haven't been added to a team yet.
-                                    </p>
+                                        {t('participant.teams.index.youHaventBeenAddedTo')}</p>
                                 </CardContent>
                             </Card>
                         ) : (
@@ -72,8 +74,7 @@ function MyTeamsPage({ teams }: IndexProps) {
                                             <div>
                                                 <div className="flex items-center gap-1.5 text-sm font-medium mb-1.5">
                                                     <Users className="h-3.5 w-3.5" />
-                                                    Members
-                                                </div>
+                                                    {t('participant.teams.index.members')}</div>
                                                 <div className="flex flex-wrap gap-1.5">
                                                     {team.members.map((m) => (
                                                         <Badge

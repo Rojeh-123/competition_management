@@ -116,112 +116,112 @@ function GalleryPage() {
     <>
       <Head title={`${t('gallery.title')} – CompeteHub`} />
       <div className="min-h-screen flex flex-col">
-      <Navbar />
+        <Navbar />
 
-      <main className="flex-1">
-        <div className="container mx-auto px-4 py-8">
-          <PageHeader
-            title={t('gallery.title')}
-            description={t('gallery.description')}
-          />
-
+        <main className="flex-1">
           <div className="container mx-auto px-4 py-8">
-            {/* Category Tabs */}
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-              <TabsList>
-                <TabsTrigger value="all">{t('common.all')}</TabsTrigger>
-                <TabsTrigger value="Photography">{t('gallery.photography')}</TabsTrigger>
-                <TabsTrigger value="Programming">{t('gallery.programming')}</TabsTrigger>
-                <TabsTrigger value="Digital Art">{t('gallery.digitalArt')}</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <PageHeader
+              title={t('gallery.title')}
+              description={t('gallery.description')}
+            />
 
-            {/* Empty State */}
-            {filteredSubmissions.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-20 text-center">
-                <FileText className="h-12 w-12 text-muted-foreground/40 mb-4" />
-                <h2 className="text-xl font-semibold mb-2">{t('gallery.noSubmissions')}</h2>
-                <p className="text-muted-foreground">
-                  {t('gallery.noSubmissionsDesc')}
-                </p>
-              </div>
-            )}
+            <div className="container mx-auto px-4 py-8">
+              {/* Category Tabs */}
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
+                <TabsList>
+                  <TabsTrigger value="all">{t('common.all')}</TabsTrigger>
+                  <TabsTrigger value="Photography">{t('gallery.photography')}</TabsTrigger>
+                  <TabsTrigger value="Programming">{t('gallery.programming')}</TabsTrigger>
+                  <TabsTrigger value="Digital Art">{t('gallery.digitalArt')}</TabsTrigger>
+                </TabsList>
+              </Tabs>
 
-            {/* Gallery */}
-            {filteredSubmissions.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredSubmissions.map((submission) => {
-                  const category = submission.competition?.category ?? 'Unknown';
-                  const { liked: currentVote, votes: currentVotes } = getVoteState(submission);
-                  const isVoting = votingId === submission.id;
+              {/* Empty State */}
+              {filteredSubmissions.length === 0 && (
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                  <FileText className="h-12 w-12 text-muted-foreground/40 mb-4" />
+                  <h2 className="text-xl font-semibold mb-2">{t('gallery.noSubmissions')}</h2>
+                  <p className="text-muted-foreground">
+                    {t('gallery.noSubmissionsDesc')}
+                  </p>
+                </div>
+              )}
 
-                  return (
-                    <Card key={submission.id} className="overflow-hidden group">
-                      {/* Submission Preview with image fallback */}
-                      <div className="h-40 overflow-hidden">
-                        {submission.competition?.image ? (
-                          <img
-                            src={`/competition_management/public/storage/${submission.competition.image}`}
-                            alt={submission.competition?.title ?? 'Competition Image'}
-                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="h-full w-full flex items-center justify-center bg-muted">
-                            <Trophy className="h-16 w-16 text-primary" />
-                          </div>
-                        )}
-                      </div>
+              {/* Gallery */}
+              {filteredSubmissions.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredSubmissions.map((submission) => {
+                    const category = submission.competition?.category ?? t('common.unknown');
+                    const { liked: currentVote, votes: currentVotes } = getVoteState(submission);
+                    const isVoting = votingId === submission.id;
 
-                      <CardContent className="pt-4">
-                        {/* Title */}
-                        <h3 className="font-semibold mb-1">{submission.title}</h3>
+                    return (
+                      <Card key={submission.id} className="overflow-hidden group">
+                        {/* Submission Preview with image fallback */}
+                        <div className="h-40 overflow-hidden">
+                          {submission.competition?.image ? (
+                            <img
+                              src={`/competition_management/public/storage/${submission.competition.image}`}
+                              alt={submission.competition?.title ?? 'Competition Image'}
+                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="h-full w-full flex items-center justify-center bg-muted">
+                              <Trophy className="h-16 w-16 text-primary" />
+                            </div>
+                          )}
+                        </div>
 
-                        {/* Description */}
-                        {submission.description && (
-                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                            {submission.description}
-                          </p>
-                        )}
+                        <CardContent className="pt-4">
+                          {/* Title */}
+                          <h3 className="font-semibold mb-1">{submission.title}</h3>
 
-                        {/* Bottom Row */}
-                        <div className="flex items-center justify-between gap-3">
-                          {/* Category */}
-                          <Badge variant="secondary" className="text-xs">
-                            {category}
-                          </Badge>
+                          {/* Description */}
+                          {submission.description && (
+                            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                              {submission.description}
+                            </p>
+                          )}
 
-                          {/* Voting Buttons */}
-                          <div className="flex items-center gap-1">
-                            {/* Like */}
-                            {isAuthenticated && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                disabled={isVoting}
-                                onClick={() => handleVote(submission)}
-                                className={`cursor-pointer ${currentVote
+                          {/* Bottom Row */}
+                          <div className="flex items-center justify-between gap-3">
+                            {/* Category */}
+                            <Badge variant="secondary" className="text-xs">
+                              {category}
+                            </Badge>
+
+                            {/* Voting Buttons */}
+                            <div className="flex items-center gap-1">
+                              {/* Like */}
+                              {isAuthenticated && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  disabled={isVoting}
+                                  onClick={() => handleVote(submission)}
+                                  className={`cursor-pointer ${currentVote
                                     ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/20'
                                     : 'text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20'
-                                  }`}
-                              >
-                                <Heart className={`h-4 w-4 mr-1 ${currentVote ? 'fill-current' : ''}`} />
-                                {currentVotes}
-                              </Button>
-                            )}
+                                    }`}
+                                >
+                                  <Heart className={`h-4 w-4 mr-1 ${currentVote ? 'fill-current' : ''}`} />
+                                  {currentVotes}
+                                </Button>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-            )}
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </>
   );
 }

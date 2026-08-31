@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import axios from "axios";
 import { Head, router, usePage } from "@inertiajs/react";
 import { route } from "ziggy-js";
@@ -59,6 +60,8 @@ type Props = {
 };
 
 export default function Exam() {
+  const { t } = useTranslation();
+
 
     const {
         competition,
@@ -409,8 +412,7 @@ export default function Exam() {
                                     </h1>
 
                                     <p className="text-sm text-muted-foreground">
-                                        Exam
-                                    </p>
+                                        {t('participant.exam.exam')}</p>
                                 </div>
 
                                 <div
@@ -447,8 +449,7 @@ export default function Exam() {
                                         <div>
 
                                             <p className="font-semibold">
-                                                Answered Questions
-                                            </p>
+                                                {t('participant.exam.answeredQuestions')}</p>
 
                                             <p className="text-2xl font-bold">
                                                 {answeredCount}
@@ -459,7 +460,7 @@ export default function Exam() {
                                         </div>
 
                                         <div className="text-sm text-muted-foreground">
-                                            Question{" "}
+                                            {t('participant.exam.question')}{" "}
                                             {currentQuestion + 1}
                                             {" / "}
                                             {questions.length}
@@ -477,8 +478,7 @@ export default function Exam() {
 
                                 <CardHeader>
                                     <CardTitle>
-                                        Questions
-                                    </CardTitle>
+                                        {t('participant.exam.questions')}</CardTitle>
                                 </CardHeader>
 
                                 <CardContent>
@@ -544,13 +544,11 @@ export default function Exam() {
 
                                         <div>
                                             <span className="mr-1 inline-block h-3 w-3 rounded border" />
-                                            Not answered
-                                        </div>
+                                            {t('participant.exam.notAnswered')}</div>
 
                                         <div>
                                             <span className="mr-1 inline-block h-3 w-3 rounded bg-green-500/20" />
-                                            Answered
-                                        </div>
+                                            {t('participant.exam.answered')}</div>
 
                                     </div>
 
@@ -567,7 +565,7 @@ export default function Exam() {
                                     <div className="flex items-center justify-between">
 
                                         <CardTitle>
-                                            Question{" "}
+                                            {t('participant.exam.question')}{" "}
                                             {currentQuestion +
                                                 1}
                                             {" / "}
@@ -580,8 +578,7 @@ export default function Exam() {
                                             {
                                                 question.points
                                             }{" "}
-                                            point
-                                            {question.points !==
+                                            {t('participant.exam.point')}{question.points !==
                                                 1
                                                 ? "s"
                                                 : ""}
@@ -708,8 +705,7 @@ export default function Exam() {
                                         )
                                     }
                                 >
-                                    Previous
-                                </Button>
+                                    {t('participant.exam.previous')}</Button>
 
                                 {isLastQuestion ? (
 
@@ -722,7 +718,7 @@ export default function Exam() {
 
                                             if (
                                                 confirm(
-                                                    "Are you sure you want to submit? You cannot attempt this exam again."
+                                                    t('participant.exam.areYouSureYouWant')
                                                 )
                                             ) {
                                                 submitExam("manual");
@@ -732,8 +728,7 @@ export default function Exam() {
                                     >
                                         <CheckCircle2 className="mr-2 h-4 w-4" />
 
-                                        Submit Exam
-                                    </Button>
+                                        {t('participant.exam.submitExam')}</Button>
 
                                 ) : (
 
@@ -749,8 +744,7 @@ export default function Exam() {
                                             )
                                         }
                                     >
-                                        Next
-                                    </Button>
+                                        {t('participant.exam.next')}</Button>
 
                                 )}
 

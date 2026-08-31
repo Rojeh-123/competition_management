@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +13,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 function ProfilePage() {
+  const { t } = useTranslation();
+
   type PageProps = {
     numberOfJoinedCompetitions: number;
     numberOfMedals: number;
@@ -82,13 +85,13 @@ function ProfilePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="My Profile – Public Portfolio" />
+      <Head title={t('participant.profile.myProfilePublicPortfolio')} />
       <Navbar />
       <main className="flex-1">
         <div className="p-6">
           <PageHeader
-            title="My Profile"
-            description="Your public portfolio and achievements"
+            title={t('sidebar.myProfile')}
+            description={t('participant.profile.yourPublicPortfolioAndAchievements')}
             actions={
               auth.user?.id === shownUser?.id ? (
                 <div className="flex gap-2">
@@ -98,8 +101,7 @@ function ProfilePage() {
                     className="cursor-pointer"
                     onClick={() => router.visit(route("edit-profile"))}
                   >
-                    Edit Profile
-                  </Button>
+                    {t('participant.profile.editProfile')}</Button>
 
                   <Button
                     variant="destructive"
@@ -107,8 +109,7 @@ function ProfilePage() {
                     className="cursor-pointer"
                     onClick={() => setOpenDelete(true)}
                   >
-                    Delete Profile
-                  </Button>
+                    {t('participant.profile.deleteProfile')}</Button>
                 </div>
               ) : null
             }
@@ -148,7 +149,7 @@ function ProfilePage() {
                 <div className="mt-6 border-t pt-6 grid grid-cols-2 gap-4">
 
                   <div>
-                    <p className="text-xs text-muted-foreground">Full Name</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.fullName')}</p>
                     <p className="font-medium">{shownUser.full_name}</p>
                   </div>
 
@@ -176,13 +177,13 @@ function ProfilePage() {
 
                   {auth.user?.role === "admin" && (
                     <div>
-                      <p className="text-xs text-muted-foreground">User ID</p>
+                      <p className="text-xs text-muted-foreground">{t('participant.profile.userId')}</p>
                       <p className="font-medium">#{shownUser.id}</p>
                     </div>
                   )}
 
                   <div className="col-span-2">
-                    <p className="text-xs text-muted-foreground">Biography</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.biography')}</p>
                     <p className="font-medium">
                       {shownUser.bio || "No biography provided."}
                     </p>
@@ -196,17 +197,17 @@ function ProfilePage() {
                     <p className="text-lg font-bold">
                       {numberOfJoinedCompetitions}
                     </p>
-                    <p className="text-xs text-muted-foreground">Competitions</p>
+                    <p className="text-xs text-muted-foreground">{t('nav.competitions')}</p>
                   </div>
 
                   <div>
                     <p className="text-lg font-bold">{numberOfMedals}</p>
-                    <p className="text-xs text-muted-foreground">Medals</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.medals')}</p>
                   </div>
 
                   <div>
                     <p className="text-lg font-bold">#{rank}</p>
-                    <p className="text-xs text-muted-foreground">Rank</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.rank')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -215,7 +216,7 @@ function ProfilePage() {
             <div className="lg:col-span-2 space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Achievements & Badges</CardTitle>
+                  <CardTitle className="text-base">{t('participant.profile.achievementsBadges')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {shownUser.badges.length > 0 ? (
@@ -253,22 +254,20 @@ function ProfilePage() {
                               {badge.name}
                             </p>
                             <p className="text-[11px] text-muted-foreground">
-                              {badge.points * badge.pivot.count} pts
-                            </p>
+                              {badge.points * badge.pivot.count} {t('participant.profile.pts')}</p>
                           </div>
                         </div>
                       ))}
                     </div>
                   ) : (
                     <p className="py-6 text-center text-sm text-muted-foreground">
-                      No badges earned yet.
-                    </p>
+                      {t('participant.profile.noBadgesEarnedYet')}</p>
                   )}
                 </CardContent>
               </Card>
 
               <Card>
-                <CardHeader><CardTitle className="text-base">Recent Submissions</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="text-base">{t('participant.profile.recentSubmissions')}</CardTitle></CardHeader>
                 <CardContent>
                   <ScrollArea className="h-120 pr-4">
                     <div className="space-y-3">
@@ -294,15 +293,13 @@ function ProfilePage() {
 
                             {submission.scores_avg_score !== null && (
                               <Badge variant="secondary">
-                                {Number(submission.scores_avg_score).toFixed(1)} pts
-                              </Badge>
+                                {Number(submission.scores_avg_score).toFixed(1)} {t('participant.profile.pts')}</Badge>
                             )}
                           </div>
                         ))
                       ) : (
                         <p className="py-6 text-center text-sm text-muted-foreground">
-                          No submissions yet.
-                        </p>
+                          {t('participant.profile.noSubmissionsYet')}</p>
                       )}
                     </div>
                   </ScrollArea>
@@ -318,15 +315,14 @@ function ProfilePage() {
       <Dialog open={openDelete} onOpenChange={setOpenDelete}>
         <DialogContent className="sm:max-w-md mx-auto">
           <DialogHeader>
-            <DialogTitle>Delete Profile</DialogTitle>
+            <DialogTitle>{t('participant.profile.deleteProfile')}</DialogTitle>
           </DialogHeader>
           <p className="text-sm text-muted-foreground mb-4">
-            Please enter your password to confirm. This action cannot be undone.
-          </p>
+            {t('participant.profile.pleaseEnterYourPasswordTo')}</p>
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
+              placeholder={t('participant.profile.enterYourPassword')}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="pr-10"
@@ -346,15 +342,13 @@ function ProfilePage() {
           )}
           <DialogFooter className="mt-4">
             <Button variant="outline" onClick={() => setOpenDelete(false)}>
-              Cancel
-            </Button>
+              {t('participant.profile.cancel')}</Button>
             <Button
               variant="destructive"
               onClick={handleDelete}
               disabled={password.trim().length < 8}
             >
-              Yes, Delete
-            </Button>
+              {t('participant.profile.yesDelete')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

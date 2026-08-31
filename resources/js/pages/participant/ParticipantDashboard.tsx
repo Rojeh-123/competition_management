@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, usePage } from "@inertiajs/react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -59,6 +60,8 @@ interface PageProps {
 }
 
 function ParticipantDashboard() {
+  const { t } = useTranslation();
+
     const {
         user,
         stats,
@@ -69,7 +72,7 @@ function ParticipantDashboard() {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Head title="Participant Dashboard – Activity Overview" />
+            <Head title={t('participant.participantDashboard.participantDashboardActivityOverview')} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -81,31 +84,31 @@ function ParticipantDashboard() {
                             title={`Welcome back, ${
                                 user.full_name ?? user.name
                             }`}
-                            description="Here's your competition activity overview."
+                            description={t('participant.participantDashboard.heresYourCompetitionActivityOverview')}
                         />
 
                         {/* Statistics */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                             <StatsCard
-                                label="Active Competitions"
+                                label={t('home.heroBadge')}
                                 value={stats.activeCompetitions}
                                 icon={Trophy}
                             />
 
                             <StatsCard
-                                label="Submitted Entries"
+                                label={t('participant.participantDashboard.submittedEntries')}
                                 value={stats.submittedEntries}
                                 icon={FileText}
                             />
 
                             <StatsCard
-                                label="Awards Won"
+                                label={t('participant.participantDashboard.awardsWon')}
                                 value={stats.awardsWon}
                                 icon={Award}
                             />
 
                             <StatsCard
-                                label="Pending Submissions"
+                                label={t('participant.participantDashboard.pendingSubmissions')}
                                 value={stats.pendingSubmissions}
                                 icon={FileText}
                             />
@@ -113,8 +116,7 @@ function ParticipantDashboard() {
 
                         {/* Upcoming Deadlines */}
                         <h3 className="font-semibold text-lg mb-4">
-                            Upcoming Deadlines
-                        </h3>
+                            {t('participant.participantDashboard.upcomingDeadlines')}</h3>
 
                         <Card className="mb-8">
                             <CardContent className="py-4">
@@ -139,16 +141,14 @@ function ParticipantDashboard() {
                                     </div>
                                 ) : (
                                     <p className="text-muted-foreground">
-                                        No upcoming deadlines.
-                                    </p>
+                                        {t('participant.participantDashboard.noUpcomingDeadlines')}</p>
                                 )}
                             </CardContent>
                         </Card>
 
                         {/* Recent Submissions */}
                         <h3 className="font-semibold text-lg mb-4">
-                            Recent Submissions
-                        </h3>
+                            {t('participant.participantDashboard.recentSubmissions')}</h3>
 
                         <Card className="mb-8">
                             <CardContent className="py-4">
@@ -168,30 +168,25 @@ function ParticipantDashboard() {
                                                         </p>
 
                                                         <p className="text-sm text-muted-foreground">
-                                                            Submitted
-                                                            Successfully
-                                                        </p>
+                                                            {t('participant.participantDashboard.submittedSuccessfully')}</p>
                                                     </div>
 
                                                     <Badge>
-                                                        Submitted
-                                                    </Badge>
+                                                        {t('participant.participantDashboard.submitted')}</Badge>
                                                 </div>
                                             )
                                         )}
                                     </div>
                                 ) : (
                                     <p className="text-muted-foreground">
-                                        No submissions yet.
-                                    </p>
+                                        {t('participant.participantDashboard.noSubmissionsYet')}</p>
                                 )}
                             </CardContent>
                         </Card>
 
                         {/* Active Competitions */}
                         <h3 className="font-semibold text-lg mb-4">
-                            Active Competitions
-                        </h3>
+                            {t('home.heroBadge')}</h3>
 
                         {activeCompetitions.length > 0 ? (
                             <div className="space-y-3">
@@ -232,7 +227,7 @@ function ParticipantDashboard() {
                                                     </p>
 
                                                     <p className="text-xs text-muted-foreground mt-1">
-                                                        Status: {comp.status}
+                                                        {t('participant.participantDashboard.status')}{comp.status}
                                                     </p>
                                                 </div>
                                             </div>
@@ -263,9 +258,7 @@ function ParticipantDashboard() {
                         ) : (
                             <Card>
                                 <CardContent className="py-8 text-center text-muted-foreground">
-                                    You are not currently participating in any
-                                    active competitions.
-                                </CardContent>
+                                    {t('participant.participantDashboard.youAreNotCurrentlyParticipating')}</CardContent>
                             </Card>
                         )}
                     </div>

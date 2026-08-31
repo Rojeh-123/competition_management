@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, usePage } from "@inertiajs/react";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader, Navbar, Footer, DashboardSidebar } from "@/components/layout";
@@ -13,12 +14,14 @@ interface Score {
 }
 
 function JudgeHistoryPage() {
+  const { t } = useTranslation();
+
   const { scores } = usePage().props as unknown as {
       scores: Score[];
   };
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Evaluation History – Completed Reviews" />
+            <Head title={t('judge.judgeHistory.evaluationHistoryCompletedReviews')} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -27,8 +30,8 @@ function JudgeHistoryPage() {
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                         <PageHeader
-                            title="Evaluation History"
-                            description="Your completed evaluation records"
+                            title={t('sidebar.evaluationHistory')}
+                            description={t('judge.judgeHistory.yourCompletedEvaluationRecords')}
                         />
 
                         <div className="overflow-x-auto border rounded-lg">
@@ -36,24 +39,20 @@ function JudgeHistoryPage() {
                                 <thead className="bg-muted">
                                     <tr>
                                         <th className="text-left px-4 py-3 font-medium">
-                                            Entry ID
-                                        </th>
+                                            {t('judge.judgeHistory.entryId')}</th>
 
                                         <th className="text-left px-4 py-3 font-medium">
-                                            Competition
-                                        </th>
+                                            {t('judge.judgeHistory.competition')}</th>
 
                                         <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">
-                                            Score Given
-                                        </th>
+                                            {t('judge.judgeHistory.scoreGiven')}</th>
 
                                         <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
                                             Date
                                         </th>
 
                                         <th className="text-left px-4 py-3 font-medium">
-                                            Status
-                                        </th>
+                                            {t('common.status')}</th>
                                     </tr>
                                 </thead>
 
@@ -64,8 +63,7 @@ function JudgeHistoryPage() {
                                             className="border-t hover:bg-muted/50"
                                         >
                                             <td className="px-4 py-3 font-mono text-muted-foreground whitespace-nowrap">
-                                                #SUB-
-                                                {String(
+                                                {t('judge.judgeHistory.sub')}{String(
                                                     score.submissionId
                                                 ).padStart(3, "0")}
                                             </td>
@@ -86,12 +84,10 @@ function JudgeHistoryPage() {
                                             <td className="px-4 py-3 whitespace-nowrap">
                                                 {score.status === 'Locked' ? (
                                                     <Badge className="bg-emerald-100 text-emerald-700 border-0 text-xs">
-                                                        Locked
-                                                    </Badge>
+                                                        {t('judge.judgeHistory.locked')}</Badge>
                                                 ) : (
                                                     <Badge className="bg-red-100 text-red-700 border-0 text-xs">
-                                                        In Draft
-                                                    </Badge>
+                                                        {t('judge.judgeHistory.inDraft')}</Badge>
                                                 )}
                                             </td>
                                         </tr>

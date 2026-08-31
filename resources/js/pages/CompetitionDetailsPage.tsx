@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, useForm, usePage } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import { Button } from '@/components/ui/button';
@@ -154,6 +155,8 @@ type PageProps = {
 };
 
 function ManageCompetitionDetailsPage() {
+    const { t } = useTranslation();
+
     const { user, competition, isJoined, attempt } =
         usePage<PageProps>().props;
 
@@ -169,7 +172,7 @@ function ManageCompetitionDetailsPage() {
     if (!competition) {
         return (
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-                <p>Competition not found.</p>
+                <p>{t('competitionDetails.competitionNotFound')}</p>
 
                 <Button
                     variant="ghost"
@@ -179,8 +182,7 @@ function ManageCompetitionDetailsPage() {
                     }
                 >
                     <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Competitions
-                </Button>
+                    {t('competitionDetails.backToCompetitions')}</Button>
             </div>
         );
     }
@@ -197,7 +199,7 @@ function ManageCompetitionDetailsPage() {
         const target = new Date(date).getTime();
         const diff = target - now;
 
-        if (diff <= 0) return "Expired";
+        if (diff <= 0) return t('common.expired');
 
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
@@ -315,8 +317,7 @@ function ManageCompetitionDetailsPage() {
                             className="mb-4 cursor-pointer"
                         >
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Back to Competitions
-                        </Button>
+                            {t('competitionDetails.backToCompetitions')}</Button>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -350,35 +351,28 @@ function ManageCompetitionDetailsPage() {
                                         <TabsList className="inline-flex w-auto min-w-full justify-start">
 
                                             <TabsTrigger value="overview">
-                                                Overview
-                                            </TabsTrigger>
+                                                {t('competitionDetails.overview')}</TabsTrigger>
 
                                             <TabsTrigger value="rules">
-                                                Rules & Guidelines
-                                            </TabsTrigger>
+                                                {t('competitionDetails.rulesGuidelines')}</TabsTrigger>
 
                                             <TabsTrigger value="judging">
-                                                Judging Criteria
-                                            </TabsTrigger>
+                                                {t('competitionDetails.judgingCriteria')}</TabsTrigger>
 
                                             <TabsTrigger value="prizes">
-                                                Prizes
-                                            </TabsTrigger>
+                                                {t('competitionDetails.prizes')}</TabsTrigger>
 
                                             <TabsTrigger value="timeline">
-                                                Timeline
-                                            </TabsTrigger>
+                                                {t('competitionDetails.timeline')}</TabsTrigger>
 
                                             {isWinnersAnnounced && (
                                                 <TabsTrigger value="winners">
-                                                    Winners
-                                                </TabsTrigger>
+                                                    {t('nav.winners')}</TabsTrigger>
                                             )}
 
                                             {competition.has_question_bank && (
                                                 <TabsTrigger value="question-bank">
-                                                    Question Bank
-                                                </TabsTrigger>
+                                                    {t('competitionDetails.questionBank')}</TabsTrigger>
                                             )}
 
                                         </TabsList>
@@ -402,29 +396,25 @@ function ManageCompetitionDetailsPage() {
                                                     <div className="flex items-center gap-2 text-sm">
                                                         <Users className="h-4 w-4 text-muted-foreground" />
                                                         <span>
-                                                            {competition.participants_count} participants
-                                                        </span>
+                                                            {competition.participants_count} {t('common.participants')}</span>
                                                     </div>
 
                                                     <div className="flex items-center gap-2 text-sm">
                                                         <FileText className="h-4 w-4 text-muted-foreground" />
                                                         <span>
-                                                            {competition.submissions_count} submissions
-                                                        </span>
+                                                            {competition.submissions_count} {t('sidebar.submissions')}</span>
                                                     </div>
 
                                                     <div className="flex items-center gap-2 text-sm">
                                                         <Award className="h-4 w-4 text-muted-foreground" />
                                                         <span>
-                                                            {competition.number_of_winners} winners
-                                                        </span>
+                                                            {competition.number_of_winners} {t('nav.winners')}</span>
                                                     </div>
 
                                                     <div className="flex items-center gap-2 text-sm">
                                                         <Trophy className="h-4 w-4 text-muted-foreground" />
                                                         <span>
-                                                            Certificates & Prizes
-                                                        </span>
+                                                            {t('competitionDetails.certificatesPrizes')}</span>
                                                     </div>
 
                                                 </div>
@@ -449,15 +439,13 @@ function ManageCompetitionDetailsPage() {
                                                 <div className="mt-6 p-4 bg-muted rounded-lg">
 
                                                     <p className="text-sm font-medium mb-2">
-                                                        Submission Requirements
-                                                    </p>
+                                                        {t('competitionDetails.submissionRequirements')}</p>
 
                                                     <p className="text-sm text-muted-foreground">
-                                                        Max file size: {competition.max_file_size_mb}MB
-                                                    </p>
+                                                        {t('competitionDetails.maxFileSize')}{competition.max_file_size_mb}{t('competitionDetails.mb')}</p>
 
                                                     <p className="text-sm text-muted-foreground">
-                                                        Allowed types: {competition.allowed_file_types}
+                                                        {t('competitionDetails.allowedTypes')}{competition.allowed_file_types}
                                                     </p>
 
                                                 </div>
@@ -497,8 +485,7 @@ function ManageCompetitionDetailsPage() {
                                                                     </div>
 
                                                                     <Badge>
-                                                                        {criterion.max_score} pts
-                                                                    </Badge>
+                                                                        {criterion.max_score} {t('competitionDetails.pts')}</Badge>
 
                                                                 </div>
 
@@ -511,8 +498,7 @@ function ManageCompetitionDetailsPage() {
                                                 ) : (
 
                                                     <p className="text-muted-foreground">
-                                                        No judging criteria have been added for this competition.
-                                                    </p>
+                                                        {t('competitionDetails.noJudgingCriteriaHaveBeen')}</p>
 
                                                 )}
 
@@ -523,8 +509,7 @@ function ManageCompetitionDetailsPage() {
                                                             onClick={() => setIsCriteriaModalOpen(true)}
                                                         >
                                                             <Plus className="h-4 w-4 mr-2" />
-                                                            Add Judging Criteria
-                                                        </Button>
+                                                            {t('competitionDetails.addJudgingCriteria')}</Button>
                                                     </div>
                                                 )}
 
@@ -559,8 +544,7 @@ function ManageCompetitionDetailsPage() {
 
                                                                 <div>
                                                                     <p className="font-semibold">
-                                                                        {item.place} Place
-                                                                    </p>
+                                                                        {item.place} {t('competitionDetails.place')}</p>
 
                                                                     <p className="text-sm text-muted-foreground">
                                                                         {item.prize}
@@ -590,17 +574,17 @@ function ManageCompetitionDetailsPage() {
 
                                                     {[
                                                         {
-                                                            label: "Competition Starts",
+                                                            label: t('competitionDetails.timelineStarts'),
                                                             date: competition.start_date,
                                                             icon: Calendar,
                                                         },
                                                         {
-                                                            label: "Submission Deadline",
+                                                            label: t('competitionDetails.timelineDeadline'),
                                                             date: competition.submission_deadline,
                                                             icon: Clock,
                                                         },
                                                         {
-                                                            label: "Competition Ends",
+                                                            label: t('competitionDetails.timelineEnds'),
                                                             date: competition.end_date,
                                                             icon: Trophy,
                                                         },
@@ -669,8 +653,7 @@ function ManageCompetitionDetailsPage() {
                                                             {/* Top Winners */}
                                                             <div className="mb-10">
                                                                 <h4 className="mb-5 text-xl font-semibold">
-                                                                    Top Winners
-                                                                </h4>
+                                                                    {t('winners.topWinners')}</h4>
 
                                                                 <div className="space-y-3">
                                                                     {[...competition.winners]
@@ -730,8 +713,7 @@ function ManageCompetitionDetailsPage() {
                                                             {/* Full Leaderboard */}
                                                             <div>
                                                                 <h4 className="mb-5 text-xl font-semibold">
-                                                                    Full Leaderboard
-                                                                </h4>
+                                                                    {t('winners.fullLeaderboard')}</h4>
 
                                                                 <div className="space-y-2">
                                                                     {[...competition.winners]
@@ -780,8 +762,8 @@ function ManageCompetitionDetailsPage() {
                                                     ) : (
                                                         <div className="p-8 text-center text-muted-foreground rounded-lg border border-dashed">
                                                             <Trophy className="h-10 w-10 mx-auto text-amber-500/50 mb-2" />
-                                                            <p className="font-medium text-foreground">Results Published</p>
-                                                            <p className="text-sm mt-1">Winners have been officially announced for this competition.</p>
+                                                            <p className="font-medium text-foreground">{t('status.results_published')}</p>
+                                                            <p className="text-sm mt-1">{t('competitionDetails.winnersHaveBeenOfficiallyAnnounced')}</p>
                                                         </div>
                                                     )}
                                                 </CardContent>
@@ -798,8 +780,7 @@ function ManageCompetitionDetailsPage() {
                                                 <Card>
                                                     <CardHeader>
                                                         <CardTitle>
-                                                            Question Bank Management
-                                                        </CardTitle>
+                                                            {t('competitionDetails.questionBankManagement')}</CardTitle>
                                                     </CardHeader>
 
                                                     <CardContent>
@@ -816,19 +797,14 @@ function ManageCompetitionDetailsPage() {
                                                                         )
                                                                     }
                                                                 >
-                                                                    Manage Question Bank
-                                                                </Button>
+                                                                    {t('competitionDetails.manageQuestionBank')}</Button>
                                                             ) : (
                                                                 <div className="rounded-lg border border-muted bg-muted/30 p-4">
                                                                     <div className="mb-1 font-medium">
-                                                                        Question Bank Locked
-                                                                    </div>
+                                                                        {t('competitionDetails.questionBankLocked')}</div>
 
                                                                     <p className="text-sm text-muted-foreground">
-                                                                        The question bank can only be managed before the competition
-                                                                        starts. Once the competition begins, you will no longer be able
-                                                                        to add, edit, or remove questions.
-                                                                    </p>
+                                                                        {t('competitionDetails.theQuestionBankCanOnly')}</p>
                                                                 </div>
                                                             )
                                                         }
@@ -846,8 +822,7 @@ function ManageCompetitionDetailsPage() {
                                                 <Card>
                                                     <CardHeader>
                                                         <CardTitle>
-                                                            Competition Exam
-                                                        </CardTitle>
+                                                            {t('competitionDetails.competitionExam')}</CardTitle>
                                                     </CardHeader>
 
                                                     <CardContent className="space-y-6">
@@ -856,8 +831,7 @@ function ManageCompetitionDetailsPage() {
 
                                                             <div className="rounded-lg border p-4">
                                                                 <p className="text-sm text-muted-foreground">
-                                                                    Number of Questions
-                                                                </p>
+                                                                    {t('competitionDetails.numberOfQuestions')}</p>
 
                                                                 <p className="text-2xl font-bold">
                                                                     {
@@ -870,8 +844,7 @@ function ManageCompetitionDetailsPage() {
 
                                                             <div className="rounded-lg border p-4">
                                                                 <p className="text-sm text-muted-foreground">
-                                                                    Duration
-                                                                </p>
+                                                                    {t('competitionDetails.duration')}</p>
 
                                                                 <p className="text-2xl font-bold">
                                                                     {
@@ -879,43 +852,38 @@ function ManageCompetitionDetailsPage() {
                                                                             .question_bank
                                                                             ?.duration_minutes
                                                                     }{" "}
-                                                                    minutes
-                                                                </p>
+                                                                    {t('competitionDetails.minutes')}</p>
                                                             </div>
 
                                                         </div>
-                                                    {competition.status === "open" ? (
-                                                        attempt ? (
+                                                        {competition.status === "open" ? (
+                                                            attempt ? (
+                                                                <div className="rounded-lg border p-5">
+                                                                    <p className="font-semibold">
+                                                                        {t('competitionDetails.youHaveAlreadyAttemptedThis')}</p>
+
+                                                                    <p className="mt-1 text-sm text-muted-foreground">
+                                                                        {t('competitionDetails.youCannotAttemptThisExam')}</p>
+
+                                                                    {attempt.score !== null && (
+                                                                        <p className="mt-4 text-lg font-bold">
+                                                                            {t('competitionDetails.score')}{attempt.score} / {attempt.max_score}
+                                                                        </p>
+                                                                    )}
+                                                                </div>
+                                                            ) : (
+                                                                <Button
+                                                                    onClick={startExam}
+                                                                    className="cursor-pointer"
+                                                                >
+                                                                    {t('competitionDetails.startExam')}</Button>
+                                                            )
+                                                        ) : (
                                                             <div className="rounded-lg border p-5">
                                                                 <p className="font-semibold">
-                                                                    You have already attempted this exam.
-                                                                </p>
-
-                                                                <p className="mt-1 text-sm text-muted-foreground">
-                                                                    You cannot attempt this exam again.
-                                                                </p>
-
-                                                                {attempt.score !== null && (
-                                                                    <p className="mt-4 text-lg font-bold">
-                                                                        Score: {attempt.score} / {attempt.max_score}
-                                                                    </p>
-                                                                )}
+                                                                    {t('competitionDetails.thisExamIsNotCurrently')}</p>
                                                             </div>
-                                                        ) : (
-                                                            <Button
-                                                                onClick={startExam}
-                                                                className="cursor-pointer"
-                                                            >
-                                                                Start Exam
-                                                            </Button>
-                                                        )
-                                                    ) : (
-                                                        <div className="rounded-lg border p-5">
-                                                            <p className="font-semibold">
-                                                                This exam is not currently available.
-                                                            </p>
-                                                        </div>
-                                                    )}
+                                                        )}
 
                                                     </CardContent>
                                                 </Card>
@@ -934,8 +902,7 @@ function ManageCompetitionDetailsPage() {
                                     <CardContent className="pt-6 text-center">
 
                                         <p className="text-sm text-muted-foreground mb-2">
-                                            Submission Closes In
-                                        </p>
+                                            {t('competitionDetails.submissionClosesIn')}</p>
 
                                         <CountdownTimer
                                             deadline={
@@ -962,8 +929,7 @@ function ManageCompetitionDetailsPage() {
                                                                 }
                                                             >
                                                                 <Pencil className="mr-2 h-4 w-4" />
-                                                                Update Competition
-                                                            </Button>
+                                                                {t('competitionDetails.updateCompetition')}</Button>
                                                         )}
 
                                                     <Button
@@ -972,7 +938,7 @@ function ManageCompetitionDetailsPage() {
                                                         onClick={() => {
                                                             if (
                                                                 confirm(
-                                                                    "Are you sure you want to delete this competition? This action cannot be undone."
+                                                                    t('competitionDetails.areYouSureYouWant')
                                                                 )
                                                             ) {
                                                                 router.delete(
@@ -985,8 +951,7 @@ function ManageCompetitionDetailsPage() {
                                                         }}
                                                     >
                                                         <Trash2 className="mr-2 h-4 w-4" />
-                                                        Delete Competition
-                                                    </Button>
+                                                        {t('competitionDetails.deleteCompetition')}</Button>
                                                 </>
                                             )}
 
@@ -1013,15 +978,13 @@ function ManageCompetitionDetailsPage() {
                                                             )
                                                         }
                                                     >
-                                                        Join Competition
-                                                    </Button>
+                                                        {t('competitionDetails.joinCompetition')}</Button>
                                                 )}
 
                                         </div>
 
                                         <p className="text-xs text-muted-foreground mt-2">
-                                            Free to participate
-                                        </p>
+                                            {t('competitionDetails.freeToParticipate')}</p>
 
                                     </CardContent>
                                 </Card>
@@ -1030,26 +993,22 @@ function ManageCompetitionDetailsPage() {
                                 <Card>
                                     <CardHeader className="pb-3">
                                         <CardTitle className="text-sm">
-                                            Quick Info
-                                        </CardTitle>
+                                            {t('competitionDetails.quickInfo')}</CardTitle>
                                     </CardHeader>
 
                                     <CardContent className="space-y-3 text-sm">
 
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">
-                                                Max File Size
-                                            </span>
+                                                {t('competitionDetails.maxFileSize')}</span>
 
                                             <span className="font-medium">
-                                                {competition.max_file_size_mb} MB
-                                            </span>
+                                                {competition.max_file_size_mb} {t('competitionDetails.mb')}</span>
                                         </div>
 
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">
-                                                File Types
-                                            </span>
+                                                {t('competitionDetails.fileTypes')}</span>
 
                                             <span className="font-medium">
                                                 {competition.allowed_file_types}
@@ -1058,8 +1017,7 @@ function ManageCompetitionDetailsPage() {
 
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">
-                                                Winners
-                                            </span>
+                                                {t('nav.winners')}</span>
 
                                             <span className="font-medium">
                                                 {competition.number_of_winners}
@@ -1068,8 +1026,7 @@ function ManageCompetitionDetailsPage() {
 
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">
-                                                Visibility
-                                            </span>
+                                                {t('competitionDetails.visibility')}</span>
 
                                             <span className="font-medium capitalize">
                                                 {competition.visibility}
@@ -1093,8 +1050,7 @@ function ManageCompetitionDetailsPage() {
 
                         <DialogHeader>
                             <DialogTitle>
-                                Add Judging Criterion
-                            </DialogTitle>
+                                {t('competitionDetails.addJudgingCriterion')}</DialogTitle>
                         </DialogHeader>
 
                         <form
@@ -1112,7 +1068,7 @@ function ManageCompetitionDetailsPage() {
                                             e.target.value
                                         )
                                     }
-                                    placeholder="Problem Solving"
+                                    placeholder={t('competitionDetails.problemSolving')}
                                 />
 
                                 {errors.name && (
@@ -1123,7 +1079,7 @@ function ManageCompetitionDetailsPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label>Maximum Score</Label>
+                                <Label>{t('competitionDetails.maximumScore')}</Label>
 
                                 <Input
                                     type="number"
@@ -1154,16 +1110,15 @@ function ManageCompetitionDetailsPage() {
                                         setIsCriteriaModalOpen(false)
                                     }
                                 >
-                                    Cancel
-                                </Button>
+                                    {t('competitionDetails.cancel')}</Button>
 
                                 <Button
                                     type="submit"
                                     disabled={processing}
                                 >
                                     {processing
-                                        ? "Adding..."
-                                        : "Add Criterion"}
+                                        ? t('competitionDetails.addingCriterion')
+                                        : t('competitionDetails.addCriterion')}
                                 </Button>
 
                             </DialogFooter>

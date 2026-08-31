@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import React from "react";
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { route } from "ziggy-js";
@@ -58,6 +59,8 @@ type PageProps = {
 };
 
 export default function SubmitEntryPage() {
+  const { t } = useTranslation();
+
     const { competition, errors, teamId } = usePage<PageProps>().props;
     const { data, setData, post, processing } =
         useForm<SubmissionForm>({
@@ -82,7 +85,7 @@ export default function SubmitEntryPage() {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Head title="Submit Entry – Upload Your Submission" />
+            <Head title={t('participant.submitEntry.submitEntryUploadYourSubmission')} />
             <Navbar />
 
             <div className="flex flex-1">
@@ -91,8 +94,8 @@ export default function SubmitEntryPage() {
                 <main className="flex-1 overflow-auto">
                     <div className="p-6">
                         <PageHeader
-                            title="Submit Entry"
-                            description="Upload your submission for the competition"
+                            title={t('participant.submitEntry.submitEntry')}
+                            description={t('participant.submitEntry.uploadYourSubmissionForThe')}
                         />
 
                         <Card className="w-full">
@@ -100,13 +103,12 @@ export default function SubmitEntryPage() {
                                 <form onSubmit={submit} className="space-y-6">
                                     <div>
                                         <Label htmlFor="title">
-                                            Entry Title
-                                        </Label>
+                                            {t('participant.submitEntry.entryTitle')}</Label>
 
                                         <Input
                                             id="title"
                                             className="mt-1.5"
-                                            placeholder="Optimized Graph Index Core Implementation"
+                                            placeholder={t('participant.submitEntry.optimizedGraphIndexCoreImplementation')}
                                             value={data.title}
                                             onChange={(e) =>
                                                 setData(
@@ -125,13 +127,12 @@ export default function SubmitEntryPage() {
 
                                     <div>
                                         <Label htmlFor="description">
-                                            Description
-                                        </Label>
+                                            {t('participant.submitEntry.description')}</Label>
 
                                         <Textarea
                                             id="description"
                                             className="mt-1.5 min-h-[120px]"
-                                            placeholder="Describe your submission..."
+                                            placeholder={t('participant.submitEntry.describeYourSubmission')}
                                             value={data.description}
                                             onChange={(e) =>
                                                 setData(
@@ -150,8 +151,7 @@ export default function SubmitEntryPage() {
 
                                     <div>
                                         <Label className="mb-3 block">
-                                            Upload Files
-                                        </Label>
+                                            {t('participant.submitEntry.uploadFiles')}</Label>
 
                                         <FileUpload
                                             accept={(competition.allowed_file_types ?? "")
@@ -185,8 +185,7 @@ export default function SubmitEntryPage() {
                                         />
 
                                         <Label htmlFor="original" className="cursor-pointer font-normal">
-                                            I verify this work is original and created by me.
-                                        </Label>
+                                            {t('participant.submitEntry.iVerifyThisWorkIs')}</Label>
                                     </div>
 
                                     {errors.original && (
@@ -203,8 +202,7 @@ export default function SubmitEntryPage() {
                                                 window.history.back()
                                             }
                                         >
-                                            Cancel
-                                        </Button>
+                                            {t('participant.submitEntry.cancel')}</Button>
 
                                         <Button
                                             type="submit"

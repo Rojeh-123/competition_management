@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState, useMemo } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import { route } from "ziggy-js";
@@ -46,6 +47,8 @@ type Competition = {
 };
 
 function AssignJudgePage() {
+  const { t } = useTranslation();
+
   const { judge, competitions } = usePage<{
       judge: User;
       competitions: Competition[];
@@ -98,7 +101,7 @@ function AssignJudgePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Assign Judge – Competition Assignments" />
+      <Head title={t('admin.assignJudge.assignJudgeCompetitionAssignments')} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -107,8 +110,8 @@ function AssignJudgePage() {
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
-              title="Assign Judge"
-              description="Assign this judge to one or more competitions."
+              title={t('admin.assignJudge.assignJudge')}
+              description={t('admin.assignJudge.assignThisJudgeToOne')}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
@@ -153,7 +156,7 @@ function AssignJudgePage() {
 
                   <Input
                     className="pl-10"
-                    placeholder="Search competitions..."
+                    placeholder={t('common.searchCompetitions')}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                   />
@@ -205,8 +208,8 @@ function AssignJudgePage() {
                           </div>
 
                           <div className="text-right text-sm text-muted-foreground">
-                            <div>{competition.submissions} submissions</div>
-                            <div>{competition.assignedJudges} judges</div>
+                            <div>{competition.submissions} {t('sidebar.submissions')}</div>
+                            <div>{competition.assignedJudges} {t('admin.assignJudge.judges')}</div>
                           </div>
                         </CardContent>
                       </Card>
@@ -220,8 +223,7 @@ function AssignJudgePage() {
                 <Card className="sticky top-6">
                   <CardContent className="space-y-5 p-5">
                     <h3 className="font-semibold">
-                      Assignment Summary
-                    </h3>
+                      {t('admin.assignJudge.assignmentSummary')}</h3>
 
                     <div className="flex items-center gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -232,16 +234,14 @@ function AssignJudgePage() {
                         </div>
 
                         <div className="text-sm text-muted-foreground">
-                          Selected Competitions
-                        </div>
+                          {t('admin.assignJudge.selectedCompetitions')}</div>
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       {selected.length === 0 ? (
                         <p className="text-sm text-muted-foreground">
-                          No competitions selected.
-                        </p>
+                          {t('admin.assignJudge.noCompetitionsSelected')}</p>
                       ) : (
                         selected.map((id) => {
                           const competition = competitions.find(
@@ -265,8 +265,7 @@ function AssignJudgePage() {
                         <Users className="h-4 w-4" />
 
                         <span className="text-sm font-medium">
-                          Estimated Workload
-                        </span>
+                          {t('admin.assignJudge.estimatedWorkload')}</span>
                       </div>
 
                       <p className="text-2xl font-bold mt-2">
@@ -274,8 +273,7 @@ function AssignJudgePage() {
                       </p>
 
                       <p className="text-xs text-muted-foreground">
-                        Approximate submissions to review
-                      </p>
+                        {t('admin.assignJudge.approximateSubmissionsToReview')}</p>
                     </div>
 
                     <div className="flex gap-2 pt-2">
@@ -283,16 +281,14 @@ function AssignJudgePage() {
                           variant="outline"
                           onClick={() => router.visit(route("admin.judges"))}
                       >
-                          Cancel
-                      </Button>
+                          {t('admin.assignJudge.cancel')}</Button>
 
                       <Button
                         className="flex-1"
                         disabled={selected.length === 0}
                         onClick={handleAssign}
                       >
-                        Assign Judge
-                      </Button>
+                        {t('admin.assignJudge.assignJudge')}</Button>
                     </div>
                   </CardContent>
                 </Card>

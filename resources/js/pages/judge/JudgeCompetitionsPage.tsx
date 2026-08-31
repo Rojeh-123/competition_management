@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { PageHeader, Navbar, Footer, DashboardSidebar } from "@/components/layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,11 +22,13 @@ interface PageProps {
 }
 
 function JudgeCompetitionsPage() {
+  const { t } = useTranslation();
+
     const { competitions } = usePage<PageProps>().props;
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Assigned Competitions – Evaluation Tasks" />
+            <Head title={t('judge.judgeCompetitions.assignedCompetitionsEvaluationTasks')} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -34,8 +37,8 @@ function JudgeCompetitionsPage() {
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                         <PageHeader
-                            title="Assigned Competitions"
-                            description="Competitions assigned to you for evaluation"
+                            title={t('sidebar.assignedCompetitions')}
+                            description={t('judge.judgeCompetitions.competitionsAssignedToYouFor')}
                         />
 
                         <div className="overflow-x-auto border rounded-lg">
@@ -43,24 +46,19 @@ function JudgeCompetitionsPage() {
                                 <thead className="bg-muted">
                                     <tr>
                                         <th className="px-4 py-3 text-left font-medium">
-                                            Competition
-                                        </th>
+                                            {t('judge.judgeCompetitions.competition')}</th>
 
                                         <th className="hidden px-4 py-3 text-left font-medium sm:table-cell">
-                                            Category
-                                        </th>
+                                            {t('common.category')}</th>
 
                                         <th className="hidden px-4 py-3 text-left font-medium md:table-cell">
-                                            Deadline
-                                        </th>
+                                            {t('judge.judgeCompetitions.deadline')}</th>
 
                                         <th className="px-4 py-3 text-left font-medium">
-                                            Status
-                                        </th>
+                                            {t('common.status')}</th>
 
                                         <th className="px-4 py-3 text-left font-medium">
-                                            Action
-                                        </th>
+                                            {t('judge.judgeCompetitions.action')}</th>
                                     </tr>
                                 </thead>
 
@@ -113,12 +111,10 @@ function JudgeCompetitionsPage() {
                                                             )
                                                         }
                                                     >
-                                                        View Queue
-                                                    </Button>
+                                                        {t('judge.judgeCompetitions.viewQueue')}</Button>
                                                 ) : (
                                                     <p className="text-muted-foreground text-xs sm:text-sm">
-                                                        Not in judging stage
-                                                    </p>
+                                                        {t('judge.judgeCompetitions.notInJudgingStage')}</p>
                                                 )}
                                             </td>
                                         </tr>

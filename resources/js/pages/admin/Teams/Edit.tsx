@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState, useMemo } from "react";
 import { route } from "ziggy-js";
 import { Button } from '@/components/ui/button';
@@ -48,6 +49,8 @@ interface TeamForm {
 }
 
 function TeamsEditPage({ team, competitions, participants }: EditProps) {
+  const { t } = useTranslation();
+
     const { data, setData, put, processing, errors } = useForm<TeamForm>({
         name: team.name,
         competition_id: team.competition_id ? String(team.competition_id) : '',
@@ -81,23 +84,23 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Teams – Edit Team" />
+            <Head title={t('admin.teams.edit.teamsEditTeam')} />
             <Navbar />
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
                 <DashboardSidebar />
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
-                        <PageHeader title="Edit Team" description={`Update details for "${team.name}"`} />
+                        <PageHeader title={t('admin.teams.edit.editTeam')} description={`Update details for "${team.name}"`} />
 
                         <Card>
                             <CardContent className="pt-6">
                                 <form onSubmit={submit} className="space-y-5">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <Label htmlFor="name" className="flex items-center gap-1.5">Team name</Label>
+                                            <Label htmlFor="name" className="flex items-center gap-1.5">{t('admin.teams.edit.teamName')}</Label>
                                             <Input
                                                 id="name"
-                                                placeholder="Team name..."
+                                                placeholder={t('admin.teams.edit.teamName')}
                                                 className="mt-1.5"
                                                 value={data.name}
                                                 onChange={(e) => setData('name', e.target.value)}
@@ -110,14 +113,13 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                                         <div>
                                             <Label className="flex items-center gap-1.5">
                                                 <Trophy className="h-3.5 w-3.5 text-muted-foreground" />
-                                                Competition
-                                            </Label>
+                                                {t('admin.teams.edit.competition')}</Label>
                                             <Select
                                                 value={data.competition_id}
                                                 onValueChange={(value) => setData('competition_id', value)}
                                             >
                                                 <SelectTrigger className="mt-1.5">
-                                                    <SelectValue placeholder="Select competition" />
+                                                    <SelectValue placeholder={t('admin.teams.edit.selectCompetition')} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {competitions.map((c) => (
@@ -136,14 +138,13 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                                     <div>
                                         <Label className="flex items-center gap-1.5">
                                             <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                                            Members (participants)
-                                        </Label>
+                                            {t('admin.teams.edit.membersParticipants')}</Label>
                                         <div className="relative mt-1.5">
                                             <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
                                             <Input
                                                 value={memberSearch}
                                                 onChange={(e) => setMemberSearch(e.target.value)}
-                                                placeholder="Search participants..."
+                                                placeholder={t('admin.teams.edit.searchParticipants')}
                                                 className="pl-8 h-8 text-sm"
                                             />
                                         </div>
@@ -166,8 +167,7 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                                             ))}
                                             {filteredParticipants.length === 0 && (
                                                 <p className="col-span-full text-sm text-muted-foreground text-center py-2">
-                                                    No participants found.
-                                                </p>
+                                                    {t('admin.teams.edit.noParticipantsFound')}</p>
                                             )}
                                         </div>
                                     </div>

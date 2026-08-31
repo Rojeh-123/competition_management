@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, Link, router } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,8 @@ interface MessageShowProps {
 }
 
 function MessageShow({ message }: MessageShowProps) {
+  const { t } = useTranslation();
+
     const handleDelete = () => {
         router.delete(route("admin.messages.destroy", message.id));
     };
@@ -45,8 +48,7 @@ function MessageShow({ message }: MessageShowProps) {
                                 href={route("admin.messages.index")}
                                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
                             >
-                                <ArrowLeft className="h-4 w-4" /> Back to messages
-                            </Link>
+                                <ArrowLeft className="h-4 w-4" /> {t('admin.messages.show.backToMessages')}</Link>
 
                             <PageHeader title={message.subject} />
 
@@ -65,14 +67,14 @@ function MessageShow({ message }: MessageShowProps) {
                                     </div>
 
                                     <div>
-                                        <p className="text-sm font-medium mb-1.5">Message</p>
+                                        <p className="text-sm font-medium mb-1.5">{t('contact.message')}</p>
                                         <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                                             {message.message}
                                         </p>
                                     </div>
 
                                     <p className="text-xs text-muted-foreground">
-                                        Received {new Date(message.created_at).toLocaleString()}
+                                        {t('admin.messages.show.received')}{new Date(message.created_at).toLocaleString()}
                                     </p>
 
                                     <div className="flex gap-2 pt-2">

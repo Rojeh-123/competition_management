@@ -193,7 +193,7 @@ export function Navbar() {
               <div>
                 <div className="flex items-center gap-2 font-bold text-lg mb-6 pt-2">
                   <Trophy className="h-6 w-6 text-amber-500" />
-                  <span>CompeteHub</span>
+                  <span>{t('layout.index.competehub')}</span>
                 </div>
                 <nav className="flex flex-col gap-1.5">
                   {publicLinks.map(link => (
@@ -241,7 +241,7 @@ export function Navbar() {
           </Sheet>
           <Link href={route('home')} className="flex items-center gap-2 font-bold text-xl">
             <Trophy className="h-6 w-6 text-amber-500 shrink-0" />
-            <span className="inline-block">CompeteHub</span>
+            <span className="inline-block">{t('layout.index.competehub')}</span>
           </Link>
         </div>
 
@@ -513,7 +513,7 @@ export function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
                 <Trophy className="h-4 w-4 text-primary" />
               </div>
-              <span className="font-bold text-lg tracking-tight">CompeteHub</span>
+              <span className="font-bold text-lg tracking-tight">{t('layout.index.competehub')}</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-[260px]">
               {t('footer.tagline')}
@@ -801,8 +801,7 @@ export function FileUpload({
                         {t('common.dropFiles')}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                        {t('common.accepted')}: {accept} (Max {maxSize} MB)
-                    </p>
+                        {t('common.accepted')}: {accept} {t('layout.index.max')}{maxSize} {t('layout.index.mb')}</p>
                 </>
             ) : (
                 <>
@@ -821,8 +820,7 @@ export function FileUpload({
                                 </span>
 
                                 <span className="text-muted-foreground">
-                                    {(file.size / 1024 / 1024).toFixed(2)} MB
-                                </span>
+                                    {(file.size / 1024 / 1024).toFixed(2)} {t('layout.index.mb')}</span>
                             </div>
                         ))}
                     </div>

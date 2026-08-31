@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { PageHeader, Navbar, Footer, DashboardSidebar } from '@/components/layout';
 import { Button } from '@/components/ui/button';
@@ -43,6 +44,8 @@ interface Props {
 }
 
 function AnnouncementsPage({ announcements }: Props) {
+  const { t } = useTranslation();
+
   const items = announcements.data;
   const [deletingKey, setDeletingKey] = useState<string | null>(null);
 
@@ -73,7 +76,7 @@ function AnnouncementsPage({ announcements }: Props) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Announcements – Platform Updates" />
+      <Head title={t('admin.announcements.announcementsPlatformUpdates')} />
 
       <Navbar />
 
@@ -84,15 +87,14 @@ function AnnouncementsPage({ announcements }: Props) {
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <PageHeader
-                title="Announcements"
-                description="Manage broadcast messages sent to platform users"
+                title={t('sidebar.announcements')}
+                description={t('admin.announcements.manageBroadcastMessagesSentTo')}
               />
 
               <Button asChild className="cursor-pointer">
                 <Link href={route('admin.announcements.create')}>
                   <Plus className="h-4 w-4 mr-2" />
-                  New Announcement
-                </Link>
+                  {t('admin.announcements.newAnnouncement')}</Link>
               </Button>
             </div>
 
@@ -104,17 +106,15 @@ function AnnouncementsPage({ announcements }: Props) {
                   </div>
 
                   <div>
-                    <p className="font-medium">No announcements yet</p>
+                    <p className="font-medium">{t('admin.announcements.noAnnouncementsYet')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Broadcast your first message to get started.
-                    </p>
+                      {t('admin.announcements.broadcastYourFirstMessageTo')}</p>
                   </div>
 
                   <Button asChild className="cursor-pointer mt-2">
                     <Link href={route('admin.announcements.create')}>
                       <Plus className="h-4 w-4 mr-2" />
-                      New Announcement
-                    </Link>
+                      {t('admin.announcements.newAnnouncement')}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -174,8 +174,7 @@ function AnnouncementsPage({ announcements }: Props) {
                             <div className="flex items-center gap-4 pt-1 text-xs text-muted-foreground">
                               <span className="flex items-center gap-1.5">
                                 <Users className="h-3.5 w-3.5" />
-                                {announcement.recipient_count} recipient
-                                {announcement.recipient_count === 1 ? '' : 's'}
+                                {announcement.recipient_count} {t('admin.announcements.recipient')}{announcement.recipient_count === 1 ? '' : 's'}
                               </span>
 
                               <span className="flex items-center gap-1.5">

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { route } from "ziggy-js";
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -54,6 +55,8 @@ interface PageProps {
 }
 
 function TeamShowPage({ team, hasSubmitted }: ShowProps) {
+  const { t } = useTranslation();
+
     const { user } = usePage<PageProps>().props;
     const statusColors: Record<string, string> = {
         upcoming: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
@@ -72,7 +75,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                 <DashboardSidebar />
                 <main className="flex-1 overflow-auto">
                     <div className="p-6 space-y-6">
-                        <PageHeader title={team.name} description="Your team roster and competition entry" />
+                        <PageHeader title={team.name} description={t('participant.teams.show.yourTeamRosterAndCompetition')} />
                         <Card>
                             <CardContent className="p-6">
                                 {team.competition ? (
@@ -82,8 +85,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                             <div className="min-w-0">
                                                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                                                     <Trophy className="h-4 w-4 text-amber-500" />
-                                                    Competing in
-                                                </div>
+                                                    {t('participant.teams.show.competingIn')}</div>
 
                                                 <h2 className="mt-1 text-xl font-semibold">
                                                     {team.competition.title}
@@ -107,8 +109,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                         <div className="grid grid-cols-1 gap-4 border-y py-5 sm:grid-cols-3">
                                             <div>
                                                 <p className="text-xs font-medium text-muted-foreground">
-                                                    Starts
-                                                </p>
+                                                    {t('participant.teams.show.starts')}</p>
                                                 <p className="mt-1 text-sm font-semibold">
                                                     {new Date(
                                                         team.competition.start_date
@@ -118,8 +119,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
 
                                             <div>
                                                 <p className="text-xs font-medium text-muted-foreground">
-                                                    Submission deadline
-                                                </p>
+                                                    {t('participant.teams.show.submissionDeadline')}</p>
                                                 <p className="mt-1 text-sm font-semibold">
                                                     {new Date(
                                                         team.competition.submission_deadline
@@ -129,8 +129,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
 
                                             <div>
                                                 <p className="text-xs font-medium text-muted-foreground">
-                                                    Ends
-                                                </p>
+                                                    {t('participant.teams.show.ends')}</p>
                                                 <p className="mt-1 text-sm font-semibold">
                                                     {new Date(
                                                         team.competition.end_date
@@ -144,8 +143,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                             {team.competition.category?.name && (
                                                 <div>
                                                     <p className="text-xs font-medium text-muted-foreground">
-                                                        Category
-                                                    </p>
+                                                        {t('common.category')}</p>
                                                     <p className="mt-1 text-sm font-semibold">
                                                         {team.competition.category.name}
                                                     </p>
@@ -155,8 +153,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                             {team.competition.prize_description && (
                                                 <div>
                                                     <p className="text-xs font-medium text-muted-foreground">
-                                                        Prize
-                                                    </p>
+                                                        {t('participant.teams.show.prize')}</p>
                                                     <p className="mt-1 text-sm font-semibold">
                                                         {team.competition.prize_description}
                                                     </p>
@@ -165,8 +162,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
 
                                             <div>
                                                 <p className="text-xs font-medium text-muted-foreground">
-                                                    Winners
-                                                </p>
+                                                    {t('nav.winners')}</p>
                                                 <p className="mt-1 text-sm font-semibold">
                                                     {team.competition.number_of_winners}
                                                 </p>
@@ -176,15 +172,14 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                 ) : (
                                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                         <Trophy className="h-4 w-4" />
-                                        Not assigned to a competition yet
-                                    </div>
+                                        {t('participant.teams.show.notAssignedToACompetition')}</div>
                                 )}
                             </CardContent>
                         </Card>
 
                         <div>
                             <h2 className="text-sm font-medium text-muted-foreground mb-3">
-                                Team members ({team.members.length})
+                                {t('participant.teams.show.teamMembers')}{team.members.length})
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {team.members.map((member) => (
@@ -207,7 +202,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                                     <div className="flex items-center gap-2">
                                                         <p className="font-semibold truncate">{member.full_name}</p>
                                                         {member.id === user.id && (
-                                                            <Badge variant="default">You</Badge>
+                                                            <Badge variant="default">{t('participant.teams.show.you')}</Badge>
                                                         )}
                                                     </div>
                                                     <p className="text-sm text-muted-foreground">@{member.username}</p>
@@ -259,9 +254,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                 </Link>
                                 <p className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground">
                                     <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                                    Once any member of this team submits an entry, the team's submission is locked —
-                                    no other member will be able to submit again for this competition.
-                                </p>
+                                    {t('participant.teams.show.onceAnyMemberOfThis')}</p>
                             </CardContent>
                         </Card>
                     </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
 import { route } from 'ziggy-js';
@@ -32,6 +33,8 @@ type PageProps = {
 };
 
 function ManageSubmissionsPage() {
+  const { t } = useTranslation();
+
   const { user, submissions } = usePage<PageProps>().props;
   const [tab, setTab] = useState('pending');
 
@@ -45,7 +48,7 @@ function ManageSubmissionsPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Submissions – Entry Moderation" />
+      <Head title={t('admin.manageSubmissions.submissionsEntryModeration')} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -54,16 +57,16 @@ function ManageSubmissionsPage() {
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
-              title="Manage Submissions"
-              description="Review and moderate submitted entries"
+              title={t('admin.manageSubmissions.manageSubmissions')}
+              description={t('admin.manageSubmissions.reviewAndModerateSubmittedEntries')}
             />
 
             <Tabs value={tab} onValueChange={setTab} className="mb-6">
               <div className="overflow-x-auto pb-1 max-w-full">
                 <TabsList className="inline-flex w-auto min-w-full justify-start">
-                  <TabsTrigger value="pending">Pending</TabsTrigger>
-                  <TabsTrigger value="approved">Approved</TabsTrigger>
-                  <TabsTrigger value="rejected">Rejected</TabsTrigger>
+                  <TabsTrigger value="pending">{t('admin.manageSubmissions.pending')}</TabsTrigger>
+                  <TabsTrigger value="approved">{t('admin.manageSubmissions.approved')}</TabsTrigger>
+                  <TabsTrigger value="rejected">{t('admin.manageSubmissions.rejected')}</TabsTrigger>
                   <TabsTrigger value="all">All</TabsTrigger>
                 </TabsList>
               </div>
@@ -74,15 +77,14 @@ function ManageSubmissionsPage() {
                 <thead className="bg-muted">
                   <tr>
                     <th className="text-left px-4 py-3 font-medium">ID</th>
-                    <th className="text-left px-4 py-3 font-medium">Title</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('admin.manageSubmissions.title')}</th>
                     <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">
-                      Competition
-                    </th>
+                      {t('admin.manageSubmissions.competition')}</th>
                     <th className="text-left px-4 py-3 font-medium hidden xl:table-cell">
                       Participant
                     </th>
-                    <th className="text-left px-4 py-3 font-medium">Status</th>
-                    <th className="text-left px-4 py-3 font-medium">Actions</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('common.status')}</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('admin.manageSubmissions.actions')}</th>
                   </tr>
                 </thead>
 
@@ -94,7 +96,7 @@ function ManageSubmissionsPage() {
                       onClick={() => router.visit(route('admin.submissions.show', sub.id))}
                     >
                       <td className="px-4 py-3 font-mono text-muted-foreground whitespace-nowrap">
-                        #SUB-{String(sub.id).padStart(3, '0')}
+                        {t('admin.manageSubmissions.sub')}{String(sub.id).padStart(3, '0')}
                       </td>
 
                       <td className="px-4 py-3 font-medium min-w-[160px]">
@@ -137,8 +139,7 @@ function ManageSubmissionsPage() {
                             router.visit(route('admin.submissions.show', sub.id));
                           }}
                         >
-                          View
-                        </Button>
+                          {t('admin.manageSubmissions.view')}</Button>
                       </td>
                     </tr>
                   ))}
@@ -148,7 +149,7 @@ function ManageSubmissionsPage() {
 
             {filteredSubmissions.length === 0 && (
               <p className="mt-4 text-sm text-muted-foreground">
-                No submissions match the selected filter for {user.full_name || user.username}.
+                {t('admin.manageSubmissions.noSubmissionsMatchTheSelected')}{user.full_name || user.username}.
               </p>
             )}
           </div>

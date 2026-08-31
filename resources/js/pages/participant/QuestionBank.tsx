@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import { Clock, FileQuestion, CheckCircle } from "lucide-react";
@@ -42,6 +43,8 @@ export default function QuestionBank({
     questionBank,
     attempt,
 }: Props) {
+  const { t } = useTranslation();
+
     const startExam = () => {
         router.visit(
             route(
@@ -65,8 +68,7 @@ export default function QuestionBank({
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-2xl">
-                                    {competition.title} Exam
-                                </CardTitle>
+                                    {competition.title} {t('participant.questionBank.exam')}</CardTitle>
                             </CardHeader>
 
                             <CardContent className="space-y-6">
@@ -79,8 +81,7 @@ export default function QuestionBank({
                                             <FileQuestion className="h-5 w-5" />
 
                                             <span className="font-medium">
-                                                Questions
-                                            </span>
+                                                {t('participant.questionBank.questions')}</span>
                                         </div>
 
                                         <p className="text-2xl font-bold">
@@ -94,15 +95,13 @@ export default function QuestionBank({
                                             <Clock className="h-5 w-5" />
 
                                             <span className="font-medium">
-                                                Duration
-                                            </span>
+                                                {t('participant.questionBank.duration')}</span>
                                         </div>
 
                                         <p className="text-2xl font-bold">
                                             {questionBank.duration_minutes}
                                             <span className="ml-1 text-sm font-normal">
-                                                minutes
-                                            </span>
+                                                {t('participant.questionBank.minutes')}</span>
                                         </p>
                                     </div>
 
@@ -112,45 +111,34 @@ export default function QuestionBank({
 
                                 <div className="rounded-lg border bg-muted/50 p-5">
                                     <h3 className="mb-3 font-semibold">
-                                        Before you start
-                                    </h3>
+                                        {t('participant.questionBank.beforeYouStart')}</h3>
 
                                     <ul className="space-y-2 text-sm text-muted-foreground">
                                         <li>
-                                            • You will receive{" "}
+                                            {t('participant.questionBank.YouWillReceive')}{" "}
                                             <strong>
                                                 {questionBank.number_of_questions}
                                             </strong>{" "}
-                                            random questions.
-                                        </li>
+                                            {t('participant.questionBank.randomQuestions')}</li>
 
                                         <li>
-                                            • You have{" "}
+                                            {t('participant.questionBank.YouHave')}{" "}
                                             <strong>
                                                 {questionBank.duration_minutes}
                                             </strong>{" "}
-                                            minutes to complete the exam.
-                                        </li>
+                                            {t('participant.questionBank.minutesToCompleteTheExam')}</li>
 
                                         <li>
-                                            • Your answers are automatically
-                                            saved while you are taking the exam.
-                                        </li>
+                                            {t('participant.questionBank.YourAnswersAreAutomatically')}</li>
 
                                         <li>
-                                            • After starting the exam, do not switch to another browser tab or
-                                            application. Doing so will automatically submit your exam.
-                                        </li>
+                                            {t('participant.questionBank.AfterStartingTheExam')}</li>
 
                                         <li>
-                                            • When the time expires, your exam
-                                            will be automatically submitted.
-                                        </li>
+                                            {t('participant.questionBank.WhenTheTimeExpires')}</li>
 
                                         <li>
-                                            • You can only attempt this exam
-                                            once.
-                                        </li>
+                                            {t('participant.questionBank.YouCanOnlyAttempt')}</li>
                                     </ul>
                                 </div>
 
@@ -163,20 +151,16 @@ export default function QuestionBank({
                                             <CheckCircle className="h-5 w-5" />
 
                                             <h3 className="font-semibold">
-                                                Exam Already Attempted
-                                            </h3>
+                                                {t('participant.questionBank.examAlreadyAttempted')}</h3>
                                         </div>
 
                                         <p className="mt-2 text-sm text-muted-foreground">
-                                            You have already attempted this
-                                            exam and cannot attempt it again.
-                                        </p>
+                                            {t('participant.questionBank.youHaveAlreadyAttemptedThis')}</p>
 
                                         {attempt.score !== null && (
                                             <div className="mt-4">
                                                 <p className="text-sm text-muted-foreground">
-                                                    Your Score
-                                                </p>
+                                                    {t('participant.questionBank.yourScore')}</p>
 
                                                 <p className="text-2xl font-bold">
                                                     {attempt.score}
@@ -194,8 +178,7 @@ export default function QuestionBank({
                                         className="w-full cursor-pointer"
                                         onClick={startExam}
                                     >
-                                        Start Exam
-                                    </Button>
+                                        {t('participant.questionBank.startExam')}</Button>
                                 )}
 
                             </CardContent>

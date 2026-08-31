@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download } from 'lucide-react';
@@ -7,31 +8,33 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Head } from "@inertiajs/react";
 
 function ReportsPage() {
+  const { t } = useTranslation();
+
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Reports – Platform Analytics" />
+      <Head title={t('admin.reports.reportsPlatformAnalytics')} />
       <Navbar />
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
         <DashboardSidebar />
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
-            <PageHeader title="Reports & Analytics" description="Platform metrics and data export" />
+            <PageHeader title={t('admin.reports.reportsAnalytics')} description={t('admin.reports.platformMetricsAndDataExport')} />
 
             <Card className="mb-6">
-              <CardHeader><CardTitle className="text-base">Export Reports</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-base">{t('admin.reports.exportReports')}</CardTitle></CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="outline" className="cursor-pointer"><Download className="h-4 w-4 mr-2" />PDF Report</Button>
-                  <Button variant="outline" className="cursor-pointer"><Download className="h-4 w-4 mr-2" />Excel Ledger</Button>
-                  <Button variant="outline" className="cursor-pointer"><Download className="h-4 w-4 mr-2" />Raw CSV</Button>
+                  <Button variant="outline" className="cursor-pointer"><Download className="h-4 w-4 mr-2" />{t('admin.reports.pdfReport')}</Button>
+                  <Button variant="outline" className="cursor-pointer"><Download className="h-4 w-4 mr-2" />{t('admin.reports.excelLedger')}</Button>
+                  <Button variant="outline" className="cursor-pointer"><Download className="h-4 w-4 mr-2" />{t('admin.reports.rawCsv')}</Button>
                 </div>
               </CardContent>
             </Card>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
-                <CardHeader><CardTitle className="text-base">Monthly Registrations</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="text-base">{t('admin.reports.monthlyRegistrations')}</CardTitle></CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={platformStats.monthlyGrowth}>
@@ -45,7 +48,7 @@ function ReportsPage() {
                 </CardContent>
               </Card>
               <Card>
-                <CardHeader><CardTitle className="text-base">Participation by Country</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="text-base">{t('admin.reports.participationByCountry')}</CardTitle></CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     {platformStats.participationByCountry.map(item => (

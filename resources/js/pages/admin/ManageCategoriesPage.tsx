@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,6 +21,8 @@ type PageProps = {
 };
 
 export default function ManageCategoriesPage() {
+  const { t } = useTranslation();
+
     const { categories } = usePage<PageProps>().props;
 
     const [newCategory, setNewCategory] = useState({
@@ -84,7 +87,7 @@ export default function ManageCategoriesPage() {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Manage Categories – Competition Categories" />
+            <Head title={t('admin.manageCategories.manageCategoriesCompetitionCategories')} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -93,14 +96,14 @@ export default function ManageCategoriesPage() {
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                         <PageHeader
-                            title="Manage Categories"
-                            description="Add, edit, or remove competition categories"
+                            title={t('admin.manageCategories.manageCategories')}
+                            description={t('admin.manageCategories.addEditOrRemoveCompetition')}
                         />
 
                         <Card className="max-w-2xl mb-6">
                             <CardContent className="pt-6 space-y-3">
                                 <Input
-                                    placeholder="Category name..."
+                                    placeholder={t('admin.manageCategories.categoryName')}
                                     value={newCategory.name}
                                     onChange={(e) =>
                                         setNewCategory({
@@ -111,7 +114,7 @@ export default function ManageCategoriesPage() {
                                 />
 
                                 <Input
-                                    placeholder="Description..."
+                                    placeholder={t('admin.manageCategories.description')}
                                     value={newCategory.description}
                                     onChange={(e) =>
                                         setNewCategory({
@@ -126,8 +129,7 @@ export default function ManageCategoriesPage() {
                                     className="cursor-pointer"
                                 >
                                     <Plus className="mr-2 h-4 w-4" />
-                                    Add Category
-                                </Button>
+                                    {t('admin.manageCategories.addCategory')}</Button>
                             </CardContent>
                         </Card>
 
@@ -135,14 +137,12 @@ export default function ManageCategoriesPage() {
                             <table className="w-full text-sm">
                                 <thead className="bg-muted">
                                     <tr>
-                                        <th className="px-4 py-3 text-left">Category</th>
-                                        <th className="px-4 py-3 text-left">Description</th>
+                                        <th className="px-4 py-3 text-left">{t('common.category')}</th>
+                                        <th className="px-4 py-3 text-left">{t('admin.manageCategories.description')}</th>
                                         <th className="px-4 py-3 text-left">
-                                            Competitions
-                                        </th>
+                                            {t('nav.competitions')}</th>
                                         <th className="px-4 py-3 text-left">
-                                            Actions
-                                        </th>
+                                            {t('admin.manageCategories.actions')}</th>
                                     </tr>
                                 </thead>
 
@@ -197,12 +197,12 @@ export default function ManageCategoriesPage() {
             <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
                 <DialogContent className="sm:max-w-lg">
                     <DialogHeader>
-                        <DialogTitle>Edit Category</DialogTitle>
+                        <DialogTitle>{t('admin.manageCategories.editCategory')}</DialogTitle>
                     </DialogHeader>
 
                     <div className="space-y-4 py-2">
                         <Input
-                            placeholder="Category name"
+                            placeholder={t('admin.manageCategories.categoryName')}
                             value={editingCategory.name}
                             onChange={(e) =>
                                 setEditingCategory({
@@ -213,7 +213,7 @@ export default function ManageCategoriesPage() {
                         />
 
                         <Input
-                            placeholder="Description"
+                            placeholder={t('admin.manageCategories.description')}
                             value={editingCategory.description}
                             onChange={(e) =>
                                 setEditingCategory({
@@ -229,12 +229,10 @@ export default function ManageCategoriesPage() {
                             variant="outline"
                             onClick={() => setShowEditDialog(false)}
                         >
-                            Cancel
-                        </Button>
+                            {t('admin.manageCategories.cancel')}</Button>
 
                         <Button onClick={updateCategory}>
-                            Save Changes
-                        </Button>
+                            {t('admin.manageCategories.saveChanges')}</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

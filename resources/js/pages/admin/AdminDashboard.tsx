@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, usePage } from "@inertiajs/react";
 import {
     Trophy,
@@ -79,13 +80,15 @@ interface Stats {
 }
 
 function AdminDashboard() {
+  const { t } = useTranslation();
+
     const { stats } = usePage().props as unknown as {
         stats: Stats;
     };
 
     return (
         <>
-            <Head title="Admin Dashboard – Control Panel" />
+            <Head title={t('admin.adminDashboard.adminDashboardControlPanel')} />
             <div className="flex min-h-screen flex-col">
             <Navbar />
 
@@ -96,8 +99,8 @@ function AdminDashboard() {
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
 
                         <PageHeader
-                            title="Administration Dashboard"
-                            description="Manage competitions and monitor platform performance."
+                            title={t('admin.adminDashboard.administrationDashboard')}
+                            description={t('admin.adminDashboard.manageCompetitionsAndMonitorPlatform')}
                         />
 
 
@@ -106,49 +109,49 @@ function AdminDashboard() {
                         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
                             <StatsCard
-                                label="Total Users"
+                                label={t('admin.adminDashboard.totalUsers')}
                                 value={stats.totalUsers.toString()}
                                 icon={Users}
                             />
 
                             <StatsCard
-                                label="Active Competitions"
+                                label={t('home.heroBadge')}
                                 value={stats.activeCompetitions.toString()}
                                 icon={Trophy}
                             />
 
                             <StatsCard
-                                label="Total Submissions"
+                                label={t('admin.adminDashboard.totalSubmissions')}
                                 value={stats.totalSubmissions.toString()}
                                 icon={FileText}
                             />
 
                             <StatsCard
-                                label="Total Judges"
+                                label={t('admin.adminDashboard.totalJudges')}
                                 value={stats.totalJudges.toString()}
                                 icon={UserCheck}
                             />
 
                             <StatsCard
-                                label="Pending Submissions"
+                                label={t('admin.adminDashboard.pendingSubmissions')}
                                 value={stats.pendingSubmissions.toString()}
                                 icon={Clock}
                             />
 
                             <StatsCard
-                                label="Completed Competitions"
+                                label={t('admin.adminDashboard.completedCompetitions')}
                                 value={stats.completedCompetitions.toString()}
                                 icon={CheckCircle}
                             />
 
                             <StatsCard
-                                label="New Users This Month"
+                                label={t('admin.adminDashboard.newUsersThisMonth')}
                                 value={stats.newUsersThisMonth.toString()}
                                 icon={Users}
                             />
 
                             <StatsCard
-                                label="Submissions Today"
+                                label={t('admin.adminDashboard.submissionsToday')}
                                 value={stats.submissionsToday.toString()}
                                 icon={FileText}
                             />
@@ -162,8 +165,7 @@ function AdminDashboard() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle>
-                                        User Growth
-                                    </CardTitle>
+                                        {t('admin.adminDashboard.userGrowth')}</CardTitle>
                                 </CardHeader>
 
                                 <CardContent>
@@ -203,8 +205,7 @@ function AdminDashboard() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle>
-                                        Monthly Submissions
-                                    </CardTitle>
+                                        {t('admin.adminDashboard.monthlySubmissions')}</CardTitle>
                                 </CardHeader>
 
                                 <CardContent>
@@ -248,45 +249,38 @@ function AdminDashboard() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle>
-                                        Competition Overview
-                                    </CardTitle>
+                                        {t('admin.adminDashboard.competitionOverview')}</CardTitle>
                                 </CardHeader>
 
                                 <CardContent className="space-y-3">
 
                                     <p>
-                                        Active :
-                                        {" "}
+                                        {t('admin.adminDashboard.active')}{" "}
                                         {stats.activeCompetitions}
                                     </p>
 
                                     <p>
-                                        Upcoming :
-                                        {" "}
+                                        {t('admin.adminDashboard.upcoming')}{" "}
                                         {stats.upcomingCompetitions}
                                     </p>
 
                                     <p>
-                                        submissionClosed :
-                                        {" "}
+                                        {t('admin.adminDashboard.submissionclosed')}{" "}
                                         {stats.submissionClosed}
                                     </p>
 
                                     <p>
-                                        Judging :
-                                        {" "}
+                                        {t('admin.adminDashboard.judging')}{" "}
                                         {stats.judgingCompetitions}
                                     </p>
 
                                     <p>
-                                        Winners Announced :
-                                        {" "}
+                                        {t('admin.adminDashboard.winnersAnnounced')}{" "}
                                         {stats.winnersAnnounced}
                                     </p>
 
                                     <p>
-                                        Completed :
-                                        {" "}
+                                        {t('admin.adminDashboard.completed')}{" "}
                                         {stats.completedCompetitions}
                                     </p>
 
@@ -298,8 +292,7 @@ function AdminDashboard() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle>
-                                        Recent Activities
-                                    </CardTitle>
+                                        {t('admin.adminDashboard.recentActivities')}</CardTitle>
                                 </CardHeader>
 
                                 <CardContent>
@@ -327,8 +320,7 @@ function AdminDashboard() {
                                         ) : (
 
                                             <p className="text-sm text-muted-foreground">
-                                                No recent activities.
-                                            </p>
+                                                {t('admin.adminDashboard.noRecentActivities')}</p>
 
                                         )}
 
@@ -347,8 +339,7 @@ function AdminDashboard() {
 
                             <CardHeader>
                                 <CardTitle>
-                                    Participation By Country
-                                </CardTitle>
+                                    {t('admin.adminDashboard.participationByCountry')}</CardTitle>
                             </CardHeader>
 
                             <CardContent>
@@ -392,8 +383,7 @@ function AdminDashboard() {
                                 ) : (
 
                                     <p className="text-sm text-muted-foreground">
-                                        No participation data available.
-                                    </p>
+                                        {t('admin.adminDashboard.noParticipationDataAvailable')}</p>
 
                                 )}
 

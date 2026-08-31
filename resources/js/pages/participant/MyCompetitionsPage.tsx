@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,8 @@ type PageProps = {
 };
 
 function MyCompetitionsPage() {
+  const { t } = useTranslation();
+
   const { competitions } = usePage<PageProps>().props;
   const [tab, setTab] = useState('active');
   const activeCompetitions = competitions.filter(c => c.status === 'open');
@@ -62,27 +65,27 @@ function MyCompetitionsPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Head title="My Competitions – Discover Your Competitions" />
+      <Head title={t('participant.myCompetitions.myCompetitionsDiscoverYourCompetitions')} />
       <Navbar />
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
         <DashboardSidebar />
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
-            <PageHeader title="My Competitions" description="Track your enrolled competitions and submissions" />
+            <PageHeader title={t('sidebar.myCompetitions')} description={t('participant.myCompetitions.trackYourEnrolledCompetitionsAnd')} />
 
             <Tabs value={tab} onValueChange={setTab} className="mb-6">
                 <div className="overflow-x-auto pb-1 max-w-full">
                   <TabsList className="inline-flex w-auto min-w-full justify-start">
                     <TabsTrigger value="active">
-                        Active ({activeCompetitions.length})
+                        {t('participant.myCompetitions.active')}{activeCompetitions.length})
                     </TabsTrigger>
 
                     <TabsTrigger value="evaluation">
-                        Under Evaluation ({evaluationCompetitions.length})
+                        {t('participant.myCompetitions.underEvaluation')}{evaluationCompetitions.length})
                     </TabsTrigger>
 
                     <TabsTrigger value="all">
-                        All ({competitions.length})
+                        {t('participant.myCompetitions.all')}{competitions.length})
                     </TabsTrigger>
                   </TabsList>
                 </div>
@@ -102,7 +105,7 @@ function MyCompetitionsPage() {
                                   <div>
                                       <h3 className="font-semibold">{comp.title}</h3>
                                       <p className="text-sm text-muted-foreground mt-1">
-                                          Deadline:{" "}
+                                          {t('participant.myCompetitions.deadline')}{" "}
                                           <CountdownTimer deadline={comp.submission_deadline} />
                                       </p>
                                   </div>
@@ -117,8 +120,7 @@ function MyCompetitionsPage() {
                                                   router.visit(route("participant.submit", { competitionId: comp.id }));
                                               }}
                                           >
-                                              Upload Entry
-                                          </Button>
+                                              {t('participant.myCompetitions.uploadEntry')}</Button>
                                       )}
 
                                       <Button
@@ -134,14 +136,13 @@ function MyCompetitionsPage() {
                                               );
                                           }}
                                       >
-                                          Leave Contest
-                                      </Button>
+                                          {t('participant.myCompetitions.leaveContest')}</Button>
                                   </div>
                               </div>
 
                               <div className="mt-4">
                                   <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                                      <span>Time Progress:</span>
+                                      <span>{t('participant.myCompetitions.timeProgress')}</span>
                                       <span>{progress}%</span>
                                   </div>
 

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,8 @@ interface Props {
 }
 
 export default function AuditLogsPage() {
+  const { t } = useTranslation();
+
   const { auditLogs } = usePage<Props>().props;
 
   const [search, setSearch] = useState("");
@@ -68,7 +71,7 @@ export default function AuditLogsPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Audit Logs – Security Activity" />
+      <Head title={t('admin.auditLogs.auditLogsSecurityActivity')} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -77,13 +80,13 @@ export default function AuditLogsPage() {
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
-              title="Audit Logs"
-              description="Platform security and activity monitoring"
+              title={t('sidebar.auditLogs')}
+              description={t('admin.auditLogs.platformSecurityAndActivityMonitoring')}
             />
 
             <div className="mb-6">
               <Input
-                placeholder="Search audit logs..."
+                placeholder={t('admin.auditLogs.searchAuditLogs')}
                 value={search}
                 onChange={(e) =>
                   setSearch(e.target.value)
@@ -97,28 +100,22 @@ export default function AuditLogsPage() {
                 <thead className="bg-muted">
                   <tr>
                     <th className="px-4 py-3 text-left font-medium">
-                      Timestamp
-                    </th>
+                      {t('admin.auditLogs.timestamp')}</th>
 
                     <th className="px-4 py-3 text-left font-medium">
-                      Operator
-                    </th>
+                      {t('admin.auditLogs.operator')}</th>
 
                     <th className="hidden px-4 py-3 text-left font-medium sm:table-cell">
-                      Action
-                    </th>
+                      {t('admin.auditLogs.action')}</th>
 
                     <th className="hidden px-4 py-3 text-left font-medium md:table-cell">
-                      Table
-                    </th>
+                      {t('admin.auditLogs.table')}</th>
 
                     <th className="hidden px-4 py-3 text-left font-medium lg:table-cell">
-                      Details
-                    </th>
+                      {t('admin.auditLogs.details')}</th>
 
                     <th className="hidden px-4 py-3 text-left font-medium xl:table-cell">
-                      IP Address
-                    </th>
+                      {t('admin.auditLogs.ipAddress')}</th>
                   </tr>
                 </thead>
 
@@ -172,8 +169,7 @@ export default function AuditLogsPage() {
                         colSpan={6}
                         className="py-10 text-center text-muted-foreground"
                       >
-                        No audit logs found.
-                      </td>
+                        {t('admin.auditLogs.noAuditLogsFound')}</td>
                     </tr>
                   )}
                 </tbody>

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState, useMemo } from "react";
 import { route } from "ziggy-js";
 import { Button } from '@/components/ui/button';
@@ -34,6 +35,8 @@ interface TeamForm {
 }
 
 function TeamsCreatePage({ competitions, participants }: CreateProps) {
+  const { t } = useTranslation();
+
     const { data, setData, post, processing, errors } = useForm<TeamForm>({
         name: '',
         competition_id: '',
@@ -67,23 +70,23 @@ function TeamsCreatePage({ competitions, participants }: CreateProps) {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Teams – Add Team" />
+            <Head title={t('admin.teams.create.teamsAddTeam')} />
             <Navbar />
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
                 <DashboardSidebar />
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
-                        <PageHeader title="Add Team" description="Create a new team and assign it to a competition" />
+                        <PageHeader title={t('admin.teams.create.addTeam')} description={t('admin.teams.create.createANewTeamAnd')} />
 
                         <Card>
                             <CardContent className="pt-6">
                                 <form onSubmit={submit} className="space-y-5">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <Label htmlFor="name" className="flex items-center gap-1.5">Team name</Label>
+                                            <Label htmlFor="name" className="flex items-center gap-1.5">{t('admin.teams.create.teamName')}</Label>
                                             <Input
                                                 id="name"
-                                                placeholder="Team name..."
+                                                placeholder={t('admin.teams.create.teamName')}
                                                 className="mt-1.5"
                                                 value={data.name}
                                                 onChange={(e) => setData('name', e.target.value)}
@@ -96,14 +99,13 @@ function TeamsCreatePage({ competitions, participants }: CreateProps) {
                                         <div>
                                             <Label className="flex items-center gap-1.5">
                                                 <Trophy className="h-3.5 w-3.5 text-muted-foreground" />
-                                                Competition
-                                            </Label>
+                                                {t('admin.teams.create.competition')}</Label>
                                             <Select
                                                 value={data.competition_id}
                                                 onValueChange={(value) => setData('competition_id', value)}
                                             >
                                                 <SelectTrigger className="mt-1.5">
-                                                    <SelectValue placeholder="Select competition" />
+                                                    <SelectValue placeholder={t('admin.teams.create.selectCompetition')} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {competitions.map((c) => (
@@ -122,14 +124,13 @@ function TeamsCreatePage({ competitions, participants }: CreateProps) {
                                     <div>
                                         <Label className="flex items-center gap-1.5">
                                             <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                                            Members (participants)
-                                        </Label>
+                                            {t('admin.teams.create.membersParticipants')}</Label>
                                         <div className="relative mt-1.5">
                                             <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
                                             <Input
                                                 value={memberSearch}
                                                 onChange={(e) => setMemberSearch(e.target.value)}
-                                                placeholder="Search participants..."
+                                                placeholder={t('admin.teams.create.searchParticipants')}
                                                 className="pl-8 h-8 text-sm"
                                             />
                                         </div>
@@ -152,8 +153,7 @@ function TeamsCreatePage({ competitions, participants }: CreateProps) {
                                             ))}
                                             {filteredParticipants.length === 0 && (
                                                 <p className="col-span-full text-sm text-muted-foreground text-center py-2">
-                                                    No participants found.
-                                                </p>
+                                                    {t('admin.teams.create.noParticipantsFound')}</p>
                                             )}
                                         </div>
                                     </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { route } from "ziggy-js";
@@ -33,6 +34,8 @@ import {
 } from "lucide-react";
 
 function JudgeProfilePage() {
+  const { t } = useTranslation();
+
   type PageProps = {
     auth: {
       user: {
@@ -115,14 +118,14 @@ function JudgeProfilePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Judge Profile – Evaluation Overview" />
+      <Head title={t('judge.profile.judgeProfileEvaluationOverview')} />
       <Navbar />
 
       <main className="flex-1 min-w-0">
         <div className="p-4 sm:p-6 lg:p-8 min-w-0">
           <PageHeader
-            title="Judge Profile"
-            description="Judge information, current assignments and reviewed submissions."
+            title={t('judge.profile.judgeProfile')}
+            description={t('judge.profile.judgeInformationCurrentAssignmentsAnd')}
             actions={
               auth.user?.id === shownJudge.id ? (
                 <div className="flex flex-wrap gap-2">
@@ -131,16 +134,14 @@ function JudgeProfilePage() {
                     size="sm"
                     onClick={() => router.visit(route("edit-profile"))}
                   >
-                    Edit Profile
-                  </Button>
+                    {t('judge.profile.editProfile')}</Button>
 
                   <Button
                     variant="destructive"
                     size="sm"
                     onClick={() => setOpenDelete(true)}
                   >
-                    Delete Profile
-                  </Button>
+                    {t('judge.profile.deleteProfile')}</Button>
                 </div>
               ) : null
             }
@@ -187,8 +188,7 @@ function JudgeProfilePage() {
                 <div className="mt-6 grid grid-cols-2 gap-4 border-t pt-6">
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Full Name
-                    </p>
+                      {t('judge.profile.fullName')}</p>
 
                     <p className="font-medium">
                       {shownJudge.full_name}
@@ -238,8 +238,7 @@ function JudgeProfilePage() {
                   {auth.user?.role === "admin" && (
                     <div>
                       <p className="text-xs text-muted-foreground">
-                        Judge ID
-                      </p>
+                        {t('judge.profile.judgeId')}</p>
 
                       <p className="font-medium">
                         #{shownJudge.id}
@@ -249,8 +248,7 @@ function JudgeProfilePage() {
 
                   <div className="col-span-2">
                     <p className="text-xs text-muted-foreground">
-                      Biography
-                    </p>
+                      {t('judge.profile.biography')}</p>
 
                     <p className="font-medium">
                       {shownJudge.bio || "No biography provided."}
@@ -269,8 +267,7 @@ function JudgeProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Judged Competitions
-                    </p>
+                      {t('judge.profile.judgedCompetitions')}</p>
                   </div>
 
                   <div className="rounded-lg border p-4 text-center">
@@ -281,8 +278,7 @@ function JudgeProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Completed Reviews
-                    </p>
+                      {t('judge.profile.completedReviews')}</p>
                   </div>
 
                   <div className="rounded-lg border p-4 text-center">
@@ -293,8 +289,7 @@ function JudgeProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Pending Reviews
-                    </p>
+                      {t('judge.profile.pendingReviews')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -310,8 +305,7 @@ function JudgeProfilePage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="h-5 w-5" />
-                    Assigned Competitions
-                  </CardTitle>
+                    {t('sidebar.assignedCompetitions')}</CardTitle>
                 </CardHeader>
 
                 <CardContent>
@@ -334,12 +328,10 @@ function JudgeProfilePage() {
 
                               <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
                                 <span>
-                                  {assignment.submissions_count} submissions
-                                </span>
+                                  {assignment.submissions_count} {t('sidebar.submissions')}</span>
 
                                 <span>
-                                  {assignment.completed_reviews} reviewed
-                                </span>
+                                  {assignment.completed_reviews} {t('judge.profile.reviewed')}</span>
                               </div>
                             </div>
 
@@ -350,8 +342,7 @@ function JudgeProfilePage() {
                         ))
                       ) : (
                         <p className="py-8 text-center text-sm text-muted-foreground">
-                          No assigned competitions.
-                        </p>
+                          {t('judge.profile.noAssignedCompetitions')}</p>
                       )}
                     </div>
                   </ScrollArea>
@@ -364,8 +355,7 @@ function JudgeProfilePage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <FileCheck className="h-5 w-5" />
-                    Reviewed Submissions
-                  </CardTitle>
+                    {t('judge.profile.reviewedSubmissions')}</CardTitle>
                 </CardHeader>
 
                 <CardContent>
@@ -382,14 +372,13 @@ function JudgeProfilePage() {
                             </p>
 
                             <p className="mt-1 text-sm text-muted-foreground">
-                              Competition: {review.competition.title}
+                              {t('judge.profile.competition')}{review.competition.title}
                             </p>
                           </div>
                         ))
                       ) : (
                         <p className="py-8 text-center text-sm text-muted-foreground">
-                          No submissions reviewed yet.
-                        </p>
+                          {t('judge.profile.noSubmissionsReviewedYet')}</p>
                       )}
                     </div>
                   </ScrollArea>
@@ -408,19 +397,17 @@ function JudgeProfilePage() {
       <Dialog open={openDelete} onOpenChange={setOpenDelete}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete Profile</DialogTitle>
+            <DialogTitle>{t('judge.profile.deleteProfile')}</DialogTitle>
           </DialogHeader>
 
           <p className="text-sm text-muted-foreground">
-            Please enter your password to confirm deleting your profile. This
-            action cannot be undone.
-          </p>
+            {t('judge.profile.pleaseEnterYourPasswordTo')}</p>
 
           <div className="relative mt-2">
             <Input
               type={showPassword ? "text" : "password"}
               value={password}
-              placeholder="Enter your password"
+              placeholder={t('judge.profile.enterYourPassword')}
               className="pr-10"
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -449,16 +436,14 @@ function JudgeProfilePage() {
               variant="outline"
               onClick={() => setOpenDelete(false)}
             >
-              Cancel
-            </Button>
+              {t('judge.profile.cancel')}</Button>
 
             <Button
               variant="destructive"
               disabled={password.trim().length < 8}
               onClick={handleDelete}
             >
-              Yes, Delete
-            </Button>
+              {t('judge.profile.yesDelete')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from "react";
@@ -26,6 +27,8 @@ import { cn } from '@/lib/utils';
 import { COUNTRIES } from '@/lib/countries';
 
 function EditProfilePage() {
+  const { t } = useTranslation();
+
     type PageProps = {
         user: {
             id: number;
@@ -99,18 +102,18 @@ function EditProfilePage() {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Edit Profile – Account Settings" />
+            <Head title={t('allUsers.editProfile.editProfileAccountSettings')} />
             <Navbar />
             <main className="flex-1">
                 <div className="w-full p-6">
-                    <PageHeader title="Edit Profile" description="Update your profile information" />
+                    <PageHeader title={t('allUsers.editProfile.editProfile')} description={t('allUsers.editProfile.updateYourProfileInformation')} />
 
                     <Card className="w-full">
                         <CardContent className="pt-6 space-y-4">
                             <form onSubmit={submit} className="space-y-6">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
-                                        <Label htmlFor="first_name">First Name</Label>
+                                        <Label htmlFor="first_name">{t('auth.firstName')}</Label>
                                         <Input
                                             id="first_name"
                                             value={data.first_name}
@@ -121,7 +124,7 @@ function EditProfilePage() {
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="last_name">Last Name</Label>
+                                        <Label htmlFor="last_name">{t('auth.lastName')}</Label>
                                         <Input
                                             id="last_name"
                                             value={data.last_name}
@@ -132,7 +135,7 @@ function EditProfilePage() {
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="email">Email Address</Label>
+                                        <Label htmlFor="email">{t('auth.emailAddress')}</Label>
                                         <Input
                                             id="email"
                                             type="email"
@@ -171,9 +174,9 @@ function EditProfilePage() {
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                                                 <Command>
-                                                    <CommandInput placeholder="Search country..." />
+                                                    <CommandInput placeholder={t('auth.searchCountry')} />
                                                     <CommandList>
-                                                        <CommandEmpty>No country found.</CommandEmpty>
+                                                        <CommandEmpty>{t('allUsers.editProfile.noCountryFound')}</CommandEmpty>
                                                         <CommandGroup>
                                                             {COUNTRIES.map((country) => (
                                                                 <CommandItem
@@ -232,7 +235,7 @@ function EditProfilePage() {
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="image">Profile Image (Optional)</Label>
+                                    <Label htmlFor="image">{t('allUsers.editProfile.profileImageOptional')}</Label>
                                     <div className="flex items-center gap-4 mt-1.5">
                                         <Input
                                             id="image"
@@ -248,7 +251,7 @@ function EditProfilePage() {
                                         {preview && (
                                             <img
                                                 src={preview}
-                                                alt="Preview"
+                                                alt={t('allUsers.editProfile.preview')}
                                                 className="h-20 w-20 rounded-md object-cover border"
                                             />
                                         )}
@@ -259,14 +262,14 @@ function EditProfilePage() {
                                 <hr className="my-6" />
 
                                 <div>
-                                    <Label htmlFor="password">Old Password</Label>
+                                    <Label htmlFor="password">{t('allUsers.editProfile.oldPassword')}</Label>
                                     <div className="relative mt-1.5">
                                         <Input
                                             id="password"
                                             type={showOldPassword ? "text" : "password"}
                                             value={data.oldPassword}
                                             onChange={(e) => setData({ ...data, oldPassword: e.target.value })}
-                                            placeholder="Please Enter Your Old Password"
+                                            placeholder={t('allUsers.editProfile.pleaseEnterYourOldPassword')}
                                             className="pr-10"
                                         />
                                         <button
@@ -282,14 +285,14 @@ function EditProfilePage() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
-                                        <Label htmlFor="password">New Password</Label>
+                                        <Label htmlFor="password">{t('allUsers.editProfile.newPassword')}</Label>
                                         <div className="relative mt-1.5">
                                             <Input
                                                 id="password"
                                                 type={showPassword ? "text" : "password"}
                                                 value={data.password}
                                                 onChange={(e) => setData({ ...data, password: e.target.value })}
-                                                placeholder="Minimum 8 characters"
+                                                placeholder={t('allUsers.editProfile.minimum8Characters')}
                                                 className="pr-10"
                                             />
                                             <button
@@ -304,7 +307,7 @@ function EditProfilePage() {
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="password_confirmation">Confirm Password</Label>
+                                        <Label htmlFor="password_confirmation">{t('auth.confirmPassword')}</Label>
                                         <div className="relative mt-1.5">
                                             <Input
                                                 id="password_confirmation"
@@ -313,7 +316,7 @@ function EditProfilePage() {
                                                 onChange={(e) =>
                                                     setData({ ...data, password_confirmation: e.target.value })
                                                 }
-                                                placeholder="Repeat your password"
+                                                placeholder={t('allUsers.editProfile.repeatYourPassword')}
                                                 className="pr-10"
                                             />
                                             <button
@@ -332,16 +335,14 @@ function EditProfilePage() {
 
                                 <div className="flex items-center gap-3 pt-4">
                                     <Button type="submit" className="cursor-pointer" disabled={!ableSubmit}>
-                                        Save Changes
-                                    </Button>
+                                        {t('allUsers.editProfile.saveChanges')}</Button>
                                     <Button
                                         variant="outline"
                                         className="cursor-pointer"
                                         type="button"
                                         onClick={() => router.visit(route("profile", { id: user.id }))}
                                     >
-                                        Cancel
-                                    </Button>
+                                        {t('allUsers.editProfile.cancel')}</Button>
                                 </div>
                             </form>
                         </CardContent>

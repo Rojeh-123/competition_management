@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { route } from "ziggy-js";
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -28,27 +29,28 @@ interface IndexProps {
 }
 
 function TeamsIndexPage({ teams }: IndexProps) {
+  const { t } = useTranslation();
+
     const handleDelete = (id: number) => {
-        if (confirm('Remove this team?')) {
+        if (confirm(t('admin.teams.index.removeThisTeam'))) {
             router.delete(route('admin.teams.destroy', { team: id }));
         }
     };
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Teams – Manage Teams" />
+            <Head title={t('admin.teams.index.teamsManageTeams')} />
             <Navbar />
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
                 <DashboardSidebar />
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                            <PageHeader title="Teams" description="Manage teams entered into competitions" />
+                            <PageHeader title={t('admin.teams.index.teams')} description={t('admin.teams.index.manageTeamsEnteredIntoCompetitions')} />
                             <Link href={route('admin.teams.create')}>
                                 <Button className="cursor-pointer w-full sm:w-auto">
                                     <Plus className="h-4 w-4 mr-2" />
-                                    Add Team
-                                </Button>
+                                    {t('admin.teams.index.addTeam')}</Button>
                             </Link>
                         </div>
 
@@ -56,16 +58,15 @@ function TeamsIndexPage({ teams }: IndexProps) {
                             <CardContent className="pt-6">
                                 {teams.length === 0 ? (
                                     <p className="text-sm text-muted-foreground py-8 text-center">
-                                        No teams yet. Add your first team to get started.
-                                    </p>
+                                        {t('admin.teams.index.noTeamsYetAddYour')}</p>
                                 ) : (
                                     <div className="overflow-x-auto">
                                         <table className="w-full border-collapse">
                                             <thead>
                                                 <tr className="text-left border-b text-sm text-muted-foreground">
                                                     <th className="py-2 font-medium">Name</th>
-                                                    <th className="font-medium">Competition</th>
-                                                    <th className="font-medium">Members</th>
+                                                    <th className="font-medium">{t('admin.teams.index.competition')}</th>
+                                                    <th className="font-medium">{t('admin.teams.index.members')}</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>

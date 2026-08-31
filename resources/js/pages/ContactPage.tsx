@@ -63,7 +63,7 @@ function ContactPage() {
                           </Label>
                           <Input
                             type="text"
-                            placeholder="you@example.com / 01000000000"
+                            placeholder={t('contact.contactPlaceholder')}
                             className="mt-1.5"
                             value={data.contact}
                             onChange={handleChange("contact")}
@@ -126,7 +126,7 @@ function ContactPage() {
                     <div className="flex justify-center mb-4">
                       <img
                         src={`/competition_management/public/storage/profile_images/rojeh.jpg`}
-                        alt="Rojeh Samy"
+                        alt={t('contact.rojehSamy')}
                         className="h-24 w-24 rounded-full object-cover"
                       />
                     </div>

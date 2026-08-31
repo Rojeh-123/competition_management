@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from "react";
 import { Head, usePage, useForm, router } from "@inertiajs/react";
 import { route } from "ziggy-js";
@@ -54,6 +55,8 @@ type PageProps = {
 };
 
 function ManageCompetitionsPage() {
+  const { t } = useTranslation();
+
   const { competitions = [] } = usePage<PageProps>().props;
 
   type CompetitionTab =
@@ -109,7 +112,7 @@ function ManageCompetitionsPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Manage Competitions – Competition Lifecycle" />
+      <Head title={t('admin.manageCompetitions.manageCompetitionsCompetitionLifecycle')} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -118,8 +121,8 @@ function ManageCompetitionsPage() {
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
-              title="Manage Competitions"
-              description="Competition lifecycle management"
+              title={t('sidebar.manageCompetitions')}
+              description={t('admin.manageCompetitions.competitionLifecycleManagement')}
               actions={
                 <Button
                   className="cursor-pointer"
@@ -130,8 +133,7 @@ function ManageCompetitionsPage() {
                   }
                 >
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Competition
-                </Button>
+                  {t('admin.manageCompetitions.createCompetition')}</Button>
               }
             />
 
@@ -146,12 +148,10 @@ function ManageCompetitionsPage() {
                   <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
                   <TabsTrigger value="open">Open</TabsTrigger>
                   <TabsTrigger value="submission_closed">
-                    Submission Closed
-                  </TabsTrigger>
+                    {t('status.submission_closed')}</TabsTrigger>
                   <TabsTrigger value="judging">Judging</TabsTrigger>
                   <TabsTrigger value="results_published">
-                    Results Published
-                  </TabsTrigger>
+                    {t('status.results_published')}</TabsTrigger>
                   <TabsTrigger value="archived">Archived</TabsTrigger>
                 </TabsList>
               </div>
@@ -162,20 +162,16 @@ function ManageCompetitionsPage() {
                 <thead className="bg-muted">
                   <tr>
                     <th className="px-6 py-3 text-left font-medium">
-                      Competition
-                    </th>
+                      {t('admin.manageCompetitions.competition')}</th>
 
                     <th className="hidden px-6 py-3 text-left font-medium sm:table-cell">
-                      Enrolled
-                    </th>
+                      {t('admin.manageCompetitions.enrolled')}</th>
 
                     <th className="hidden px-6 py-3 text-left font-medium md:table-cell">
-                      Status
-                    </th>
+                      {t('common.status')}</th>
 
                     <th className="px-6 py-3 text-center font-medium">
-                      Actions
-                    </th>
+                      {t('admin.manageCompetitions.actions')}</th>
                   </tr>
                 </thead>
 
@@ -217,8 +213,7 @@ function ManageCompetitionsPage() {
                                 setSelectedPrivateCompetition(comp.id);
                               }}
                             >
-                              Add Participants
-                            </Button>
+                              {t('admin.manageCompetitions.addParticipants')}</Button>
                           ) : null}
 
                           <Button
@@ -233,8 +228,7 @@ function ManageCompetitionsPage() {
                               )
                             }
                           >
-                            View
-                          </Button>
+                            {t('admin.manageCompetitions.view')}</Button>
                         </td>
                       </tr>
                     ))
@@ -244,8 +238,7 @@ function ManageCompetitionsPage() {
                         colSpan={4}
                         className="py-10 text-center text-muted-foreground"
                       >
-                        No competitions found.
-                      </td>
+                        {t('admin.manageCompetitions.noCompetitionsFound')}</td>
                     </tr>
                   )}
                 </tbody>
@@ -264,8 +257,7 @@ function ManageCompetitionsPage() {
 
             <DialogHeader>
               <DialogTitle>
-                Add Judging Criterion
-              </DialogTitle>
+                {t('admin.manageCompetitions.addJudgingCriterion')}</DialogTitle>
             </DialogHeader>
 
             <form
@@ -308,8 +300,7 @@ function ManageCompetitionsPage() {
                     setIsAddParticipantModalOpen(false)
                   }
                 >
-                  Cancel
-                </Button>
+                  {t('admin.manageCompetitions.cancel')}</Button>
 
                 <Button
                   type="submit"

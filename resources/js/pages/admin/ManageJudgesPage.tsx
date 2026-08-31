@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import { route } from "ziggy-js";
 import { Head, usePage, router } from '@inertiajs/react';
@@ -59,6 +60,8 @@ function CountryCombobox({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const { t } = useTranslation();
+
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -108,15 +111,14 @@ function CountryCombobox({
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search country..."
+              placeholder={t('auth.searchCountry')}
               className="w-full bg-transparent px-2 py-1 text-sm outline-none placeholder:text-muted-foreground"
             />
           </div>
           <div className="max-h-60 overflow-y-auto p-1">
             {filtered.length === 0 && (
               <p className="px-2 py-1.5 text-sm text-muted-foreground">
-                No country found.
-              </p>
+                {t('admin.manageJudges.noCountryFound')}</p>
             )}
             {filtered.map((country) => (
               <button
@@ -145,6 +147,8 @@ function CountryCombobox({
 }
 
 function ManageJudgesPage() {
+  const { t } = useTranslation();
+
   const [search, setSearch] = useState('');
   const { judges, errors } = usePage<PageProps>().props;
 
@@ -207,7 +211,7 @@ function ManageJudgesPage() {
   const deleteJudge = () => {
     if (!selectedJudge) return;
 
-    if (!confirm("Are you sure you want to delete this judge?")) {
+    if (!confirm(t('admin.manageJudges.areYouSureYouWant'))) {
       return;
     }
 
@@ -251,20 +255,20 @@ function ManageJudgesPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Manage Judges – Judge Administration" />
+      <Head title={t('admin.manageJudges.manageJudgesJudgeAdministration')} />
       <Navbar />
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
         <DashboardSidebar />
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
-            <PageHeader title="Manage Judges" description="Judge directory and assignment management" />
+            <PageHeader title={t('sidebar.manageJudges')} description={t('admin.manageJudges.judgeDirectoryAndAssignmentManagement')} />
 
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="max-w-md w-full">
                 <SearchBar
                   value={search}
                   onChange={setSearch}
-                  placeholder="Search judges by name, username, email, or role..."
+                  placeholder={t('admin.manageJudges.searchJudgesByNameUsername')}
                 />
               </div>
 
@@ -272,8 +276,7 @@ function ManageJudgesPage() {
                 onClick={() => setShowAddDialog(true)}
                 className="w-full sm:w-auto"
               >
-                Add Judge
-              </Button>
+                {t('admin.manageJudges.addJudge')}</Button>
             </div>
 
             <div className="border rounded-lg overflow-x-auto">
@@ -281,9 +284,9 @@ function ManageJudgesPage() {
                 <thead className="bg-muted">
                   <tr>
                     <th className="text-left px-4 py-3 font-medium">Judge</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Specialty</th>
-                    <th className="text-left px-4 py-3 font-medium">Status</th>
-                    <th className="text-left px-4 py-3 font-medium">Actions</th>
+                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">{t('admin.manageJudges.specialty')}</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('common.status')}</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('admin.manageJudges.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -328,8 +331,7 @@ function ManageJudgesPage() {
                                   router.visit(route("admin.judges.assign", judge.id));
                                 }}
                               >
-                                Assign
-                              </Button>
+                                {t('admin.manageJudges.assign')}</Button>
                               <Button
                                 size="sm"
                                 variant="default"
@@ -341,14 +343,12 @@ function ManageJudgesPage() {
                                   setShowModifyDialog(true);
                                 }}
                               >
-                                Modify
-                              </Button>
+                                {t('admin.manageJudges.modify')}</Button>
                             </div>
                           </td>
                         ) : (
                           <td className="px-4 py-3 text-xs text-muted-foreground">
-                            Disabled account
-                          </td>
+                            {t('admin.manageJudges.disabledAccount')}</td>
                         )}
                       </tr>
                     );
@@ -380,12 +380,10 @@ function ManageJudgesPage() {
 
                   <div>
                     <DialogTitle className="text-xl">
-                      Modify Judge
-                    </DialogTitle>
+                      {t('admin.manageJudges.modifyJudge')}</DialogTitle>
 
                     <p className="text-sm text-muted-foreground">
-                      Edit account information and permissions.
-                    </p>
+                      {t('admin.manageJudges.editAccountInformationAndPermissions')}</p>
                   </div>
                 </div>
               </DialogHeader>
@@ -395,13 +393,12 @@ function ManageJudgesPage() {
                 {/* Personal Information */}
                 <section className="space-y-4">
                   <h3 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-                    Personal Information
-                  </h3>
+                    {t('admin.manageJudges.personalInformation')}</h3>
 
                   <div className="grid gap-4 md:grid-cols-2">
 
                     <div className="space-y-2">
-                      <Label htmlFor="full_name">Full Name</Label>
+                      <Label htmlFor="full_name">{t('admin.manageJudges.fullName')}</Label>
                       <Input
                         id="full_name"
                         value={form?.full_name ?? ""}
@@ -478,7 +475,7 @@ function ManageJudgesPage() {
                     <Label htmlFor="bio">Bio</Label>
                     <textarea
                       id="bio"
-                      placeholder="Tell us something about yourself..."
+                      placeholder={t('auth.bioPlaceholder')}
                       className="mt-1 flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                       value={form?.bio ?? ""}
                       onChange={(e) =>
@@ -496,8 +493,7 @@ function ManageJudgesPage() {
                 {/* Account */}
                 <section className="space-y-4">
                   <h3 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-                    Account
-                  </h3>
+                    {t('admin.manageJudges.account')}</h3>
 
                   <div className="grid gap-4 md:grid-cols-2">
 
@@ -534,7 +530,7 @@ function ManageJudgesPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Status</Label>
+                      <Label>{t('common.status')}</Label>
 
                       <Select
                         value={form?.account_status ?? ""}
@@ -559,8 +555,7 @@ function ManageJudgesPage() {
                           </SelectItem>
 
                           <SelectItem value="disabled">
-                            Disabled
-                          </SelectItem>
+                            {t('admin.manageJudges.disabled')}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -573,12 +568,10 @@ function ManageJudgesPage() {
                 {/* Danger Zone */}
                 <section className="rounded-lg border border-destructive/20 bg-destructive/5 p-4">
                   <h3 className="font-semibold text-destructive">
-                    Danger Zone
-                  </h3>
+                    {t('admin.manageJudges.dangerZone')}</h3>
 
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Permanently remove this judge and all associated data.
-                  </p>
+                    {t('admin.manageJudges.permanentlyRemoveThisJudgeAnd')}</p>
 
                   <Button
                     variant="destructive"
@@ -586,8 +579,7 @@ function ManageJudgesPage() {
                     type="button"
                     onClick={deleteJudge}
                   >
-                    Delete Judge
-                  </Button>
+                    {t('admin.manageJudges.deleteJudge')}</Button>
                 </section>
 
               </div>
@@ -597,12 +589,10 @@ function ManageJudgesPage() {
                   variant="outline"
                   onClick={() => setShowModifyDialog(false)}
                 >
-                  Cancel
-                </Button>
+                  {t('admin.manageJudges.cancel')}</Button>
 
                 <Button onClick={saveJudge}>
-                  Save Changes
-                </Button>
+                  {t('admin.manageJudges.saveChanges')}</Button>
               </DialogFooter>
             </>
           )}
@@ -621,12 +611,10 @@ function ManageJudgesPage() {
 
               <div>
                 <DialogTitle className="text-xl">
-                  Add Judge
-                </DialogTitle>
+                  {t('admin.manageJudges.addJudge')}</DialogTitle>
 
                 <p className="text-sm text-muted-foreground">
-                  Create a new Judge account.
-                </p>
+                  {t('admin.manageJudges.createANewJudgeAccount')}</p>
               </div>
             </div>
           </DialogHeader>
@@ -636,13 +624,12 @@ function ManageJudgesPage() {
             {/* Personal Information */}
             <section className="space-y-4">
               <h3 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
-                Personal Information
-              </h3>
+                {t('admin.manageJudges.personalInformation')}</h3>
 
               <div className="grid gap-4 md:grid-cols-2">
 
                 <div className="space-y-2">
-                  <Label>Full Name</Label>
+                  <Label>{t('admin.manageJudges.fullName')}</Label>
                   <Input
                     value={newJudge.full_name}
                     onChange={(e) =>
@@ -740,7 +727,7 @@ function ManageJudgesPage() {
 
                 <textarea
                   className="flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  placeholder="Tell us something about this Judge..."
+                  placeholder={t('admin.manageJudges.tellUsSomethingAboutThis')}
                   value={newJudge.bio}
                   onChange={(e) =>
                     setnewJudge({
@@ -762,11 +749,10 @@ function ManageJudgesPage() {
             {/* Account Settings */}
             <section className="space-y-4">
               <h3 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
-                Account Settings
-              </h3>
+                {t('admin.manageJudges.accountSettings')}</h3>
 
               <div className="space-y-2">
-                <Label>Status</Label>
+                <Label>{t('common.status')}</Label>
 
                 <Select
                   value={newJudge.account_status}
@@ -787,8 +773,7 @@ function ManageJudgesPage() {
                     </SelectItem>
 
                     <SelectItem value="disabled">
-                      Disabled
-                    </SelectItem>
+                      {t('admin.manageJudges.disabled')}</SelectItem>
                   </SelectContent>
                 </Select>
                 {errors.account_status && (
@@ -815,7 +800,7 @@ function ManageJudgesPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Confirm Password</Label>
+                  <Label>{t('auth.confirmPassword')}</Label>
                   <Input
                     type="password"
                     value={passwordConfirmation}
@@ -840,12 +825,10 @@ function ManageJudgesPage() {
               variant="outline"
               onClick={() => setShowAddDialog(false)}
             >
-              Cancel
-            </Button>
+              {t('admin.manageJudges.cancel')}</Button>
 
             <Button onClick={createJudge}>
-              Create Judge
-            </Button>
+              {t('admin.manageJudges.createJudge')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

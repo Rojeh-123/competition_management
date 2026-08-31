@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, useForm, router } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import { useState } from "react";
@@ -69,6 +70,8 @@ type CompetitionForm = {
 };
 
 function CreateAndEditCompetitionPages({ categories, competition }: Props) {
+  const { t } = useTranslation();
+
   const isEditing = !!competition;
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -170,13 +173,13 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                       <div>
-                        <Label htmlFor="title">Competition Title</Label>
+                        <Label htmlFor="title">{t('admin.createAndEditCompetitionPages.competitionTitle')}</Label>
                         <Input
                           id="title"
                           className="mt-1.5"
                           value={data.title}
                           onChange={(e) => setData("title", e.target.value)}
-                          placeholder="Interface Design Grand Prix"
+                          placeholder={t('admin.createAndEditCompetitionPages.interfaceDesignGrandPrix')}
                         />
                         {errors.title && (
                           <p className="mt-1 text-sm text-red-500 font-semibold">{errors.title}</p>
@@ -184,14 +187,14 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                       </div>
 
                       <div>
-                        <Label htmlFor="category">Category</Label>
+                        <Label htmlFor="category">{t('common.category')}</Label>
 
                         <Select
                           value={data.category_id}
                           onValueChange={(value) => setData("category_id", value)}
                         >
                           <SelectTrigger className="mt-1.5">
-                            <SelectValue placeholder="Select category" />
+                            <SelectValue placeholder={t('admin.createAndEditCompetitionPages.selectCategory')} />
                           </SelectTrigger>
 
                           <SelectContent>
@@ -216,14 +219,13 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Competition Image</Label>
+                      <Label>{t('admin.createAndEditCompetitionPages.competitionImage')}</Label>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                         {/* Upload */}
                         <div>
                           <Label htmlFor="image" className="text-sm text-muted-foreground">
-                            Replace Image
-                          </Label>
+                            {t('admin.createAndEditCompetitionPages.replaceImage')}</Label>
 
                           <Input
                             id="image"
@@ -244,8 +246,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                           />
 
                           <p className="mt-2 text-xs text-muted-foreground">
-                            Leave this empty to keep the current image.
-                          </p>
+                            {t('admin.createAndEditCompetitionPages.leaveThisEmptyToKeep')}</p>
 
                           {errors.image && (
                             <p className="mt-2 text-sm font-semibold text-red-500">
@@ -263,7 +264,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                           {imagePreview ? (
                             <img
                               src={imagePreview}
-                              alt="New preview"
+                              alt={t('admin.createAndEditCompetitionPages.newPreview')}
                               className="mt-2 h-56 w-full rounded-lg border object-cover"
                             />
                           ) : isEditing && competition.image ? (
@@ -274,8 +275,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                             />
                           ) : (
                             <div className="mt-2 flex h-56 items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
-                              No image uploaded
-                            </div>
+                              {t('admin.createAndEditCompetitionPages.noImageUploaded')}</div>
                           )}
                         </div>
                       </div>
@@ -284,7 +284,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                       <div>
-                        <Label htmlFor="visibility">Visibility</Label>
+                        <Label htmlFor="visibility">{t('admin.createAndEditCompetitionPages.visibility')}</Label>
 
                         <Select
                           value={data.visibility}
@@ -297,8 +297,8 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                           </SelectTrigger>
 
                           <SelectContent>
-                            <SelectItem value="public">Public</SelectItem>
-                            <SelectItem value="private">Private</SelectItem>
+                            <SelectItem value="public">{t('admin.createAndEditCompetitionPages.public')}</SelectItem>
+                            <SelectItem value="private">{t('admin.createAndEditCompetitionPages.private')}</SelectItem>
                           </SelectContent>
                         </Select>
 
@@ -319,8 +319,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                             }
                           />
                           <Label htmlFor="team_allowed" className="cursor-pointer">
-                            Allow Team Participation
-                          </Label>
+                            {t('admin.createAndEditCompetitionPages.allowTeamParticipation')}</Label>
                         </div>
 
                         {/* Added Question Bank Checkbox */}
@@ -333,8 +332,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                             }
                           />
                           <Label htmlFor="has_question_bank" className="cursor-pointer">
-                            Enable Question Bank
-                          </Label>
+                            {t('admin.createAndEditCompetitionPages.enableQuestionBank')}</Label>
                         </div>
                       </div>
 
@@ -345,7 +343,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                   {/* Description & Rules */}
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="description">Description</Label>
+                      <Label htmlFor="description">{t('admin.createAndEditCompetitionPages.description')}</Label>
                       <Textarea
                         id="description"
                         className="mt-1.5 min-h-[120px]"
@@ -360,7 +358,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     </div>
 
                     <div>
-                      <Label htmlFor="rules">Rules</Label>
+                      <Label htmlFor="rules">{t('admin.createAndEditCompetitionPages.rules')}</Label>
                       <Textarea
                         id="rules"
                         className="mt-1.5 min-h-[120px]"
@@ -381,7 +379,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                       <div>
-                        <Label htmlFor="published_at">Published At</Label>
+                        <Label htmlFor="published_at">{t('admin.createAndEditCompetitionPages.publishedAt')}</Label>
                         <Input
                           id="published_at"
                           type="datetime-local"
@@ -398,8 +396,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="registration_deadline">
-                          Registration Deadline
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.registrationDeadline')}</Label>
                         <Input
                           id="registration_deadline"
                           type="datetime-local"
@@ -421,7 +418,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                       <div>
-                        <Label htmlFor="start_date">Start Date</Label>
+                        <Label htmlFor="start_date">{t('admin.createAndEditCompetitionPages.startDate')}</Label>
                         <Input
                           id="start_date"
                           type="datetime-local"
@@ -438,8 +435,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="submission_deadline">
-                          Submission Deadline
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.submissionDeadline')}</Label>
                         <Input
                           id="submission_deadline"
                           type="datetime-local"
@@ -457,7 +453,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                       </div>
 
                       <div>
-                        <Label htmlFor="end_date">End Date</Label>
+                        <Label htmlFor="end_date">{t('admin.createAndEditCompetitionPages.endDate')}</Label>
                         <Input
                           id="end_date"
                           type="datetime-local"
@@ -478,8 +474,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="judging_start_date">
-                          Judging Start
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.judgingStart')}</Label>
                         <Input
                           id="judging_start_date"
                           type="datetime-local"
@@ -498,8 +493,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="judging_end_date">
-                          Judging End
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.judgingEnd')}</Label>
                         <Input
                           id="judging_end_date"
                           type="datetime-local"
@@ -520,8 +514,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                     <div>
                       <Label htmlFor="winner_announced_at">
-                        Winner Announcement Date
-                      </Label>
+                        {t('admin.createAndEditCompetitionPages.winnerAnnouncementDate')}</Label>
                       <Input
                         id="winner_announced_at"
                         type="datetime-local"
@@ -547,8 +540,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="max_file_size_mb">
-                          Maximum File Size (MB)
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.maximumFileSizeMb')}</Label>
                         <Input
                           id="max_file_size_mb"
                           type="number"
@@ -568,12 +560,11 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div className="md:col-span-2">
                         <Label htmlFor="allowed_file_types">
-                          Allowed File Types
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.allowedFileTypes')}</Label>
                         <Input
                           id="allowed_file_types"
                           className="mt-1.5"
-                          placeholder="pdf, zip, jpg, png"
+                          placeholder={t('admin.createAndEditCompetitionPages.pdfZipJpgPng')}
                           value={data.allowed_file_types}
                           onChange={(e) =>
                             setData("allowed_file_types", e.target.value)
@@ -592,8 +583,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="number_of_winners">
-                          Number of Winners
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.numberOfWinners')}</Label>
                         <Input
                           id="number_of_winners"
                           type="number"
@@ -613,12 +603,11 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="prize_description">
-                          Prize Description
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.prizeDescription')}</Label>
                         <Input
                           id="prize_description"
                           className="mt-1.5"
-                          placeholder="1st: $1000, 2nd: $500..."
+                          placeholder={t('admin.createAndEditCompetitionPages.1st10002nd500')}
                           value={data.prize_description}
                           onChange={(e) =>
                             setData("prize_description", e.target.value)
@@ -641,7 +630,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                       <div>
-                        <Label htmlFor="min_age">Minimum Age</Label>
+                        <Label htmlFor="min_age">{t('admin.createAndEditCompetitionPages.minimumAge')}</Label>
                         <Input
                           id="min_age"
                           type="number"
@@ -658,7 +647,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                       </div>
 
                       <div>
-                        <Label htmlFor="max_age">Maximum Age</Label>
+                        <Label htmlFor="max_age">{t('admin.createAndEditCompetitionPages.maximumAge')}</Label>
                         <Input
                           id="max_age"
                           type="number"
@@ -685,8 +674,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="contact_email">
-                          Contact Email
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.contactEmail')}</Label>
                         <Input
                           id="contact_email"
                           type="email"
@@ -706,8 +694,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
 
                       <div>
                         <Label htmlFor="contact_phone">
-                          Contact Phone
-                        </Label>
+                          {t('admin.createAndEditCompetitionPages.contactPhone')}</Label>
                         <Input
                           id="contact_phone"
                           type="tel"
@@ -737,8 +724,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                       className="cursor-pointer"
                       onClick={() => router.visit(route("admin.competitions"))}
                     >
-                      Cancel
-                    </Button>
+                      {t('admin.createAndEditCompetitionPages.cancel')}</Button>
 
                     <Button
                       type="submit"

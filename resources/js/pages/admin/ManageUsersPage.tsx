@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import { Head, router, usePage } from "@inertiajs/react";
 import { route } from "ziggy-js";
@@ -61,6 +62,8 @@ function CountryCombobox({
     value: string;
     onChange: (value: string) => void;
 }) {
+  const { t } = useTranslation();
+
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
@@ -110,15 +113,14 @@ function CountryCombobox({
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search country..."
+                            placeholder={t('auth.searchCountry')}
                             className="w-full bg-transparent px-2 py-1 text-sm outline-none placeholder:text-muted-foreground"
                         />
                     </div>
                     <div className="max-h-60 overflow-y-auto p-1">
                         {filtered.length === 0 && (
                             <p className="px-2 py-1.5 text-sm text-muted-foreground">
-                                No country found.
-                            </p>
+                                {t('admin.manageUsers.noCountryFound')}</p>
                         )}
                         {filtered.map((country) => (
                             <button
@@ -147,6 +149,8 @@ function CountryCombobox({
 }
 
 function ManageUsersPage() {
+  const { t } = useTranslation();
+
     const [search, setSearch] = useState('');
 
     const { usersList, errors } = usePage<PageProps>().props;
@@ -210,7 +214,7 @@ function ManageUsersPage() {
     const deleteUser = () => {
         if (!selectedUser) return;
 
-        if (!confirm("Are you sure you want to delete this user?")) {
+        if (!confirm(t('admin.manageUsers.areYouSureYouWant'))) {
             return;
         }
 
@@ -254,7 +258,7 @@ function ManageUsersPage() {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Users – User Management" />
+            <Head title={t('admin.manageUsers.usersUserManagement')} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -263,8 +267,8 @@ function ManageUsersPage() {
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                         <PageHeader
-                            title="Manage Users"
-                            description="User directory and role management"
+                            title={t('sidebar.manageUsers')}
+                            description={t('admin.manageUsers.userDirectoryAndRoleManagement')}
                         />
 
                         <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -272,7 +276,7 @@ function ManageUsersPage() {
                                 <SearchBar
                                     value={search}
                                     onChange={setSearch}
-                                    placeholder="Search users by name, username, email, or role..."
+                                    placeholder={t('admin.manageUsers.searchUsersByNameUsername')}
                                 />
                             </div>
 
@@ -280,8 +284,7 @@ function ManageUsersPage() {
                                 onClick={() => setShowAddDialog(true)}
                                 className="w-full sm:w-auto"
                             >
-                                Add User
-                            </Button>
+                                {t('admin.manageUsers.addUser')}</Button>
                         </div>
 
                         <div className="overflow-x-auto rounded-lg border">
@@ -289,8 +292,7 @@ function ManageUsersPage() {
                                 <thead className="bg-muted">
                                     <tr>
                                         <th className="px-4 py-3 text-left font-medium">
-                                            User
-                                        </th>
+                                            {t('admin.manageUsers.user')}</th>
                                         <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">
                                             Role
                                         </th>
@@ -298,11 +300,9 @@ function ManageUsersPage() {
                                             Country
                                         </th>
                                         <th className="px-4 py-3 text-left font-medium">
-                                            Status
-                                        </th>
+                                            {t('common.status')}</th>
                                         <th className="px-4 py-3 text-left font-medium">
-                                            Actions
-                                        </th>
+                                            {t('admin.manageUsers.actions')}</th>
                                     </tr>
                                 </thead>
 
@@ -376,8 +376,7 @@ function ManageUsersPage() {
                                                         setShowModifyDialog(true);
                                                     }}
                                                 >
-                                                    Modify
-                                                </Button>
+                                                    {t('admin.manageUsers.modify')}</Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -408,12 +407,10 @@ function ManageUsersPage() {
 
                                     <div>
                                         <DialogTitle className="text-xl">
-                                            Modify User
-                                        </DialogTitle>
+                                            {t('admin.manageUsers.modifyUser')}</DialogTitle>
 
                                         <p className="text-sm text-muted-foreground">
-                                            Edit account information and permissions.
-                                        </p>
+                                            {t('admin.manageUsers.editAccountInformationAndPermissions')}</p>
                                     </div>
                                 </div>
                             </DialogHeader>
@@ -423,13 +420,12 @@ function ManageUsersPage() {
                                 {/* Personal Information */}
                                 <section className="space-y-4">
                                     <h3 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-                                        Personal Information
-                                    </h3>
+                                        {t('admin.manageUsers.personalInformation')}</h3>
 
                                     <div className="grid gap-4 md:grid-cols-2">
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="full_name">Full Name</Label>
+                                            <Label htmlFor="full_name">{t('admin.manageUsers.fullName')}</Label>
                                             <Input
                                                 id="full_name"
                                                 value={form?.full_name ?? ""}
@@ -531,7 +527,7 @@ function ManageUsersPage() {
                                         <Label htmlFor="bio">Bio</Label>
                                         <textarea
                                             id="bio"
-                                            placeholder="Tell us something about yourself..."
+                                            placeholder={t('auth.bioPlaceholder')}
                                             className="mt-1 flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                                             value={form?.bio ?? ""}
                                             onChange={(e) =>
@@ -554,8 +550,7 @@ function ManageUsersPage() {
                                 {/* Account */}
                                 <section className="space-y-4">
                                     <h3 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-                                        Account
-                                    </h3>
+                                        {t('admin.manageUsers.account')}</h3>
 
                                     <div className="grid gap-4 md:grid-cols-2">
 
@@ -597,7 +592,7 @@ function ManageUsersPage() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label>Status</Label>
+                                            <Label>{t('common.status')}</Label>
 
                                             <Select
                                                 value={form?.account_status ?? ""}
@@ -622,8 +617,7 @@ function ManageUsersPage() {
                                                     </SelectItem>
 
                                                     <SelectItem value="disabled">
-                                                        Disabled
-                                                    </SelectItem>
+                                                        {t('admin.manageUsers.disabled')}</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             {errors.account_status && (
@@ -641,12 +635,10 @@ function ManageUsersPage() {
                                 {/* Danger Zone */}
                                 <section className="rounded-lg border border-destructive/20 bg-destructive/5 p-4">
                                     <h3 className="font-semibold text-destructive">
-                                        Danger Zone
-                                    </h3>
+                                        {t('admin.manageUsers.dangerZone')}</h3>
 
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        Permanently remove this user and all associated data.
-                                    </p>
+                                        {t('admin.manageUsers.permanentlyRemoveThisUserAnd')}</p>
 
                                     <Button
                                         variant="destructive"
@@ -654,8 +646,7 @@ function ManageUsersPage() {
                                         type="button"
                                         onClick={deleteUser}
                                     >
-                                        Delete User
-                                    </Button>
+                                        {t('admin.manageUsers.deleteUser')}</Button>
                                 </section>
 
                             </div>
@@ -665,12 +656,10 @@ function ManageUsersPage() {
                                     variant="outline"
                                     onClick={() => setShowModifyDialog(false)}
                                 >
-                                    Cancel
-                                </Button>
+                                    {t('admin.manageUsers.cancel')}</Button>
 
                                 <Button onClick={saveUser}>
-                                    Save Changes
-                                </Button>
+                                    {t('admin.manageUsers.saveChanges')}</Button>
                             </DialogFooter>
                         </>
                     )}
@@ -689,12 +678,10 @@ function ManageUsersPage() {
 
                             <div>
                                 <DialogTitle className="text-xl">
-                                    Add User
-                                </DialogTitle>
+                                    {t('admin.manageUsers.addUser')}</DialogTitle>
 
                                 <p className="text-sm text-muted-foreground">
-                                    Create a new user account and assign permissions.
-                                </p>
+                                    {t('admin.manageUsers.createANewUserAccount')}</p>
                             </div>
                         </div>
                     </DialogHeader>
@@ -704,13 +691,12 @@ function ManageUsersPage() {
                         {/* Personal Information */}
                         <section className="space-y-4">
                             <h3 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
-                                Personal Information
-                            </h3>
+                                {t('admin.manageUsers.personalInformation')}</h3>
 
                             <div className="grid gap-4 md:grid-cols-2">
 
                                 <div className="space-y-2">
-                                    <Label>Full Name</Label>
+                                    <Label>{t('admin.manageUsers.fullName')}</Label>
                                     <Input
                                         value={newUser.full_name}
                                         onChange={(e) =>
@@ -807,7 +793,7 @@ function ManageUsersPage() {
 
                                 <textarea
                                     className="flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                                    placeholder="Tell us something about this user..."
+                                    placeholder={t('admin.manageUsers.tellUsSomethingAboutThis')}
                                     value={newUser.bio}
                                     onChange={(e) =>
                                         setNewUser({
@@ -829,8 +815,7 @@ function ManageUsersPage() {
                         {/* Account Settings */}
                         <section className="space-y-4">
                             <h3 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
-                                Account Settings
-                            </h3>
+                                {t('admin.manageUsers.accountSettings')}</h3>
 
                             <div className="grid gap-4 md:grid-cols-2">
 
@@ -849,7 +834,7 @@ function ManageUsersPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label>Confirm Password</Label>
+                                    <Label>{t('auth.confirmPassword')}</Label>
                                     <Input
                                         type="password"
                                         value={passwordConfirmation}
@@ -902,7 +887,7 @@ function ManageUsersPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label>Status</Label>
+                                    <Label>{t('common.status')}</Label>
 
                                     <Select
                                         value={newUser.account_status}
@@ -923,8 +908,7 @@ function ManageUsersPage() {
                                             </SelectItem>
 
                                             <SelectItem value="disabled">
-                                                Disabled
-                                            </SelectItem>
+                                                {t('admin.manageUsers.disabled')}</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     {errors.account_status && (
@@ -944,12 +928,10 @@ function ManageUsersPage() {
                             variant="outline"
                             onClick={() => setShowAddDialog(false)}
                         >
-                            Cancel
-                        </Button>
+                            {t('admin.manageUsers.cancel')}</Button>
 
                         <Button onClick={createUser}>
-                            Create User
-                        </Button>
+                            {t('admin.manageUsers.createUser')}</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

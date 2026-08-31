@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, useForm, usePage } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
@@ -58,6 +59,8 @@ type PageProps = {
 };
 
 export default function QuestionBankPage() {
+  const { t } = useTranslation();
+
     const { competition, questionBank } =
         usePage<PageProps>().props;
 
@@ -185,13 +188,11 @@ export default function QuestionBankPage() {
                     >
                         <ArrowLeft className="mr-2 h-4 w-4" />
 
-                        Back to Competition
-                    </Button>
+                        {t('admin.questionBank.backToCompetition')}</Button>
 
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold">
-                            Question Bank
-                        </h1>
+                            {t('admin.questionBank.questionBank')}</h1>
 
                         <p className="text-muted-foreground mt-2">
                             {competition.title}
@@ -208,8 +209,7 @@ export default function QuestionBankPage() {
                         <Card>
                             <CardHeader>
                                 <CardTitle>
-                                    Exam Settings
-                                </CardTitle>
+                                    {t('admin.questionBank.examSettings')}</CardTitle>
                             </CardHeader>
 
                             <CardContent>
@@ -217,8 +217,7 @@ export default function QuestionBankPage() {
 
                                     <div className="space-y-2">
                                         <Label>
-                                            Number of Questions To Be Answerd
-                                        </Label>
+                                            {t('admin.questionBank.numberOfQuestionsToBe')}</Label>
 
                                         <Input
                                             type="number"
@@ -247,8 +246,7 @@ export default function QuestionBankPage() {
 
                                     <div className="space-y-2">
                                         <Label>
-                                            Exam Duration (minutes)
-                                        </Label>
+                                            {t('admin.questionBank.examDurationMinutes')}</Label>
 
                                         <Input
                                             type="number"
@@ -285,13 +283,10 @@ export default function QuestionBankPage() {
 
                             <div>
                                 <h2 className="text-xl font-semibold">
-                                    Questions
-                                </h2>
+                                    {t('admin.questionBank.questions')}</h2>
 
                                 <p className="text-sm text-muted-foreground">
-                                    {data.questions.length} questions
-                                    in the question bank
-                                </p>
+                                    {data.questions.length} {t('admin.questionBank.questionsInTheQuestionBank')}</p>
                             </div>
 
                             <Button
@@ -302,8 +297,7 @@ export default function QuestionBankPage() {
                             >
                                 <Plus className="mr-2 h-4 w-4" />
 
-                                Add Question
-                            </Button>
+                                {t('admin.questionBank.addQuestion')}</Button>
 
                         </div>
 
@@ -318,7 +312,7 @@ export default function QuestionBankPage() {
                                             <div className="flex items-center justify-between">
 
                                                 <CardTitle>
-                                                    Question{" "}
+                                                    {t('admin.questionBank.question')}{" "}
                                                     {questionIndex + 1}
                                                 </CardTitle>
 
@@ -345,8 +339,7 @@ export default function QuestionBankPage() {
 
                                             <div className="space-y-2">
                                                 <Label>
-                                                    Question
-                                                </Label>
+                                                    {t('admin.questionBank.question')}</Label>
 
                                                 <Textarea
                                                     value={
@@ -359,7 +352,7 @@ export default function QuestionBankPage() {
                                                             e.target.value
                                                         )
                                                     }
-                                                    placeholder="Enter the question..."
+                                                    placeholder={t('admin.questionBank.enterTheQuestion')}
                                                     rows={4}
                                                 />
                                             </div>
@@ -369,8 +362,7 @@ export default function QuestionBankPage() {
                                             <div className="space-y-4">
 
                                                 <Label>
-                                                    Choices
-                                                </Label>
+                                                    {t('admin.questionBank.choices')}</Label>
 
                                                 {(
                                                     [
@@ -417,8 +409,7 @@ export default function QuestionBankPage() {
 
                                             <div className="space-y-2">
                                                 <Label>
-                                                    Correct Answer
-                                                </Label>
+                                                    {t('admin.questionBank.correctAnswer')}</Label>
 
                                                 <select
                                                     value={
@@ -455,8 +446,7 @@ export default function QuestionBankPage() {
 
                                             <div className="space-y-2">
                                                 <Label>
-                                                    Points
-                                                </Label>
+                                                    {t('admin.questionBank.points')}</Label>
 
                                                 <Input
                                                     type="number"

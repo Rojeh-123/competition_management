@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, usePage, router } from '@inertiajs/react';
 import { ArrowLeft, CheckCircle2, XCircle, Trash2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -68,6 +69,8 @@ type PageProps = {
 };
 
 export default function SubmissionReviewPage() {
+  const { t } = useTranslation();
+
   const { submission, flash } = usePage<PageProps>().props;
 
   const handleApprove = () => {
@@ -99,7 +102,7 @@ export default function SubmissionReviewPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Submission Review – Moderation" />
+      <Head title={t('admin.submissionReview.submissionReviewModeration')} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -108,14 +111,13 @@ export default function SubmissionReviewPage() {
         <main className="flex-1 overflow-auto min-w-0 p-4 sm:p-6 lg:p-8 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <PageHeader
-              title="Submission Review"
-              description="Moderate the submission and review its context"
+              title={t('admin.submissionReview.submissionReview')}
+              description={t('admin.submissionReview.moderateTheSubmissionAndReview')}
             />
 
             <Button variant="outline" onClick={() => router.visit(route('admin.submissions'))}>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
+              {t('admin.submissionReview.back')}</Button>
           </div>
 
           {flash?.success && (
@@ -128,7 +130,7 @@ export default function SubmissionReviewPage() {
             <CardContent className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-2xl font-bold">{submission.title}</h2>
-                <p className="text-sm text-muted-foreground">Submission #{submission.id}</p>
+                <p className="text-sm text-muted-foreground">{t('admin.submissionReview.submission')}{submission.id}</p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
@@ -140,8 +142,7 @@ export default function SubmissionReviewPage() {
                   <>
                     <Button size="sm" onClick={handleApprove}>
                       <CheckCircle2 className="mr-2 h-4 w-4" />
-                      Approve
-                    </Button>
+                      {t('admin.submissionReview.approve')}</Button>
 
                     <Button
                       size="sm"
@@ -149,23 +150,20 @@ export default function SubmissionReviewPage() {
                       onClick={() => setRejectModalOpen(true)}
                     >
                       <XCircle className="mr-2 h-4 w-4" />
-                      Reject
-                    </Button>
+                      {t('admin.submissionReview.reject')}</Button>
                   </>
                 )}
 
                 {(submission.status === "approved" || submission.status === "rejected") && (
                   <Button size="sm" variant="outline" onClick={handleReturn}>
                     <RotateCcw className="mr-2 h-4 w-4" />
-                    Return to Pending
-                  </Button>
+                    {t('admin.submissionReview.returnToPending')}</Button>
                 )}
 
                 {submission.status !== "removed" && (
                   <Button size="sm" variant="destructive" onClick={handleRemove}>
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Remove
-                  </Button>
+                    {t('admin.submissionReview.remove')}</Button>
                 )}
               </div>
             </CardContent>
@@ -174,12 +172,12 @@ export default function SubmissionReviewPage() {
           <div className="grid gap-6 lg:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Submission content</CardTitle>
+                <CardTitle>{t('admin.submissionReview.submissionContent')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
-                <p><span className="font-medium">Description:</span> {submission.description}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.description')}</span> {submission.description}</p>
                 <div>
-                  <p className="font-medium">Uploaded files</p>
+                  <p className="font-medium">{t('admin.submissionReview.uploadedFiles')}</p>
                   {submission.files.length > 0 ? (
                     <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
                       {submission.files.map((file) => (
@@ -191,7 +189,7 @@ export default function SubmissionReviewPage() {
                       ))}
                     </ul>
                   ) : (
-                    <p className="mt-2 text-muted-foreground">No files were attached.</p>
+                    <p className="mt-2 text-muted-foreground">{t('admin.submissionReview.noFilesWereAttached')}</p>
                   )}
                 </div>
               </CardContent>
@@ -199,21 +197,21 @@ export default function SubmissionReviewPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Competition context</CardTitle>
+                <CardTitle>{t('admin.submissionReview.competitionContext')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
-                <p><span className="font-medium">Competition:</span> {submission.competitionTitle}</p>
-                <p><span className="font-medium">Rules:</span> {submission.competitionRules}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.competition')}</span> {submission.competitionTitle}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.rules')}</span> {submission.competitionRules}</p>
                 <div>
-                  <p className="font-medium">Scoring criteria</p>
+                  <p className="font-medium">{t('admin.submissionReview.scoringCriteria')}</p>
                   {submission.criteria.length > 0 ? (
                     <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
                       {submission.criteria.map((criterion) => (
-                        <li key={criterion.id}>{criterion.name} — max {criterion.maxScore} (weight {criterion.weight})</li>
+                        <li key={criterion.id}>{criterion.name} {t('admin.submissionReview.Max')}{criterion.maxScore} {t('admin.submissionReview.weight')}{criterion.weight})</li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="mt-2 text-muted-foreground">No scoring criteria have been defined.</p>
+                    <p className="mt-2 text-muted-foreground">{t('admin.submissionReview.noScoringCriteriaHaveBeen')}</p>
                   )}
                 </div>
               </CardContent>
@@ -223,26 +221,26 @@ export default function SubmissionReviewPage() {
           <div className="grid gap-6 lg:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Participant info</CardTitle>
+                <CardTitle>{t('admin.submissionReview.participantInfo')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
-                <p><span className="font-medium">Name:</span> {submission.participantName}</p>
-                {submission.participantEmail && <p><span className="font-medium">Email:</span> {submission.participantEmail}</p>}
-                <p><span className="font-medium">Past submissions:</span> {submission.participantPastSubmissions}</p>
-                <p><span className="font-medium">Category:</span> {submission.categoryName}</p>
-                <p><span className="font-medium">Version:</span> {submission.versionNumber}</p>
-                <p><span className="font-medium">Public:</span> {submission.isPublic ? 'Yes' : 'No'}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.name')}</span> {submission.participantName}</p>
+                {submission.participantEmail && <p><span className="font-medium">{t('admin.submissionReview.email')}</span> {submission.participantEmail}</p>}
+                <p><span className="font-medium">{t('admin.submissionReview.pastSubmissions')}</span> {submission.participantPastSubmissions}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.category')}</span> {submission.categoryName}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.version')}</span> {submission.versionNumber}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.public')}</span> {submission.isPublic ? 'Yes' : 'No'}</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Moderation timeline</CardTitle>
+                <CardTitle>{t('admin.submissionReview.moderationTimeline')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
-                <p><span className="font-medium">Created:</span> {submission.createdAt ?? 'Unknown'}</p>
-                <p><span className="font-medium">Updated:</span> {submission.updatedAt ?? 'Unknown'}</p>
-                <p className="text-muted-foreground">Status changes and moderation actions are tracked here for future review.</p>
+                <p><span className="font-medium">{t('admin.submissionReview.created')}</span> {submission.createdAt ?? 'Unknown'}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.updated')}</span> {submission.updatedAt ?? 'Unknown'}</p>
+                <p className="text-muted-foreground">{t('admin.submissionReview.statusChangesAndModerationActions')}</p>
               </CardContent>
             </Card>
           </div>
@@ -252,16 +250,15 @@ export default function SubmissionReviewPage() {
       <Dialog open={rejectModalOpen} onOpenChange={setRejectModalOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Reject Submission</DialogTitle>
+            <DialogTitle>{t('admin.submissionReview.rejectSubmission')}</DialogTitle>
           </DialogHeader>
 
           <div className="space-y-3">
             <p className="text-sm text-muted-foreground">
-              Please provide a reason for rejecting this submission.
-            </p>
+              {t('admin.submissionReview.pleaseProvideAReasonFor')}</p>
 
             <Textarea
-              placeholder="Enter rejection reason..."
+              placeholder={t('admin.submissionReview.enterRejectionReason')}
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
             />
@@ -272,16 +269,14 @@ export default function SubmissionReviewPage() {
               variant="outline"
               onClick={() => setRejectModalOpen(false)}
             >
-              Cancel
-            </Button>
+              {t('admin.submissionReview.cancel')}</Button>
 
             <Button
               variant="destructive"
               disabled={!rejectReason.trim()}
               onClick={confirmReject}
             >
-              Reject Submission
-            </Button>
+              {t('admin.submissionReview.rejectSubmission')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

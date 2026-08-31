@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, usePage } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
@@ -34,11 +35,13 @@ interface PageProps {
 }
 
 function JudgeDashboard() {
+  const { t } = useTranslation();
+
     const { stats } = usePage<PageProps>().props;
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Evaluation Control Center – Review Progress" />
+            <Head title={t('judge.judgeDashboard.evaluationControlCenterReviewProgress')} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -48,8 +51,8 @@ function JudgeDashboard() {
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
 
                         <PageHeader
-                            title="Evaluation Control Center"
-                            description="Manage and monitor your assigned evaluations."
+                            title={t('judge.judgeDashboard.evaluationControlCenter')}
+                            description={t('judge.judgeDashboard.manageAndMonitorYourAssigned')}
                         />
 
                         {/* Statistics */}
@@ -57,25 +60,25 @@ function JudgeDashboard() {
                         <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
                             <StatsCard
-                                label="Assigned Competitions"
+                                label={t('sidebar.assignedCompetitions')}
                                 value={stats.assignedCompetitions}
                                 icon={Trophy}
                             />
 
                             <StatsCard
-                                label="Pending Reviews"
+                                label={t('judge.judgeDashboard.pendingReviews')}
                                 value={stats.pendingReviews}
                                 icon={Clock}
                             />
 
                             <StatsCard
-                                label="Draft Evaluations"
+                                label={t('judge.judgeDashboard.draftEvaluations')}
                                 value={stats.draftEvaluations}
                                 icon={FileText}
                             />
 
                             <StatsCard
-                                label="Completed Reviews"
+                                label={t('judge.judgeDashboard.completedReviews')}
                                 value={stats.completedEvaluations}
                                 icon={CheckCircle}
                             />
@@ -86,15 +89,13 @@ function JudgeDashboard() {
                         <Card className="mb-6">
                             <CardHeader>
                                 <CardTitle className="text-base">
-                                    Evaluation Progress
-                                </CardTitle>
+                                    {t('judge.judgeDashboard.evaluationProgress')}</CardTitle>
                             </CardHeader>
 
                             <CardContent>
                                 <div className="mb-2 flex items-center justify-between text-sm">
                                     <span className="text-muted-foreground">
-                                        Overall completion
-                                    </span>
+                                        {t('judge.judgeDashboard.overallCompletion')}</span>
 
                                     <span className="font-medium">
                                         {stats.completionPercentage}%
@@ -112,7 +113,7 @@ function JudgeDashboard() {
                                         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
 
                                         <p className="text-sm text-amber-700 dark:text-amber-300">
-                                            You have{" "}
+                                            {t('judge.judgeDashboard.youHave')}{" "}
                                             <span className="font-semibold">
                                                 {stats.pendingReviews}
                                             </span>{" "}
@@ -120,8 +121,7 @@ function JudgeDashboard() {
                                             {stats.pendingReviews > 1
                                                 ? "s"
                                                 : ""}
-                                            {" "}waiting for evaluation.
-                                        </p>
+                                            {" "}{t('judge.judgeDashboard.waitingForEvaluation')}</p>
                                     </div>
                                 )}
 
@@ -129,7 +129,7 @@ function JudgeDashboard() {
                                     <div className="mt-3 rounded-lg border bg-muted/50 p-3">
 
                                         <p className="text-sm text-muted-foreground">
-                                            You currently have{" "}
+                                            {t('judge.judgeDashboard.youCurrentlyHave')}{" "}
                                             <span className="font-semibold text-foreground">
                                                 {stats.draftEvaluations}
                                             </span>{" "}
@@ -137,8 +137,7 @@ function JudgeDashboard() {
                                             {stats.draftEvaluations > 1
                                                 ? "s"
                                                 : ""}
-                                            {" "}that can be completed and submitted.
-                                        </p>
+                                            {" "}{t('judge.judgeDashboard.thatCanBeCompletedAnd')}</p>
 
                                     </div>
                                 )}
@@ -148,8 +147,7 @@ function JudgeDashboard() {
                         {/* Quick Actions */}
 
                         <h3 className="mb-4 font-semibold">
-                            Quick Actions
-                        </h3>
+                            {t('judge.judgeDashboard.quickActions')}</h3>
 
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
@@ -169,12 +167,10 @@ function JudgeDashboard() {
 
                                     <div>
                                         <p className="font-medium">
-                                            Assigned Competitions
-                                        </p>
+                                            {t('sidebar.assignedCompetitions')}</p>
 
                                         <p className="text-sm text-muted-foreground">
-                                            View competitions assigned to you.
-                                        </p>
+                                            {t('judge.judgeDashboard.viewCompetitionsAssignedToYou')}</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -195,12 +191,10 @@ function JudgeDashboard() {
 
                                     <div>
                                         <p className="font-medium">
-                                            Evaluation History
-                                        </p>
+                                            {t('sidebar.evaluationHistory')}</p>
 
                                         <p className="text-sm text-muted-foreground">
-                                            Review your completed evaluations.
-                                        </p>
+                                            {t('judge.judgeDashboard.reviewYourCompletedEvaluations')}</p>
                                     </div>
                                 </CardContent>
                             </Card>

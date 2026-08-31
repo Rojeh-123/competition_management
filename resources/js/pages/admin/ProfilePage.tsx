@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { route } from "ziggy-js";
@@ -11,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Globe, Eye, EyeOff, Trophy, Users, FolderTree, Megaphone } from "lucide-react";
 
 function AdminProfilePage() {
+  const { t } = useTranslation();
+
   type PageProps = {
     auth: {
       user: {
@@ -74,14 +77,14 @@ function AdminProfilePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Profile – Administrator Details" />
+      <Head title={t('admin.profile.profileAdministratorDetails')} />
       <Navbar />
 
       <main className="flex-1 min-w-0">
         <div className="p-4 sm:p-6 lg:p-8 min-w-0">
           <PageHeader
-            title="Administrator Profile"
-            description="Administrator information and management activity."
+            title={t('admin.profile.administratorProfile')}
+            description={t('admin.profile.administratorInformationAndManagementActivity')}
             actions={
               auth.user?.id === shownAdmin.id ? (
                 <div className="flex flex-wrap gap-2">
@@ -90,16 +93,14 @@ function AdminProfilePage() {
                     size="sm"
                     onClick={() => router.visit(route("edit-profile"))}
                   >
-                    Edit Profile
-                  </Button>
+                    {t('admin.profile.editProfile')}</Button>
 
                   <Button
                     variant="destructive"
                     size="sm"
                     onClick={() => setOpenDelete(true)}
                   >
-                    Delete Profile
-                  </Button>
+                    {t('admin.profile.deleteProfile')}</Button>
                 </div>
               ) : null
             }
@@ -148,8 +149,7 @@ function AdminProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Full Name
-                    </p>
+                      {t('admin.profile.fullName')}</p>
 
                     <p className="font-medium">
                       {shownAdmin.full_name}
@@ -199,8 +199,7 @@ function AdminProfilePage() {
                   {auth.user?.role === "admin" && (
                     <div>
                       <p className="text-xs text-muted-foreground">
-                        Admin ID
-                      </p>
+                        {t('admin.profile.adminId')}</p>
 
                       <p className="font-medium">
                         #{shownAdmin.id}
@@ -210,8 +209,7 @@ function AdminProfilePage() {
 
                   <div className="col-span-2">
                     <p className="text-xs text-muted-foreground">
-                      Biography
-                    </p>
+                      {t('admin.profile.biography')}</p>
 
                     <p className="font-medium">
                       {shownAdmin.bio || "No biography provided."}
@@ -231,8 +229,7 @@ function AdminProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Competitions
-                    </p>
+                      {t('nav.competitions')}</p>
                   </div>
 
                   <div className="rounded-lg border p-4 text-center">
@@ -243,8 +240,7 @@ function AdminProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Users
-                    </p>
+                      {t('admin.profile.users')}</p>
                   </div>
 
                   <div className="rounded-lg border p-4 text-center">
@@ -255,8 +251,7 @@ function AdminProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Categories
-                    </p>
+                      {t('sidebar.categories')}</p>
                   </div>
 
                   <div className="rounded-lg border p-4 text-center">
@@ -267,8 +262,7 @@ function AdminProfilePage() {
                     </p>
 
                     <p className="text-sm text-muted-foreground">
-                      Announcements
-                    </p>
+                      {t('sidebar.announcements')}</p>
                   </div>
 
                 </div>
@@ -286,8 +280,7 @@ function AdminProfilePage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="h-5 w-5" />
-                    Created Competitions
-                  </CardTitle>
+                    {t('admin.profile.createdCompetitions')}</CardTitle>
                 </CardHeader>
 
                 <CardContent>
@@ -316,8 +309,7 @@ function AdminProfilePage() {
                         ))
                       ) : (
                         <p className="py-8 text-center text-sm text-muted-foreground">
-                          No competitions have been created yet.
-                        </p>
+                          {t('admin.profile.noCompetitionsHaveBeenCreated')}</p>
                       )}
                     </div>
                   </ScrollArea>
@@ -336,19 +328,17 @@ function AdminProfilePage() {
       <Dialog open={openDelete} onOpenChange={setOpenDelete}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete Profile</DialogTitle>
+            <DialogTitle>{t('admin.profile.deleteProfile')}</DialogTitle>
           </DialogHeader>
 
           <p className="text-sm text-muted-foreground">
-            Please enter your password to confirm deleting your profile.
-            This action cannot be undone.
-          </p>
+            {t('admin.profile.pleaseEnterYourPasswordTo')}</p>
 
           <div className="relative mt-2">
             <Input
               type={showPassword ? "text" : "password"}
               value={password}
-              placeholder="Enter your password"
+              placeholder={t('admin.profile.enterYourPassword')}
               className="pr-10"
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -377,16 +367,14 @@ function AdminProfilePage() {
               variant="outline"
               onClick={() => setOpenDelete(false)}
             >
-              Cancel
-            </Button>
+              {t('admin.profile.cancel')}</Button>
 
             <Button
               variant="destructive"
               disabled={password.trim().length < 8}
               onClick={handleDelete}
             >
-              Yes, Delete
-            </Button>
+              {t('admin.profile.yesDelete')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

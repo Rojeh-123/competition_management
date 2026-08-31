@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Head, Link, router } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,8 @@ interface MessagesIndexProps {
 }
 
 function MessagesIndex({ messages }: MessagesIndexProps) {
+  const { t } = useTranslation();
+
     const handleDelete = (id: number) => {
         router.delete(route("admin.messages.destroy", id), {
             preserveScroll: true,
@@ -39,7 +42,7 @@ function MessagesIndex({ messages }: MessagesIndexProps) {
 
     return (
         <>
-            <Head title="Messages" />
+            <Head title={t('sidebar.messages')} />
             <div className="min-h-screen flex flex-col">
                 <Navbar />
 
@@ -49,16 +52,15 @@ function MessagesIndex({ messages }: MessagesIndexProps) {
                     <main className="flex-1 overflow-auto min-w-0">
                         <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                             <PageHeader
-                                title="Messages"
-                                description="Messages submitted through your contact form"
+                                title={t('sidebar.messages')}
+                                description={t('admin.messages.index.messagesSubmittedThroughYourContact')}
                             />
 
                             {/* Two-column grid with spacing */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                                 {messages.data.length === 0 && (
                                     <p className="text-sm text-muted-foreground col-span-2">
-                                        No messages yet.
-                                    </p>
+                                        {t('admin.messages.index.noMessagesYet')}</p>
                                 )}
 
                                 {messages.data.map((msg) => (
@@ -79,8 +81,7 @@ function MessagesIndex({ messages }: MessagesIndexProps) {
                                                             </p>
                                                             {!msg.is_read && (
                                                                 <Badge variant="default" className="shrink-0">
-                                                                    New
-                                                                </Badge>
+                                                                    {t('admin.messages.index.new')}</Badge>
                                                             )}
                                                         </div>
                                                         <p className="text-sm text-muted-foreground truncate">

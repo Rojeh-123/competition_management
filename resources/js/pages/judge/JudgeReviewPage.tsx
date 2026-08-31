@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from "react";
 import { Head, router, usePage, useForm } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,8 @@ interface PageProps extends InertiaPageProps {
 }
 
 function JudgeReviewPage() {
+  const { t } = useTranslation();
+
   const {
       submission,
       draftScores,
@@ -126,7 +129,7 @@ function JudgeReviewPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title="Evaluate Submission – Review Entry" />
+      <Head title={t('judge.judgeReview.evaluateSubmissionReviewEntry')} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -144,8 +147,7 @@ function JudgeReviewPage() {
               }
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Competitions
-            </Button>
+              {t('judge.judgeReview.backToCompetitions')}</Button>
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
@@ -154,15 +156,13 @@ function JudgeReviewPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    Submission Details
-                  </CardTitle>
+                    {t('judge.judgeReview.submissionDetails')}</CardTitle>
                 </CardHeader>
 
                 <CardContent className="space-y-4">
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Competition
-                    </p>
+                      {t('judge.judgeReview.competition')}</p>
 
                     <p className="font-medium">
                       {submission.competitionTitle}
@@ -171,8 +171,7 @@ function JudgeReviewPage() {
 
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Submission Title
-                    </p>
+                      {t('judge.judgeReview.submissionTitle')}</p>
 
                     <p className="font-medium">
                       {submission.title}
@@ -191,8 +190,7 @@ function JudgeReviewPage() {
 
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Description
-                    </p>
+                      {t('judge.judgeReview.description')}</p>
 
                     <p>
                       {submission.description ??
@@ -202,8 +200,7 @@ function JudgeReviewPage() {
 
                   <div>
                     <p className="mb-2 text-sm text-muted-foreground">
-                      Submitted Files
-                    </p>
+                      {t('judge.judgeReview.submittedFiles')}</p>
 
                     {submission.files?.length > 0 ? (
                       <div className="space-y-2">
@@ -220,13 +217,12 @@ function JudgeReviewPage() {
                             </a>
 
                             <p className="text-sm text-muted-foreground">
-                              Size: {(file.file_size / 1024).toFixed(2)} KB
-                            </p>
+                              {t('judge.judgeReview.size')}{(file.file_size / 1024).toFixed(2)} {t('judge.judgeReview.kb')}</p>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p>No files submitted.</p>
+                      <p>{t('judge.judgeReview.noFilesSubmitted')}</p>
                     )}
                   </div>
                 </CardContent>
@@ -237,8 +233,7 @@ function JudgeReviewPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    Score Submission
-                  </CardTitle>
+                    {t('judge.judgeReview.scoreSubmission')}</CardTitle>
                 </CardHeader>
 
                 <CardContent className="space-y-6">
@@ -289,8 +284,7 @@ function JudgeReviewPage() {
                   <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
                     <div className="flex items-center justify-between">
                       <span className="font-medium">
-                        Total Score
-                      </span>
+                        {t('judge.judgeReview.totalScore')}</span>
 
                       <span className="text-xl font-bold text-primary">
                         {totalScore} / {maxTotal}
@@ -300,13 +294,12 @@ function JudgeReviewPage() {
 
                   <div>
                     <Label>
-                      Evaluation Comments
-                    </Label>
+                      {t('judge.judgeReview.evaluationComments')}</Label>
 
                     <Textarea
                       value={data.comment}
                       onChange={(e) => setData("comment", e.target.value)}
-                      placeholder="Provide constructive feedback..."
+                      placeholder={t('judge.judgeReview.provideConstructiveFeedback')}
                       className="mt-2 min-h-[100px]"
                     />
                   </div>

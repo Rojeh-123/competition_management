@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -39,6 +40,8 @@ const AUDIENCES = [
 ];
 
 function CreateAnnouncementPage() {
+  const { t } = useTranslation();
+
     const [isDragging, setIsDragging] = useState(false);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -95,7 +98,7 @@ function CreateAnnouncementPage() {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Head title="Create Announcement – Platform Updates" />
+            <Head title={t('admin.createAnnouncement.createAnnouncementPlatformUpdates')} />
 
             <Navbar />
 
@@ -109,12 +112,11 @@ function CreateAnnouncementPage() {
                             className="mb-2 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
                         >
                             <ArrowLeft className="h-3.5 w-3.5" />
-                            Back to Announcements
-                        </Link>
+                            {t('admin.createAnnouncement.backToAnnouncements')}</Link>
 
                         <PageHeader
-                            title="Create Announcement"
-                            description="Broadcast a message to platform users"
+                            title={t('admin.createAnnouncement.createAnnouncement')}
+                            description={t('admin.createAnnouncement.broadcastAMessageToPlatform')}
                         />
 
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -131,8 +133,7 @@ function CreateAnnouncementPage() {
                                             <div>
                                                 <Label className="flex items-center gap-1.5">
                                                     <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                                                    Target Group
-                                                </Label>
+                                                    {t('admin.createAnnouncement.targetGroup')}</Label>
 
                                                 <Select
                                                     value={data.target_group}
@@ -141,7 +142,7 @@ function CreateAnnouncementPage() {
                                                     }
                                                 >
                                                     <SelectTrigger className="mt-1.5">
-                                                        <SelectValue placeholder="Select audience" />
+                                                        <SelectValue placeholder={t('admin.createAnnouncement.selectAudience')} />
                                                     </SelectTrigger>
 
                                                     <SelectContent>
@@ -167,8 +168,7 @@ function CreateAnnouncementPage() {
                                             <div>
                                                 <Label className="flex items-center gap-1.5">
                                                     <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
-                                                    Priority
-                                                </Label>
+                                                    {t('admin.createAnnouncement.priority')}</Label>
 
                                                 <div className="mt-1.5 grid grid-cols-3 gap-2">
                                                     {PRIORITIES.map((p) => (
@@ -207,11 +207,11 @@ function CreateAnnouncementPage() {
 
                                         {/* Title */}
                                         <div>
-                                            <Label htmlFor="title">Title</Label>
+                                            <Label htmlFor="title">{t('admin.createAnnouncement.title')}</Label>
 
                                             <Input
                                                 id="title"
-                                                placeholder="Announcement title..."
+                                                placeholder={t('admin.createAnnouncement.announcementTitle')}
                                                 className="mt-1.5"
                                                 value={data.title}
                                                 onChange={(e) =>
@@ -229,16 +229,15 @@ function CreateAnnouncementPage() {
                                         {/* Message */}
                                         <div>
                                             <div className="flex items-center justify-between">
-                                                <Label htmlFor="message">Message</Label>
+                                                <Label htmlFor="message">{t('contact.message')}</Label>
 
                                                 <span className="text-xs text-muted-foreground">
-                                                    {data.message.length} characters
-                                                </span>
+                                                    {data.message.length} {t('admin.createAnnouncement.characters')}</span>
                                             </div>
 
                                             <Textarea
                                                 id="message"
-                                                placeholder="Write your announcement message..."
+                                                placeholder={t('admin.createAnnouncement.writeYourAnnouncementMessage')}
                                                 className="mt-1.5 min-h-[160px] resize-none"
                                                 value={data.message}
                                                 onChange={(e) =>
@@ -257,10 +256,8 @@ function CreateAnnouncementPage() {
                                         <div>
                                             <Label className="flex items-center gap-1.5">
                                                 <ImageIcon className="h-3.5 w-3.5 text-muted-foreground" />
-                                                Photo
-                                                <span className="text-xs font-normal text-muted-foreground">
-                                                    (Optional)
-                                                </span>
+                                                {t('admin.createAnnouncement.photo')}<span className="text-xs font-normal text-muted-foreground">
+                                                    {t('admin.createAnnouncement.optional')}</span>
                                             </Label>
 
                                             <div
@@ -281,7 +278,7 @@ function CreateAnnouncementPage() {
                                                     <div className="relative overflow-hidden rounded-lg">
                                                         <img
                                                             src={imagePreview}
-                                                            alt="Announcement preview"
+                                                            alt={t('admin.createAnnouncement.announcementPreview')}
                                                             className="h-48 w-full object-cover"
                                                         />
 
@@ -322,8 +319,7 @@ function CreateAnnouncementPage() {
                                                         </p>
 
                                                         <p className="mt-2 text-xs text-muted-foreground">
-                                                            PNG, JPG, JPEG, WEBP up to 5MB
-                                                        </p>
+                                                            {t('admin.createAnnouncement.pngJpgJpegWebpUp')}</p>
 
                                                         <Input
                                                             id="announcement-image"
@@ -366,8 +362,7 @@ function CreateAnnouncementPage() {
                                                     setImagePreview(null);
                                                 }}
                                             >
-                                                Clear
-                                            </Button>
+                                                {t('admin.createAnnouncement.clear')}</Button>
                                         </div>
                                     </form>
                                 </CardContent>
@@ -379,8 +374,7 @@ function CreateAnnouncementPage() {
 
                                     <div className="flex items-center gap-2 mb-4 text-sm font-medium text-muted-foreground">
                                         <Megaphone className="h-4 w-4" />
-                                        Preview
-                                    </div>
+                                        {t('admin.createAnnouncement.preview')}</div>
 
                                     <div className="rounded-lg border bg-background overflow-hidden">
 
@@ -388,7 +382,7 @@ function CreateAnnouncementPage() {
                                         {imagePreview && (
                                             <img
                                                 src={imagePreview}
-                                                alt="Announcement preview"
+                                                alt={t('admin.createAnnouncement.announcementPreview')}
                                                 className="h-44 w-full object-cover"
                                             />
                                         )}
@@ -422,14 +416,13 @@ function CreateAnnouncementPage() {
                                     </div>
 
                                     <p className="mt-4 text-xs text-muted-foreground">
-                                        Visible to{' '}
+                                        {t('admin.createAnnouncement.visibleTo')}{' '}
                                         <span className="font-medium text-foreground">
                                             {AUDIENCES.find(
                                                 (a) => a.value === data.target_group
                                             )?.label ?? 'no one yet'}
                                         </span>{' '}
-                                        once broadcast.
-                                    </p>
+                                        {t('admin.createAnnouncement.onceBroadcast')}</p>
 
                                 </CardContent>
                             </Card>

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -43,6 +44,8 @@ function getPriority(priority: string | number) {
 }
 
 function NotificationsPage() {
+  const { t } = useTranslation();
+
   const { notifications } = usePage<{ notifications: Notification[] }>().props;
   const [items, setItems] = useState(notifications);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
@@ -143,15 +146,15 @@ function NotificationsPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Head title="Notifications – See Latest Updates" />
+      <Head title={t('participant.notifications.notificationsSeeLatestUpdates')} />
       <Navbar />
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
         <DashboardSidebar />
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
-              title="Notifications"
-              description="Stay updated on your competition activity"
+              title={t('sidebar.notifications')}
+              description={t('participant.notifications.stayUpdatedOnYourCompetition')}
               actions={
                 <Button
                   variant="outline"
@@ -160,16 +163,14 @@ function NotificationsPage() {
                   disabled={unreadCount === 0}
                   onClick={markAllRead}
                 >
-                  Mark All Read
-                </Button>
+                  {t('participant.notifications.markAllRead')}</Button>
               }
             />
 
             {sortedItems.length === 0 ? (
               <Card>
                 <CardContent className="py-10 text-center text-sm text-muted-foreground">
-                  You don't have any notifications yet.
-                </CardContent>
+                  {t('participant.notifications.youDontHaveAnyNotifications')}</CardContent>
               </Card>
             ) : (
               <>
@@ -253,13 +254,11 @@ function NotificationsPage() {
                                   {notif.is_read ? (
                                     <>
                                       <Mail className="h-3.5 w-3.5 mr-1" />
-                                      Mark unread
-                                    </>
+                                      {t('participant.notifications.markUnread')}</>
                                   ) : (
                                     <>
                                       <MailOpen className="h-3.5 w-3.5 mr-1" />
-                                      Mark read
-                                    </>
+                                      {t('participant.notifications.markRead')}</>
                                   )}
                                 </Button>
                                 <Button
@@ -288,7 +287,7 @@ function NotificationsPage() {
       {isSelecting && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
           <div className="flex items-center gap-3 rounded-full border bg-background shadow-lg px-4 py-2">
-            <span className="text-sm font-medium px-1">{selectedCount} selected</span>
+            <span className="text-sm font-medium px-1">{selectedCount} {t('participant.notifications.selected')}</span>
             <div className="h-5 w-px bg-border" />
             <Button
               variant="ghost"
@@ -297,8 +296,7 @@ function NotificationsPage() {
               onClick={() => bulkMarkRead(true)}
             >
               <MailOpen className="h-3.5 w-3.5 mr-1" />
-              Mark As read
-            </Button>
+              {t('participant.notifications.markAsRead')}</Button>
             <Button
               variant="ghost"
               size="sm"
@@ -306,8 +304,7 @@ function NotificationsPage() {
               onClick={() => bulkMarkRead(false)}
             >
               <Mail className="h-3.5 w-3.5 mr-1" />
-              Mark As unread
-            </Button>
+              {t('participant.notifications.markAsUnread')}</Button>
             <Button
               variant="ghost"
               size="sm"
