@@ -128,7 +128,7 @@ function LoginPage() {
                                             <Input
                                                 id="login_email"
                                                 type="email"
-                                                placeholder={t('auth.emailPlaceholder')}
+                                                placeholder="you@example.com"
                                                 className="mt-1.5"
                                                 value={loginData.email}
                                                 onChange={(e) => setLoginData('email', e.target.value)}
@@ -140,7 +140,7 @@ function LoginPage() {
                                                 <Input
                                                     id="login_password"
                                                     type={showPassword ? 'text' : 'password'}
-                                                    placeholder={t('authPages.text')}
+                                                    placeholder="••••••••"
                                                     value={loginData.password}
                                                     onChange={(e) => setLoginData('password', e.target.value)}
                                                 />
@@ -207,7 +207,7 @@ function LoginPage() {
                                                 <Label htmlFor="first_name">{t('auth.firstName')}</Label>
                                                 <Input
                                                     id="first_name"
-                                                    placeholder={t('authPages.rojeh')}
+                                                    placeholder="John"
                                                     value={data.first_name}
                                                     onChange={(e) => setData('first_name', e.target.value)}
                                                 />
@@ -222,7 +222,7 @@ function LoginPage() {
                                                 <Label htmlFor="last_name">{t('auth.lastName')}</Label>
                                                 <Input
                                                     id="last_name"
-                                                    placeholder={t('authPages.samy')}
+                                                    placeholder="Doe"
                                                     value={data.last_name}
                                                     onChange={(e) => setData('last_name', e.target.value)}
                                                 />
@@ -240,7 +240,7 @@ function LoginPage() {
                                             <Input
                                                 id="email"
                                                 type="email"
-                                                placeholder={t('auth.emailPlaceholder')}
+                                                placeholder="you@example.com"
                                                 value={data.email}
                                                 onChange={(e) => setData('email', e.target.value)}
                                             />
@@ -255,7 +255,7 @@ function LoginPage() {
                                             <Label htmlFor="username">{t('auth.username')}</Label>
                                             <Input
                                                 id="username"
-                                                placeholder={t('auth.usernamePlaceholder')}
+                                                placeholder="johndoe"
                                                 value={data.username}
                                                 onChange={(e) => setData('username', e.target.value)}
                                             />
@@ -285,7 +285,7 @@ function LoginPage() {
                                                 </PopoverTrigger>
                                                 <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                                                     <Command>
-                                                        <CommandInput placeholder={t('auth.searchCountry')} />
+                                                        <CommandInput placeholder="Search country..." />
                                                         <CommandList>
                                                             <CommandEmpty>{t('admin.manageUsers.noCountryFound')}</CommandEmpty>
                                                             <CommandGroup>
@@ -324,7 +324,7 @@ function LoginPage() {
                                             <Input
                                                 id="age"
                                                 type="number"
-                                                placeholder={t('auth.agePlaceholder')}
+                                                placeholder="25"
                                                 min={1}
                                                 max={120}
                                                 value={data.age}
@@ -358,7 +358,7 @@ function LoginPage() {
                                             <Input
                                                 id="password"
                                                 type="password"
-                                                placeholder={t('auth.min8Chars')}
+                                                placeholder="Minimum 8 characters"
                                                 value={data.password}
                                                 onChange={(e) => setData('password', e.target.value)}
                                             />
@@ -376,7 +376,7 @@ function LoginPage() {
                                             <Input
                                                 id="password_confirmation"
                                                 type="password"
-                                                placeholder={t('auth.repeatPassword')}
+                                                placeholder="Repeat your password"
                                                 value={data.password_confirmation}
                                                 onChange={(e) =>
                                                     setData('password_confirmation', e.target.value)

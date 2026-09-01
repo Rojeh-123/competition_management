@@ -183,7 +183,7 @@ export default function SubmissionReviewPage() {
                       {submission.files.map((file) => (
                         <li key={file.id}>
                           <a href={route("submissions.download", file.id)}>
-                              {file.fileName}
+                            {file.fileName}
                           </a>
                         </li>
                       ))}
@@ -229,7 +229,7 @@ export default function SubmissionReviewPage() {
                 <p><span className="font-medium">{t('admin.submissionReview.pastSubmissions')}</span> {submission.participantPastSubmissions}</p>
                 <p><span className="font-medium">{t('admin.submissionReview.category')}</span> {submission.categoryName}</p>
                 <p><span className="font-medium">{t('admin.submissionReview.version')}</span> {submission.versionNumber}</p>
-                <p><span className="font-medium">{t('admin.submissionReview.public')}</span> {submission.isPublic ? 'Yes' : 'No'}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.public')}</span> {submission.isPublic ? t('admin.submissionReview.yes') : t('admin.submissionReview.no')}</p>
               </CardContent>
             </Card>
 
@@ -238,8 +238,8 @@ export default function SubmissionReviewPage() {
                 <CardTitle>{t('admin.submissionReview.moderationTimeline')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
-                <p><span className="font-medium">{t('admin.submissionReview.created')}</span> {submission.createdAt ?? 'Unknown'}</p>
-                <p><span className="font-medium">{t('admin.submissionReview.updated')}</span> {submission.updatedAt ?? 'Unknown'}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.created')}</span> {submission.createdAt ?? t('admin.submissionReview.unknownDate')}</p>
+                <p><span className="font-medium">{t('admin.submissionReview.updated')}</span> {submission.updatedAt ?? t('admin.submissionReview.unknownDate')}</p>
                 <p className="text-muted-foreground">{t('admin.submissionReview.statusChangesAndModerationActions')}</p>
               </CardContent>
             </Card>

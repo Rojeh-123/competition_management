@@ -35,9 +35,17 @@ interface PageProps {
 }
 
 function JudgeDashboard() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { stats } = usePage<PageProps>().props;
+
+    const pendingReviewText = stats.pendingReviews === 1
+        ? t('judge.judgeDashboard.pendingReviewSingular')
+        : t('judge.judgeDashboard.pendingReviewPlural');
+
+    const draftEvaluationText = stats.draftEvaluations === 1
+        ? t('judge.judgeDashboard.draftEvaluationSingular')
+        : t('judge.judgeDashboard.draftEvaluationPlural');
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -117,10 +125,7 @@ function JudgeDashboard() {
                                             <span className="font-semibold">
                                                 {stats.pendingReviews}
                                             </span>{" "}
-                                            pending review
-                                            {stats.pendingReviews > 1
-                                                ? "s"
-                                                : ""}
+                                            {pendingReviewText}
                                             {" "}{t('judge.judgeDashboard.waitingForEvaluation')}</p>
                                     </div>
                                 )}
@@ -133,10 +138,7 @@ function JudgeDashboard() {
                                             <span className="font-semibold text-foreground">
                                                 {stats.draftEvaluations}
                                             </span>{" "}
-                                            draft evaluation
-                                            {stats.draftEvaluations > 1
-                                                ? "s"
-                                                : ""}
+                                            {draftEvaluationText}
                                             {" "}{t('judge.judgeDashboard.thatCanBeCompletedAnd')}</p>
 
                                     </div>

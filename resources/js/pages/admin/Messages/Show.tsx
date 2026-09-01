@@ -20,7 +20,7 @@ interface MessageShowProps {
 }
 
 function MessageShow({ message }: MessageShowProps) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const handleDelete = () => {
         router.delete(route("admin.messages.destroy", message.id));
@@ -58,7 +58,7 @@ function MessageShow({ message }: MessageShowProps) {
                                         <Mail className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-sm font-medium">
-                                                {isEmail ? "Email" : "WhatsApp Number"}
+                                                {isEmail ? t('admin.messages.show.emailLabel') : t('admin.messages.show.whatsappLabel')}
                                             </p>
                                             <a href={replyHref} className="text-sm text-muted-foreground">
                                                 {message.contact}
@@ -80,11 +80,11 @@ function MessageShow({ message }: MessageShowProps) {
                                     <div className="flex gap-2 pt-2">
                                         <Button variant="outline" asChild>
                                             <a href={replyHref}>
-                                                {isEmail ? "Reply by Email" : "Reply via WhatsApp"}
+                                                {isEmail ? t('admin.messages.show.replyEmail') : t('admin.messages.show.replyWhatsApp')}
                                             </a>
                                         </Button>
                                         <Button variant="destructive" onClick={handleDelete}>
-                                            <Trash2 className="h-4 w-4 mr-2" /> Delete
+                                            <Trash2 className="h-4 w-4 mr-2" /> {t('admin.messages.show.deleteButton')}
                                         </Button>
                                     </div>
                                 </CardContent>

@@ -67,7 +67,7 @@ function ManageSubmissionsPage() {
                   <TabsTrigger value="pending">{t('admin.manageSubmissions.pending')}</TabsTrigger>
                   <TabsTrigger value="approved">{t('admin.manageSubmissions.approved')}</TabsTrigger>
                   <TabsTrigger value="rejected">{t('admin.manageSubmissions.rejected')}</TabsTrigger>
-                  <TabsTrigger value="all">All</TabsTrigger>
+                  <TabsTrigger value="all">{t('common.all')}</TabsTrigger>
                 </TabsList>
               </div>
             </Tabs>
@@ -76,12 +76,12 @@ function ManageSubmissionsPage() {
               <table className="w-full text-sm">
                 <thead className="bg-muted">
                   <tr>
-                    <th className="text-left px-4 py-3 font-medium">ID</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('admin.manageSubmissions.idHeader')}</th>
                     <th className="text-left px-4 py-3 font-medium">{t('admin.manageSubmissions.title')}</th>
                     <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">
                       {t('admin.manageSubmissions.competition')}</th>
                     <th className="text-left px-4 py-3 font-medium hidden xl:table-cell">
-                      Participant
+                      {t('admin.manageSubmissions.participantHeader')}
                     </th>
                     <th className="text-left px-4 py-3 font-medium">{t('common.status')}</th>
                     <th className="text-left px-4 py-3 font-medium">{t('admin.manageSubmissions.actions')}</th>
@@ -115,15 +115,14 @@ function ManageSubmissionsPage() {
 
                       <td className="px-4 py-3 whitespace-nowrap">
                         <Badge
-                          className={`text-xs capitalize ${
-                            sub.status === 'approved'
+                          className={`text-xs capitalize ${sub.status === 'approved'
                               ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
                               : sub.status === 'rejected'
-                              ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                              : sub.status === 'judging'
-                              ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                              : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300'
-                          }`}
+                                ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
+                                : sub.status === 'judging'
+                                  ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                  : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300'
+                            }`}
                         >
                           {sub.status}
                         </Badge>

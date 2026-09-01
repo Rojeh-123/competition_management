@@ -29,7 +29,7 @@ interface IndexProps {
 }
 
 function TeamsIndexPage({ teams }: IndexProps) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const handleDelete = (id: number) => {
         if (confirm(t('admin.teams.index.removeThisTeam'))) {
@@ -64,7 +64,7 @@ function TeamsIndexPage({ teams }: IndexProps) {
                                         <table className="w-full border-collapse">
                                             <thead>
                                                 <tr className="text-left border-b text-sm text-muted-foreground">
-                                                    <th className="py-2 font-medium">Name</th>
+                                                    <th className="py-2 font-medium">{t('admin.teams.index.name')}</th>
                                                     <th className="font-medium">{t('admin.teams.index.competition')}</th>
                                                     <th className="font-medium">{t('admin.teams.index.members')}</th>
                                                     <th></th>
@@ -77,7 +77,7 @@ function TeamsIndexPage({ teams }: IndexProps) {
                                                         <td>
                                                             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                                                                 <Trophy className="h-3.5 w-3.5" />
-                                                                {team.competition?.title ?? '—'}
+                                                                {team.competition?.title ?? t('admin.teams.index.emptyCompetition')}
                                                             </span>
                                                         </td>
                                                         <td>

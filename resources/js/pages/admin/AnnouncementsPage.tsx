@@ -53,11 +53,11 @@ function AnnouncementsPage({ announcements }: Props) {
     `${a.title}|${a.created_at}`;
 
   const handleDelete = (announcement: Announcement) => {
-    const confirmed = window.confirm(
-      `Delete "${announcement.title}"? This will remove it for all ${announcement.recipient_count} recipient(s) and can't be undone.`
-    );
+    const confirmMsg = t('admin.announcements.deleteConfirm')
+      .replace('{title}', announcement.title)
+      .replace('{count}', String(announcement.recipient_count));
 
-    if (!confirmed) return;
+    if (!window.confirm(confirmMsg)) return;
 
     setDeletingKey(keyFor(announcement));
 
@@ -94,7 +94,8 @@ function AnnouncementsPage({ announcements }: Props) {
               <Button asChild className="cursor-pointer">
                 <Link href={route('admin.announcements.create')}>
                   <Plus className="h-4 w-4 mr-2" />
-                  {t('admin.announcements.newAnnouncement')}</Link>
+                  {t('admin.announcements.newAnnouncement')}
+                </Link>
               </Button>
             </div>
 
@@ -108,13 +109,15 @@ function AnnouncementsPage({ announcements }: Props) {
                   <div>
                     <p className="font-medium">{t('admin.announcements.noAnnouncementsYet')}</p>
                     <p className="text-sm text-muted-foreground">
-                      {t('admin.announcements.broadcastYourFirstMessageTo')}</p>
+                      {t('admin.announcements.broadcastYourFirstMessageTo')}
+                    </p>
                   </div>
 
                   <Button asChild className="cursor-pointer mt-2">
                     <Link href={route('admin.announcements.create')}>
                       <Plus className="h-4 w-4 mr-2" />
-                      {t('admin.announcements.newAnnouncement')}</Link>
+                      {t('admin.announcements.newAnnouncement')}
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -160,7 +163,7 @@ function AnnouncementsPage({ announcements }: Props) {
                                   className="h-7 w-7 cursor-pointer text-muted-foreground hover:text-red-500"
                                   disabled={isDeleting}
                                   onClick={() => handleDelete(announcement)}
-                                  aria-label="Delete announcement"
+                                  aria-label={t('admin.announcements.deleteAriaLabel')}
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
@@ -174,7 +177,10 @@ function AnnouncementsPage({ announcements }: Props) {
                             <div className="flex items-center gap-4 pt-1 text-xs text-muted-foreground">
                               <span className="flex items-center gap-1.5">
                                 <Users className="h-3.5 w-3.5" />
-                                {announcement.recipient_count} {t('admin.announcements.recipient')}{announcement.recipient_count === 1 ? '' : 's'}
+                                {t('admin.announcements.recipientCount').replace(
+                                  '{count}',
+                                  String(announcement.recipient_count)
+                                )}
                               </span>
 
                               <span className="flex items-center gap-1.5">

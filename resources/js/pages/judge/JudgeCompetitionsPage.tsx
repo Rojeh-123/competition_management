@@ -22,9 +22,19 @@ interface PageProps {
 }
 
 function JudgeCompetitionsPage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { competitions } = usePage<PageProps>().props;
+
+    // Status mapping using existing translation keys
+    const statusMap: Record<string, string> = {
+        upcoming: t('status.upcoming'),
+        open: t('status.open'),
+        submission_closed: t('status.submission_closed'),
+        judging: t('status.judging'),
+        results_published: t('status.results_published'),
+        archived: t('status.archived'),
+    };
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -87,10 +97,7 @@ function JudgeCompetitionsPage() {
 
                                             <td className="px-4 py-3 whitespace-nowrap">
                                                 <Badge className="border-0 bg-purple-100 text-xs text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">
-                                                    {comp.status.replace(
-                                                        "_",
-                                                        " "
-                                                    )}
+                                                    {statusMap[comp.status] || comp.status.replace("_", " ")}
                                                 </Badge>
                                             </td>
 

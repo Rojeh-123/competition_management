@@ -41,12 +41,12 @@ function JudgeSubmissionsQueue() {
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
               title={t('judge.judgeSubmissionsQueue.submissionsQueue')}
-              description={`Approved entries for ${competitionTitle}`}
+              description={`${t('judge.judgeSubmissionsQueue.approvedEntriesFor')} ${competitionTitle}`}
               actions={
                 <Select value={filter} onValueChange={setFilter}>
                   <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="all">{t('common.all')}</SelectItem>
                     <SelectItem value="oldest">{t('judge.judgeSubmissionsQueue.oldestFirst')}</SelectItem>
                     <SelectItem value="newest">{t('judge.judgeSubmissionsQueue.newestFirst')}</SelectItem>
                   </SelectContent>
@@ -60,7 +60,7 @@ function JudgeSubmissionsQueue() {
                   <tr>
                     <th className="text-left px-4 py-3 font-medium">{t('judge.judgeSubmissionsQueue.entryId')}</th>
                     <th className="text-left px-4 py-3 font-medium">{t('judge.judgeSubmissionsQueue.title')}</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Participant</th>
+                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">{t('judge.judgeSubmissionsQueue.participant')}</th>
                     <th className="text-left px-4 py-3 font-medium">{t('judge.judgeSubmissionsQueue.action')}</th>
                   </tr>
                 </thead>

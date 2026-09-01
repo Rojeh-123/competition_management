@@ -83,32 +83,32 @@ function ManageCompetitionsPage() {
   const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] = useState(false);
   const [selectedPrivateCompetition, setSelectedPrivateCompetition] = useState(0);
 
-    const {
-        data,
-        setData,
-        post,
-        processing,
-        reset,
-    } = useForm({
-        username: "",
-        email: "",
-    });
+  const {
+    data,
+    setData,
+    post,
+    processing,
+    reset,
+  } = useForm({
+    username: "",
+    email: "",
+  });
 
-    const handleAddParticipant = (e: React.FormEvent, competitionId: number) => {
-        e.preventDefault();
+  const handleAddParticipant = (e: React.FormEvent, competitionId: number) => {
+    e.preventDefault();
 
-        post(
-            route("admin.competitions.participant.private",  competitionId),
-            {
-                preserveScroll: true,
+    post(
+      route("admin.competitions.participant.private", competitionId),
+      {
+        preserveScroll: true,
 
-                onSuccess: () => {
-                    reset();
-                    setIsAddParticipantModalOpen(false);
-                },
-            }
-        );
-    };
+        onSuccess: () => {
+          reset();
+          setIsAddParticipantModalOpen(false);
+        },
+      }
+    );
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -144,15 +144,15 @@ function ManageCompetitionsPage() {
             >
               <div className="overflow-x-auto pb-1 max-w-full">
                 <TabsList className="inline-flex w-auto min-w-full justify-start">
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-                  <TabsTrigger value="open">Open</TabsTrigger>
+                  <TabsTrigger value="all">{t('common.all')}</TabsTrigger>
+                  <TabsTrigger value="upcoming">{t('status.upcoming')}</TabsTrigger>
+                  <TabsTrigger value="open">{t('status.open')}</TabsTrigger>
                   <TabsTrigger value="submission_closed">
                     {t('status.submission_closed')}</TabsTrigger>
-                  <TabsTrigger value="judging">Judging</TabsTrigger>
+                  <TabsTrigger value="judging">{t('status.judging')}</TabsTrigger>
                   <TabsTrigger value="results_published">
                     {t('status.results_published')}</TabsTrigger>
-                  <TabsTrigger value="archived">Archived</TabsTrigger>
+                  <TabsTrigger value="archived">{t('status.archived')}</TabsTrigger>
                 </TabsList>
               </div>
             </Tabs>
@@ -187,9 +187,12 @@ function ManageCompetitionsPage() {
                         </td>
 
                         <td className="hidden px-6 py-3 sm:table-cell">
-                          {comp.participants_count == 0
-                            ? "N/A"
-                            : `(${comp.participants_count} participants)`}
+                          {comp.participants_count === 0
+                            ? t('admin.manageCompetitions.notApplicable')
+                            : t('admin.manageCompetitions.participantsCount').replace(
+                              '{count}',
+                              String(comp.participants_count)
+                            )}
                         </td>
 
                         <td className="hidden px-6 py-3 md:table-cell">
@@ -247,17 +250,14 @@ function ManageCompetitionsPage() {
           </div>
         </main>
 
-
-
         <Dialog
           open={isAddParticipantModalOpen}
           onOpenChange={setIsAddParticipantModalOpen}
         >
           <DialogContent>
-
             <DialogHeader>
               <DialogTitle>
-                {t('admin.manageCompetitions.addJudgingCriterion')}</DialogTitle>
+                {t('admin.manageCompetitions.addParticipantTitle')}</DialogTitle>
             </DialogHeader>
 
             <form
@@ -265,58 +265,43 @@ function ManageCompetitionsPage() {
               className="space-y-4"
             >
               <div className="space-y-2">
-                <Label>Username</Label>
-
+                <Label>{t('admin.manageCompetitions.usernameLabel')}</Label>
                 <Input
                   value={data.username}
                   onChange={(e) =>
-                    setData(
-                      "username",
-                      e.target.value
-                    )
+                    setData("username", e.target.value)
                   }
                 />
               </div>
               <div className="space-y-2">
-                <Label>Email</Label>
-
+                <Label>{t('admin.manageCompetitions.emailLabel')}</Label>
                 <Input
                   value={data.email}
                   onChange={(e) =>
-                    setData(
-                      "email",
-                      e.target.value
-                    )
+                    setData("email", e.target.value)
                   }
                 />
               </div>
 
               <DialogFooter>
-
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() =>
-                    setIsAddParticipantModalOpen(false)
-                  }
+                  onClick={() => setIsAddParticipantModalOpen(false)}
                 >
                   {t('admin.manageCompetitions.cancel')}</Button>
-
                 <Button
                   type="submit"
                   disabled={processing}
                 >
                   {processing
-                    ? "Adding..."
-                    : "Add Participant"}
+                    ? t('admin.manageCompetitions.addingParticipant')
+                    : t('admin.manageCompetitions.addParticipantButton')}
                 </Button>
-
               </DialogFooter>
             </form>
-
           </DialogContent>
         </Dialog>
-
       </div>
       <Footer />
     </div>

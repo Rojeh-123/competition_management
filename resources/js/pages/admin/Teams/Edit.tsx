@@ -49,7 +49,7 @@ interface TeamForm {
 }
 
 function TeamsEditPage({ team, competitions, participants }: EditProps) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { data, setData, put, processing, errors } = useForm<TeamForm>({
         name: team.name,
@@ -90,7 +90,10 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                 <DashboardSidebar />
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
-                        <PageHeader title={t('admin.teams.edit.editTeam')} description={`Update details for "${team.name}"`} />
+                        <PageHeader
+                            title={t('admin.teams.edit.editTeam')}
+                            description={t('admin.teams.edit.updateDescription').replace('{name}', team.name)}
+                        />
 
                         <Card>
                             <CardContent className="pt-6">
@@ -175,7 +178,7 @@ function TeamsEditPage({ team, competitions, participants }: EditProps) {
                                     <div className="flex items-center gap-3 pt-1">
                                         <Button type="submit" className="cursor-pointer" disabled={processing}>
                                             <Save className="h-4 w-4 mr-2" />
-                                            {processing ? 'Saving...' : 'Update Team'}
+                                            {processing ? t('admin.teams.edit.saving') : t('admin.teams.edit.updateTeam')}
                                         </Button>
                                     </div>
                                 </form>

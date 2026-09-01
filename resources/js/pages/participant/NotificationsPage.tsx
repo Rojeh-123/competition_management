@@ -181,7 +181,7 @@ function NotificationsPage() {
                     aria-label="Select all notifications"
                   />
                   <span className="text-sm text-muted-foreground">
-                    {isSelecting ? `${selectedCount} selected` : 'Select all'}
+                    {isSelecting ? `${selectedCount} ${t('participant.notifications.selected')}` : t('participant.notifications.selectAll')}
                   </span>
                 </div>
 
@@ -268,7 +268,7 @@ function NotificationsPage() {
                                   onClick={() => deleteNotification(notif.id)}
                                 >
                                   <Trash2 className="h-3.5 w-3.5 mr-1" />
-                                  Delete
+                                  {t('participant.notifications.delete')}
                                 </Button>
                               </div>
                             </div>
@@ -312,7 +312,7 @@ function NotificationsPage() {
               onClick={bulkDelete}
             >
               <Trash2 className="h-3.5 w-3.5 mr-1" />
-              Delete
+              {t('participant.notifications.delete')}
             </Button>
             <div className="h-5 w-px bg-border" />
             <Button

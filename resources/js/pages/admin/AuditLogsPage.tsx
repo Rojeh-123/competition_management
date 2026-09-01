@@ -134,7 +134,7 @@ export default function AuditLogsPage() {
 
                         <td className="px-4 py-3 font-medium whitespace-nowrap">
                           {log.user?.full_name ??
-                            "System"}
+                            t('admin.auditLogs.systemOperator')}
                         </td>
 
                         <td className="hidden px-4 py-3 sm:table-cell whitespace-nowrap">
@@ -154,7 +154,7 @@ export default function AuditLogsPage() {
                         <td className="hidden px-4 py-3 text-muted-foreground lg:table-cell">
                           {log.details ??
                             (log.record_id
-                              ? `Record #${log.record_id}`
+                              ? t('admin.auditLogs.recordPrefix').replace('{id}', String(log.record_id))
                               : "-")}
                         </td>
 

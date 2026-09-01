@@ -62,7 +62,7 @@ function CountryCombobox({
     value: string;
     onChange: (value: string) => void;
 }) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
@@ -101,7 +101,7 @@ function CountryCombobox({
                 className="w-full justify-between font-normal"
                 onClick={() => setOpen((o) => !o)}
             >
-                {value || "Select a country"}
+                {value || t('admin.manageUsers.selectCountryPlaceholder')}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
 
@@ -149,7 +149,7 @@ function CountryCombobox({
 }
 
 function ManageUsersPage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const [search, setSearch] = useState('');
 
@@ -214,7 +214,7 @@ function ManageUsersPage() {
     const deleteUser = () => {
         if (!selectedUser) return;
 
-        if (!confirm(t('admin.manageUsers.areYouSureYouWant'))) {
+        if (!confirm(t('admin.manageUsers.deleteConfirmation'))) {
             return;
         }
 
@@ -294,11 +294,9 @@ function ManageUsersPage() {
                                         <th className="px-4 py-3 text-left font-medium">
                                             {t('admin.manageUsers.user')}</th>
                                         <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">
-                                            Role
-                                        </th>
+                                            {t('admin.manageUsers.roleLabel')}</th>
                                         <th className="px-4 py-3 text-left font-medium hidden md:table-cell">
-                                            Country
-                                        </th>
+                                            {t('admin.manageUsers.countryLabel')}</th>
                                         <th className="px-4 py-3 text-left font-medium">
                                             {t('common.status')}</th>
                                         <th className="px-4 py-3 text-left font-medium">
@@ -351,7 +349,6 @@ function ManageUsersPage() {
                                                 {user.country}
                                             </td>
 
-
                                             <td className="px-4 py-3 whitespace-nowrap">
                                                 <Badge
                                                     className={
@@ -360,7 +357,7 @@ function ManageUsersPage() {
                                                             : 'border-0 bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50 text-xs transition-colors'
                                                     }
                                                 >
-                                                    {user.account_status === 'active' ? 'Active' : 'Disabled'}
+                                                    {user.account_status === 'active' ? t('admin.manageUsers.active') : t('admin.manageUsers.disabled')}
                                                 </Badge>
                                             </td>
 
@@ -444,7 +441,7 @@ function ManageUsersPage() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="username">Username</Label>
+                                            <Label htmlFor="username">{t('admin.manageUsers.usernameLabel')}</Label>
                                             <Input
                                                 id="username"
                                                 value={form?.username ?? ""}
@@ -463,7 +460,7 @@ function ManageUsersPage() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="email">Email</Label>
+                                            <Label htmlFor="email">{t('admin.manageUsers.emailLabel')}</Label>
                                             <Input
                                                 id="email"
                                                 type="email"
@@ -483,7 +480,7 @@ function ManageUsersPage() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="country">Country</Label>
+                                            <Label htmlFor="country">{t('admin.manageUsers.countryLabel')}</Label>
                                             <CountryCombobox
                                                 id="country"
                                                 value={form?.country ?? ""}
@@ -504,7 +501,7 @@ function ManageUsersPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="age">Age</Label>
+                                        <Label htmlFor="age">{t('admin.manageUsers.ageLabel')}</Label>
                                         <Input
                                             id="age"
                                             type="number"
@@ -524,7 +521,7 @@ function ManageUsersPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="bio">Bio</Label>
+                                        <Label htmlFor="bio">{t('admin.manageUsers.bioLabel')}</Label>
                                         <textarea
                                             id="bio"
                                             placeholder={t('auth.bioPlaceholder')}
@@ -555,7 +552,7 @@ function ManageUsersPage() {
                                     <div className="grid gap-4 md:grid-cols-2">
 
                                         <div className="space-y-2">
-                                            <Label>Role</Label>
+                                            <Label>{t('admin.manageUsers.roleLabel')}</Label>
 
                                             <Select
                                                 value={form?.role}
@@ -572,15 +569,15 @@ function ManageUsersPage() {
 
                                                 <SelectContent>
                                                     <SelectItem value="participant">
-                                                        Participant
+                                                        {t('admin.manageUsers.participant')}
                                                     </SelectItem>
 
                                                     <SelectItem value="judge">
-                                                        Judge
+                                                        {t('admin.manageUsers.judge')}
                                                     </SelectItem>
 
                                                     <SelectItem value="admin">
-                                                        Admin
+                                                        {t('admin.manageUsers.admin')}
                                                     </SelectItem>
                                                 </SelectContent>
                                             </Select>
@@ -613,7 +610,7 @@ function ManageUsersPage() {
 
                                                 <SelectContent>
                                                     <SelectItem value="active">
-                                                        Active
+                                                        {t('admin.manageUsers.active')}
                                                     </SelectItem>
 
                                                     <SelectItem value="disabled">
@@ -714,7 +711,7 @@ function ManageUsersPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label>Username</Label>
+                                    <Label>{t('admin.manageUsers.usernameLabel')}</Label>
                                     <Input
                                         value={newUser.username}
                                         onChange={(e) =>
@@ -732,7 +729,7 @@ function ManageUsersPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label>Age</Label>
+                                    <Label>{t('admin.manageUsers.ageLabel')}</Label>
                                     <Input
                                         type="number"
                                         value={newUser.age}
@@ -751,7 +748,7 @@ function ManageUsersPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label>Country</Label>
+                                    <Label>{t('admin.manageUsers.countryLabel')}</Label>
                                     <CountryCombobox
                                         value={newUser.country}
                                         onChange={(value) =>
@@ -770,7 +767,7 @@ function ManageUsersPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label>Email</Label>
+                                <Label>{t('admin.manageUsers.emailLabel')}</Label>
                                 <Input
                                     type="email"
                                     value={newUser.email}
@@ -789,7 +786,7 @@ function ManageUsersPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label>Bio</Label>
+                                <Label>{t('admin.manageUsers.bioLabel')}</Label>
 
                                 <textarea
                                     className="flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -820,7 +817,7 @@ function ManageUsersPage() {
                             <div className="grid gap-4 md:grid-cols-2">
 
                                 <div className="space-y-2">
-                                    <Label>Password</Label>
+                                    <Label>{t('admin.manageUsers.password')}</Label>
                                     <Input
                                         type="password"
                                         value={password}
@@ -850,7 +847,7 @@ function ManageUsersPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label>Role</Label>
+                                    <Label>{t('admin.manageUsers.roleLabel')}</Label>
 
                                     <Select
                                         value={newUser.role}
@@ -867,15 +864,15 @@ function ManageUsersPage() {
 
                                         <SelectContent>
                                             <SelectItem value="participant">
-                                                Participant
+                                                {t('admin.manageUsers.participant')}
                                             </SelectItem>
 
                                             <SelectItem value="judge">
-                                                Judge
+                                                {t('admin.manageUsers.judge')}
                                             </SelectItem>
 
                                             <SelectItem value="admin">
-                                                Admin
+                                                {t('admin.manageUsers.admin')}
                                             </SelectItem>
                                         </SelectContent>
                                     </Select>
@@ -904,7 +901,7 @@ function ManageUsersPage() {
 
                                         <SelectContent>
                                             <SelectItem value="active">
-                                                Active
+                                                {t('admin.manageUsers.active')}
                                             </SelectItem>
 
                                             <SelectItem value="disabled">

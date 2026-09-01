@@ -58,7 +58,7 @@ type CompetitionForm = {
   visibility: "public" | "private";
   is_featured: boolean;
   team_allowed: boolean;
-  has_question_bank: boolean; // Added field to form state
+  has_question_bank: boolean;
   certificate_enabled: boolean;
   requires_approval: boolean;
 
@@ -113,7 +113,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
     visibility: competition?.visibility ?? "public",
     is_featured: competition?.is_featured ?? false,
     team_allowed: competition?.team_allowed ?? false,
-    has_question_bank: competition?.has_question_bank ?? false, // Initialized property
+    has_question_bank: competition?.has_question_bank ?? false,
     certificate_enabled: competition?.certificate_enabled ?? true,
     requires_approval: competition?.requires_approval ?? false,
 
@@ -145,9 +145,16 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
     }
   };
 
+  const pageTitle = isEditing
+    ? t('admin.createAndEditCompetitionPages.editTitle')
+    : t('admin.createAndEditCompetitionPages.createTitle');
+  const pageDescription = isEditing
+    ? t('admin.createAndEditCompetitionPages.editDescription')
+    : t('admin.createAndEditCompetitionPages.createDescription');
+
   return (
     <div className="flex min-h-screen flex-col">
-      <Head title={isEditing ? "Edit Competition – Competition Management" : "Create Competition – Competition Management"} />
+      <Head title={pageTitle} />
       <Navbar />
 
       <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -156,12 +163,8 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
         <main className="flex-1 overflow-auto min-w-0">
           <div className="p-4 sm:p-6 lg:p-8 min-w-0">
             <PageHeader
-              title={isEditing ? "Edit Competition" : "Create New Competition"}
-              description={
-                isEditing
-                  ? "Update the competition details."
-                  : "Set up a new competition for participants"
-              }
+              title={pageTitle}
+              description={pageDescription}
             />
 
             <Card className="mx-auto">
@@ -258,7 +261,9 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                         {/* Current Image */}
                         <div>
                           <Label className="text-sm text-muted-foreground">
-                            {imagePreview ? "New Image Preview" : "Current Image"}
+                            {imagePreview
+                              ? t('admin.createAndEditCompetitionPages.newImagePreviewLabel')
+                              : t('admin.createAndEditCompetitionPages.currentImageLabel')}
                           </Label>
 
                           {imagePreview ? (
@@ -322,7 +327,6 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                             {t('admin.createAndEditCompetitionPages.allowTeamParticipation')}</Label>
                         </div>
 
-                        {/* Added Question Bank Checkbox */}
                         <div className="flex items-center gap-2">
                           <Checkbox
                             id="has_question_bank"
@@ -679,7 +683,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                           id="contact_email"
                           type="email"
                           className="mt-1.5"
-                          placeholder="competition@example.com"
+                          placeholder={t('admin.createAndEditCompetitionPages.emailPlaceholder')}
                           value={data.contact_email}
                           onChange={(e) =>
                             setData("contact_email", e.target.value)
@@ -699,7 +703,7 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                           id="contact_phone"
                           type="tel"
                           className="mt-1.5"
-                          placeholder="+1 234 567 890"
+                          placeholder={t('admin.createAndEditCompetitionPages.phonePlaceholder')}
                           value={data.contact_phone}
                           onChange={(e) =>
                             setData("contact_phone", e.target.value)
@@ -733,11 +737,11 @@ function CreateAndEditCompetitionPages({ categories, competition }: Props) {
                     >
                       {processing
                         ? isEditing
-                          ? "Updating..."
-                          : "Creating..."
+                          ? t('admin.createAndEditCompetitionPages.updating')
+                          : t('admin.createAndEditCompetitionPages.creating')
                         : isEditing
-                          ? "Update Competition"
-                          : "Create Competition"}
+                          ? t('admin.createAndEditCompetitionPages.updateCompetition')
+                          : t('admin.createAndEditCompetitionPages.createCompetition')}
                     </Button>
                   </div>
                 </form>

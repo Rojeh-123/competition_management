@@ -8,8 +8,7 @@ import { Head } from '@inertiajs/react';
 import { PageHeader, Navbar, DashboardSidebar, Footer } from '@/components/layout';
 
 function CertificatesPage() {
-  const { t } = useTranslation();
-
+    const { t } = useTranslation();
 
     return (
         <>
@@ -29,7 +28,10 @@ function CertificatesPage() {
                                         <CardContent className="pt-6">
                                             <div className="text-center">
                                                 <Award className="h-12 w-12 text-amber-500 mx-auto mb-3" />
-                                                <h3 className="font-semibold">{t('participant.certificates.certificateOf')}{cert.rank <= 3 ? 'Rank' : 'Merit'}</h3>
+                                                <h3 className="font-semibold">
+                                                    {t('participant.certificates.certificateOf')}
+                                                    {cert.rank <= 3 ? t('participant.certificates.rankLabel') : t('participant.certificates.meritLabel')}
+                                                </h3>
                                                 <p className="text-sm text-muted-foreground mt-1">{cert.competitionTitle}</p>
                                                 <Badge variant="secondary" className="mt-2">{t('participant.certificates.rank')}{cert.rank}</Badge>
                                                 <p className="text-xs text-muted-foreground mt-3 font-mono">{t('participant.certificates.hash')}{cert.certificateCode}</p>

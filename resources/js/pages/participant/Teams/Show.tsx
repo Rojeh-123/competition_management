@@ -55,7 +55,7 @@ interface PageProps {
 }
 
 function TeamShowPage({ team, hasSubmitted }: ShowProps) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { user } = usePage<PageProps>().props;
     const statusColors: Record<string, string> = {
@@ -65,6 +65,16 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
         judging: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
         results_published: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
         archived: 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-300',
+    };
+
+    // Map status to translated label
+    const statusMap: Record<string, string> = {
+        upcoming: t('status.upcoming'),
+        open: t('status.open'),
+        submission_closed: t('status.submission_closed'),
+        judging: t('status.judging'),
+        results_published: t('status.results_published'),
+        archived: t('status.archived'),
     };
 
     return (
@@ -94,7 +104,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
 
 
                                             <Badge className={`text-xs border-0 ${statusColors[team.competition.status] || ''}`}>
-                                                {team.competition.status.replace('_', ' ')}
+                                                {statusMap[team.competition.status] || team.competition.status}
                                             </Badge>
                                         </div>
 
@@ -215,7 +225,7 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                                         {member.age !== null && (
                                                             <div className="flex items-center gap-1.5">
                                                                 <Cake className="h-3.5 w-3.5 shrink-0" />
-                                                                {member.age} years old
+                                                                {member.age} {t('participant.teams.show.yearsOld')}
                                                             </div>
                                                         )}
                                                         {member.country && (
@@ -249,7 +259,9 @@ function TeamShowPage({ team, hasSubmitted }: ShowProps) {
                                         disabled={!team.competition || hasSubmitted}
                                     >
                                         <Send className="h-4 w-4 mr-2" />
-                                        {hasSubmitted ? 'Entry Already Submitted' : 'Submit Entry'}
+                                        {hasSubmitted
+                                            ? t('participant.teams.show.entryAlreadySubmitted')
+                                            : t('participant.teams.show.submitEntry')}
                                     </Button>
                                 </Link>
                                 <p className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground">

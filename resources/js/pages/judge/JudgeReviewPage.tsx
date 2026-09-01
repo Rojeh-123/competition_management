@@ -40,43 +40,43 @@ interface Submission {
 }
 
 interface DraftScore {
-    criterion_id: number;
-    score: number;
+  criterion_id: number;
+  score: number;
 }
 
 interface PageProps extends InertiaPageProps {
-    submission: Submission;
-    draftScores: DraftScore[];
-    draftComment: string | null;
+  submission: Submission;
+  draftScores: DraftScore[];
+  draftComment: string | null;
 }
 
 function JudgeReviewPage() {
   const { t } = useTranslation();
 
   const {
-      submission,
-      draftScores,
-      draftComment,
+    submission,
+    draftScores,
+    draftComment,
   } = usePage<PageProps>().props;
 
   const [criteria, setCriteria] = useState(
-      submission.criteria.map((criterion) => {
+    submission.criteria.map((criterion) => {
 
-          const draftScore = draftScores.find(
-              (score) =>
-                  score.criterion_id === criterion.id
-          );
+      const draftScore = draftScores.find(
+        (score) =>
+          score.criterion_id === criterion.id
+      );
 
-          return {
-              ...criterion,
-              score: draftScore?.score ?? 0,
-          };
-      })
+      return {
+        ...criterion,
+        score: draftScore?.score ?? 0,
+      };
+    })
   );
 
   const { data, setData, processing } = useForm({
-      submission_id: submission.id,
-      comment: draftComment ?? "",
+    submission_id: submission.id,
+    comment: draftComment ?? "",
   });
 
   const totalScore = criteria.reduce(
@@ -180,8 +180,7 @@ function JudgeReviewPage() {
 
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Participant
-                    </p>
+                      {t('judge.judgeReview.participant')}</p>
 
                     <p className="font-medium">
                       {submission.participantName}
@@ -194,7 +193,7 @@ function JudgeReviewPage() {
 
                     <p>
                       {submission.description ??
-                        "No description provided."}
+                        t('judge.judgeReview.noDescriptionProvided')}
                     </p>
                   </div>
 
@@ -306,22 +305,22 @@ function JudgeReviewPage() {
 
                   <div className="flex gap-3">
                     <Button
-                        variant="outline"
-                        className="cursor-pointer"
-                        onClick={handleSaveDraft}
-                        disabled={processing}
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={handleSaveDraft}
+                      disabled={processing}
                     >
-                        {processing ? "Saving..." : "Save Draft"}
+                      {processing ? t('judge.judgeReview.savingDraft') : t('judge.judgeReview.saveDraft')}
                     </Button>
 
                     <Button
-                        className="cursor-pointer"
-                        onClick={handleSubmit}
-                        disabled={processing}
+                      className="cursor-pointer"
+                      onClick={handleSubmit}
+                      disabled={processing}
                     >
-                        {processing
-                            ? "Submitting..."
-                            : "Lock & Submit Score"}
+                      {processing
+                        ? t('judge.judgeReview.submittingScore')
+                        : t('judge.judgeReview.lockAndSubmit')}
                     </Button>
                   </div>
                 </CardContent>

@@ -14,11 +14,11 @@ interface Score {
 }
 
 function JudgeHistoryPage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  const { scores } = usePage().props as unknown as {
-      scores: Score[];
-  };
+    const { scores } = usePage().props as unknown as {
+        scores: Score[];
+    };
     return (
         <div className="flex min-h-screen flex-col">
             <Head title={t('judge.judgeHistory.evaluationHistoryCompletedReviews')} />
@@ -48,8 +48,7 @@ function JudgeHistoryPage() {
                                             {t('judge.judgeHistory.scoreGiven')}</th>
 
                                         <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
-                                            Date
-                                        </th>
+                                            {t('judge.judgeHistory.date')}</th>
 
                                         <th className="text-left px-4 py-3 font-medium">
                                             {t('common.status')}</th>
@@ -69,8 +68,7 @@ function JudgeHistoryPage() {
                                             </td>
 
                                             <td className="px-4 py-3 font-medium">
-                                                {score.competitionTitle ??
-                                                    "Unknown"}
+                                                {score.competitionTitle ?? t('common.unknown')}
                                             </td>
 
                                             <td className="px-4 py-3 hidden sm:table-cell font-semibold whitespace-nowrap">

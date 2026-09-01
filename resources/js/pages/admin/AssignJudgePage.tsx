@@ -10,10 +10,10 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { router } from "@inertiajs/react";
 import {
-    PageHeader,
-    Navbar,
-    Footer,
-    DashboardSidebar,
+  PageHeader,
+  Navbar,
+  Footer,
+  DashboardSidebar,
 } from '@/components/layout';
 
 import {
@@ -24,34 +24,34 @@ import {
 } from "lucide-react";
 
 type User = {
-    id: number;
-    image: string;
-    full_name: string;
-    username: string;
-    email: string;
-    role: string;
-    country: string;
-    account_status: string;
-    age: number;
-    bio: string;
+  id: number;
+  image: string;
+  full_name: string;
+  username: string;
+  email: string;
+  role: string;
+  country: string;
+  account_status: string;
+  age: number;
+  bio: string;
 };
 
 type Competition = {
-    id: number;
-    title: string;
-    category: string;
-    visibility: "public" | "private";
-    status: string;
-    submissions: number;
-    assignedJudges: number;
+  id: number;
+  title: string;
+  category: string;
+  visibility: "public" | "private";
+  status: string;
+  submissions: number;
+  assignedJudges: number;
 };
 
 function AssignJudgePage() {
   const { t } = useTranslation();
 
   const { judge, competitions } = usePage<{
-      judge: User;
-      competitions: Competition[];
+    judge: User;
+    competitions: Competition[];
   }>().props;
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
@@ -73,12 +73,12 @@ function AssignJudgePage() {
   };
 
   const handleAssign = () => {
-      router.post(
-          route("admin.judges.assign.store", { user: judge.id }),
-          {
-              competitions: selected,
-          }
-      );
+    router.post(
+      route("admin.judges.assign.store", { user: judge.id }),
+      {
+        competitions: selected,
+      }
+    );
   };
 
   const { totalAssignedSubmissions, totalAssignedJudges } = useMemo(() => {
@@ -97,7 +97,7 @@ function AssignJudgePage() {
   }, [selected, competitions]);
 
   const estimatedWorkload =
-      totalAssignedSubmissions / Math.max(totalAssignedJudges, 1);
+    totalAssignedSubmissions / Math.max(totalAssignedJudges, 1);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -121,15 +121,15 @@ function AssignJudgePage() {
                 <Card>
                   <CardContent className="flex items-center gap-4 p-5">
                     <div className="h-16 w-16 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center text-xl font-bold">
-                        {judge.image ? (
-                            <img
-                                src={`/competition_management/public/storage/${judge.image}`}
-                                alt={judge.full_name}
-                                className="w-full h-full object-cover rounded-full"
-                            />
-                        ) : (
-                            judge.full_name.charAt(0).toUpperCase()
-                        )}
+                      {judge.image ? (
+                        <img
+                          src={`/competition_management/public/storage/${judge.image}`}
+                          alt={judge.full_name}
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      ) : (
+                        judge.full_name.charAt(0).toUpperCase()
+                      )}
                     </div>
 
                     <div className="flex-1">
@@ -143,7 +143,7 @@ function AssignJudgePage() {
 
                       <div className="flex gap-2 mt-2">
                         <Badge variant="secondary">
-                          {judge.bio || "Judge"}
+                          {judge.bio || t('admin.assignJudge.judgeFallbackLabel')}
                         </Badge>
                       </div>
                     </div>
@@ -278,10 +278,10 @@ function AssignJudgePage() {
 
                     <div className="flex gap-2 pt-2">
                       <Button
-                          variant="outline"
-                          onClick={() => router.visit(route("admin.judges"))}
+                        variant="outline"
+                        onClick={() => router.visit(route("admin.judges"))}
                       >
-                          {t('admin.assignJudge.cancel')}</Button>
+                        {t('admin.assignJudge.cancel')}</Button>
 
                       <Button
                         className="flex-1"

@@ -174,12 +174,12 @@ function JudgeProfilePage() {
                   </Badge>
 
                   <p className="mt-3 text-sm text-muted-foreground">
-                    {shownJudge.bio || "No biography provided."}
+                    {shownJudge.bio || t('judge.profile.noBio')}
                   </p>
 
                   <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
                     <Globe className="h-4 w-4" />
-                    {shownJudge.country || "Not specified"}
+                    {shownJudge.country || t('participant.profile.notSpecified')}
                   </div>
                 </div>
 
@@ -197,8 +197,7 @@ function JudgeProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Username
-                    </p>
+                      {t('participant.profile.username')}</p>
 
                     <p className="font-medium">
                       @{shownJudge.username}
@@ -207,8 +206,7 @@ function JudgeProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Email
-                    </p>
+                      {t('participant.profile.email')}</p>
 
                     <p className="break-all font-medium">
                       {shownJudge.email}
@@ -217,8 +215,7 @@ function JudgeProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Role
-                    </p>
+                      {t('participant.profile.role')}</p>
 
                     <p className="font-medium capitalize">
                       {shownJudge.role}
@@ -227,11 +224,10 @@ function JudgeProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Country
-                    </p>
+                      {t('participant.profile.country')}</p>
 
                     <p className="font-medium">
-                      {shownJudge.country || "Not specified"}
+                      {shownJudge.country || t('participant.profile.notSpecified')}
                     </p>
                   </div>
 
@@ -251,7 +247,7 @@ function JudgeProfilePage() {
                       {t('judge.profile.biography')}</p>
 
                     <p className="font-medium">
-                      {shownJudge.bio || "No biography provided."}
+                      {shownJudge.bio || t('judge.profile.noBio')}
                     </p>
                   </div>
                 </div>

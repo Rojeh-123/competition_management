@@ -27,7 +27,7 @@ import { cn } from '@/lib/utils';
 import { COUNTRIES } from '@/lib/countries';
 
 function EditProfilePage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     type PageProps = {
         user: {
@@ -147,7 +147,7 @@ function EditProfilePage() {
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="username">@Username</Label>
+                                        <Label htmlFor="username">{t('auth.usernameWithAt')}</Label>
                                         <Input
                                             id="username"
                                             value={data.username}
@@ -158,7 +158,7 @@ function EditProfilePage() {
                                     </div>
 
                                     <div>
-                                        <Label htmlFor="country">Country</Label>
+                                        <Label htmlFor="country">{t('auth.country')}</Label>
                                         <Popover open={countryOpen} onOpenChange={setCountryOpen}>
                                             <PopoverTrigger asChild>
                                                 <Button
@@ -168,7 +168,7 @@ function EditProfilePage() {
                                                     aria-expanded={countryOpen}
                                                     className="w-full mt-1.5 justify-between font-normal"
                                                 >
-                                                    {data.country || "Select a country"}
+                                                    {data.country || t('auth.selectCountry')}
                                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </PopoverTrigger>
@@ -209,7 +209,7 @@ function EditProfilePage() {
 
 
                                     <div>
-                                        <Label htmlFor="age">Age</Label>
+                                        <Label htmlFor="age">{t('auth.age')}</Label>
                                         <Input
                                             id="age"
                                             type="number"
@@ -224,7 +224,7 @@ function EditProfilePage() {
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="bio">Bio</Label>
+                                    <Label htmlFor="bio">{t('auth.bio')}</Label>
                                     <Textarea
                                         id="bio"
                                         value={data.bio}
@@ -262,10 +262,10 @@ function EditProfilePage() {
                                 <hr className="my-6" />
 
                                 <div>
-                                    <Label htmlFor="password">{t('allUsers.editProfile.oldPassword')}</Label>
+                                    <Label htmlFor="oldPassword">{t('allUsers.editProfile.oldPassword')}</Label>
                                     <div className="relative mt-1.5">
                                         <Input
-                                            id="password"
+                                            id="oldPassword"
                                             type={showOldPassword ? "text" : "password"}
                                             value={data.oldPassword}
                                             onChange={(e) => setData({ ...data, oldPassword: e.target.value })}
@@ -285,10 +285,10 @@ function EditProfilePage() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
-                                        <Label htmlFor="password">{t('allUsers.editProfile.newPassword')}</Label>
+                                        <Label htmlFor="newPassword">{t('allUsers.editProfile.newPassword')}</Label>
                                         <div className="relative mt-1.5">
                                             <Input
-                                                id="password"
+                                                id="newPassword"
                                                 type={showPassword ? "text" : "password"}
                                                 value={data.password}
                                                 onChange={(e) => setData({ ...data, password: e.target.value })}

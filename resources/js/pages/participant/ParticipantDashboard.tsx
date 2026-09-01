@@ -60,7 +60,7 @@ interface PageProps {
 }
 
 function ParticipantDashboard() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const {
         user,
@@ -81,9 +81,8 @@ function ParticipantDashboard() {
                 <main className="flex-1 overflow-auto min-w-0">
                     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
                         <PageHeader
-                            title={`Welcome back, ${
-                                user.full_name ?? user.name
-                            }`}
+                            title={`Welcome back, ${user.full_name ?? user.name
+                                }`}
                             description={t('participant.participantDashboard.heresYourCompetitionActivityOverview')}
                         />
 
@@ -223,7 +222,7 @@ function ParticipantDashboard() {
 
                                                     <p className="text-sm text-muted-foreground">
                                                         {comp.category ??
-                                                            "Uncategorized"}
+                                                            t('participant.participantDashboard.uncategorized')}
                                                     </p>
 
                                                     <p className="text-xs text-muted-foreground mt-1">
@@ -241,8 +240,8 @@ function ParticipantDashboard() {
                                                     }
                                                 >
                                                     {comp.hasSubmitted
-                                                        ? "Submitted"
-                                                        : "Submission Required"}
+                                                        ? t('participant.participantDashboard.submitted')
+                                                        : t('participant.participantDashboard.submissionRequired')}
                                                 </Badge>
 
                                                 <CountdownTimer

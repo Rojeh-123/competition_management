@@ -99,7 +99,7 @@ function CountryCombobox({
         className="w-full justify-between font-normal"
         onClick={() => setOpen((o) => !o)}
       >
-        {value || "Select a country"}
+        {value || t('admin.manageJudges.selectCountryPlaceholder')}
         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
       </Button>
 
@@ -211,7 +211,7 @@ function ManageJudgesPage() {
   const deleteJudge = () => {
     if (!selectedJudge) return;
 
-    if (!confirm(t('admin.manageJudges.areYouSureYouWant'))) {
+    if (!confirm(t('admin.manageJudges.deleteConfirmation'))) {
       return;
     }
 
@@ -283,7 +283,7 @@ function ManageJudgesPage() {
               <table className="w-full text-sm">
                 <thead className="bg-muted">
                   <tr>
-                    <th className="text-left px-4 py-3 font-medium">Judge</th>
+                    <th className="text-left px-4 py-3 font-medium">{t('admin.manageJudges.judgeHeader')}</th>
                     <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">{t('admin.manageJudges.specialty')}</th>
                     <th className="text-left px-4 py-3 font-medium">{t('common.status')}</th>
                     <th className="text-left px-4 py-3 font-medium">{t('admin.manageJudges.actions')}</th>
@@ -317,7 +317,7 @@ function ManageJudgesPage() {
 
                         <td className="px-4 py-3 whitespace-nowrap">
                           <Badge variant="destructive" className={badgeClass}>
-                            {judge.account_status}
+                            {judge.account_status === "active" ? t('admin.manageJudges.active') : t('admin.manageJudges.disabled')}
                           </Badge>
                         </td>
                         {judge.account_status === "active" ? (
@@ -412,7 +412,7 @@ function ManageJudgesPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="username">Username</Label>
+                      <Label htmlFor="username">{t('admin.manageJudges.usernameLabel')}</Label>
                       <Input
                         id="username"
                         value={form?.username ?? ""}
@@ -426,7 +426,7 @@ function ManageJudgesPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">{t('admin.manageJudges.emailLabel')}</Label>
                       <Input
                         id="email"
                         type="email"
@@ -441,7 +441,7 @@ function ManageJudgesPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="country">Country</Label>
+                      <Label htmlFor="country">{t('admin.manageJudges.countryLabel')}</Label>
                       <CountryCombobox
                         id="country"
                         value={form?.country ?? ""}
@@ -457,7 +457,7 @@ function ManageJudgesPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="age">Age</Label>
+                    <Label htmlFor="age">{t('admin.manageJudges.ageLabel')}</Label>
                     <Input
                       id="age"
                       type="number"
@@ -472,7 +472,7 @@ function ManageJudgesPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="bio">Bio</Label>
+                    <Label htmlFor="bio">{t('admin.manageJudges.bioLabel')}</Label>
                     <textarea
                       id="bio"
                       placeholder={t('auth.bioPlaceholder')}
@@ -498,7 +498,7 @@ function ManageJudgesPage() {
                   <div className="grid gap-4 md:grid-cols-2">
 
                     <div className="space-y-2">
-                      <Label>Role</Label>
+                      <Label>{t('admin.manageJudges.roleLabel')}</Label>
 
                       <Select
                         value={form?.role}
@@ -515,15 +515,15 @@ function ManageJudgesPage() {
 
                         <SelectContent>
                           <SelectItem value="participant">
-                            Participant
+                            {t('admin.manageJudges.participant')}
                           </SelectItem>
 
                           <SelectItem value="judge">
-                            Judge
+                            {t('admin.manageJudges.judge')}
                           </SelectItem>
 
                           <SelectItem value="admin">
-                            Admin
+                            {t('admin.manageJudges.admin')}
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -551,7 +551,7 @@ function ManageJudgesPage() {
 
                         <SelectContent>
                           <SelectItem value="active">
-                            Active
+                            {t('admin.manageJudges.active')}
                           </SelectItem>
 
                           <SelectItem value="disabled">
@@ -647,7 +647,7 @@ function ManageJudgesPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Username</Label>
+                  <Label>{t('admin.manageJudges.usernameLabel')}</Label>
                   <Input
                     value={newJudge.username}
                     onChange={(e) =>
@@ -662,11 +662,10 @@ function ManageJudgesPage() {
                       {errors.username}
                     </p>
                   )}
-
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Age</Label>
+                  <Label>{t('admin.manageJudges.ageLabel')}</Label>
                   <Input
                     type="number"
                     value={newJudge.age}
@@ -685,7 +684,7 @@ function ManageJudgesPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Country</Label>
+                  <Label>{t('admin.manageJudges.countryLabel')}</Label>
                   <CountryCombobox
                     value={newJudge.country}
                     onChange={(value) =>
@@ -704,7 +703,7 @@ function ManageJudgesPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Email</Label>
+                <Label>{t('admin.manageJudges.emailLabel')}</Label>
                 <Input
                   type="email"
                   value={newJudge.email}
@@ -723,7 +722,7 @@ function ManageJudgesPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Bio</Label>
+                <Label>{t('admin.manageJudges.bioLabel')}</Label>
 
                 <textarea
                   className="flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -769,7 +768,7 @@ function ManageJudgesPage() {
 
                   <SelectContent>
                     <SelectItem value="active">
-                      Active
+                      {t('admin.manageJudges.active')}
                     </SelectItem>
 
                     <SelectItem value="disabled">
@@ -786,7 +785,7 @@ function ManageJudgesPage() {
               <div className="grid gap-4 md:grid-cols-2">
 
                 <div className="space-y-2">
-                  <Label>Password</Label>
+                  <Label>{t('admin.manageJudges.password')}</Label>
                   <Input
                     type="password"
                     value={password}

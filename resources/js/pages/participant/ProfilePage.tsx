@@ -136,12 +136,12 @@ function ProfilePage() {
                   </h3>
 
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {shownUser.bio || "No biography provided."}
+                    {shownUser.bio || t('participant.profile.noBio')}
                   </p>
 
                   <div className="flex items-center gap-2 mt-3 text-sm text-muted-foreground">
                     <Globe className="h-4 w-4" />
-                    {shownUser.country || "Not specified"}
+                    {shownUser.country || t('participant.profile.notSpecified')}
                   </div>
                 </div>
 
@@ -154,24 +154,24 @@ function ProfilePage() {
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">Username</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.username')}</p>
                     <p className="font-medium">@{shownUser.username}</p>
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">Email</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.email')}</p>
                     <p className="font-medium break-all">{shownUser.email}</p>
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">Role</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.role')}</p>
                     <p className="font-medium capitalize">{shownUser.role}</p>
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">Country</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.country')}</p>
                     <p className="font-medium">
-                      {shownUser.country || "Not specified"}
+                      {shownUser.country || t('participant.profile.notSpecified')}
                     </p>
                   </div>
 
@@ -185,7 +185,7 @@ function ProfilePage() {
                   <div className="col-span-2">
                     <p className="text-xs text-muted-foreground">{t('participant.profile.biography')}</p>
                     <p className="font-medium">
-                      {shownUser.bio || "No biography provided."}
+                      {shownUser.bio || t('participant.profile.noBio')}
                     </p>
                   </div>
 
@@ -197,7 +197,7 @@ function ProfilePage() {
                     <p className="text-lg font-bold">
                       {numberOfJoinedCompetitions}
                     </p>
-                    <p className="text-xs text-muted-foreground">{t('nav.competitions')}</p>
+                    <p className="text-xs text-muted-foreground">{t('participant.profile.competitions')}</p>
                   </div>
 
                   <div>

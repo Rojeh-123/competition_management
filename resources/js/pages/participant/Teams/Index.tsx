@@ -36,7 +36,7 @@ interface PageProps {
 }
 
 function MyTeamsPage({ teams }: IndexProps) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { user } = usePage<PageProps>().props;
 
@@ -68,7 +68,7 @@ function MyTeamsPage({ teams }: IndexProps) {
 
                                             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
                                                 <Trophy className="h-3.5 w-3.5" />
-                                                {team.competition?.title ?? 'Not assigned to a competition yet'}
+                                                {team.competition?.title ?? t('participant.teams.index.noCompetitionAssigned')}
                                             </div>
 
                                             <div>
@@ -81,7 +81,7 @@ function MyTeamsPage({ teams }: IndexProps) {
                                                             key={m.id}
                                                             variant={m.id === user.id ? 'default' : 'secondary'}
                                                         >
-                                                            {m.full_name}{m.id === user.id ? ' (You)' : ''}
+                                                            {m.full_name}{m.id === user.id ? ` ${t('participant.teams.index.youLabel')}` : ''}
                                                         </Badge>
                                                     ))}
                                                 </div>

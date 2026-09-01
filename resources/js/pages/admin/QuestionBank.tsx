@@ -59,7 +59,7 @@ type PageProps = {
 };
 
 export default function QuestionBankPage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { competition, questionBank } =
         usePage<PageProps>().props;
@@ -166,7 +166,7 @@ export default function QuestionBankPage() {
 
     return (
         <>
-            <Head title={`Question Bank - ${competition.title}`} />
+            <Head title={`${t('admin.questionBank.questionBank')} - ${competition.title}`} />
             <Navbar />
 
             <div className="flex flex-col lg:flex-row flex-1 min-w-0">
@@ -396,7 +396,7 @@ export default function QuestionBankPage() {
                                                                     e.target.value
                                                                 )
                                                             }
-                                                            placeholder={`Choice ${choice}`}
+                                                            placeholder={t('admin.questionBank.choicePlaceholder').replace('{choice}', choice)}
                                                         />
 
                                                     </div>
@@ -488,8 +488,8 @@ export default function QuestionBankPage() {
                                 <Save className="mr-2 h-4 w-4" />
 
                                 {processing
-                                    ? "Saving..."
-                                    : "Save Question Bank"}
+                                    ? t('admin.questionBank.saving')
+                                    : t('admin.questionBank.saveQuestionBank')}
                             </Button>
 
                         </div>

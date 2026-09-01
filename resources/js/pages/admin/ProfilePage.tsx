@@ -134,12 +134,12 @@ function AdminProfilePage() {
                   </Badge>
 
                   <p className="mt-3 text-sm text-muted-foreground">
-                    {shownAdmin.bio || "No biography provided."}
+                    {shownAdmin.bio || t('admin.profile.noBio')}
                   </p>
 
                   <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
                     <Globe className="h-4 w-4" />
-                    {shownAdmin.country || "Not specified"}
+                    {shownAdmin.country || t('admin.profile.notSpecified')}
                   </div>
                 </div>
 
@@ -158,8 +158,7 @@ function AdminProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Username
-                    </p>
+                      {t('admin.profile.usernameLabel')}</p>
 
                     <p className="font-medium">
                       @{shownAdmin.username}
@@ -168,8 +167,7 @@ function AdminProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Email
-                    </p>
+                      {t('admin.profile.emailLabel')}</p>
 
                     <p className="break-all font-medium">
                       {shownAdmin.email}
@@ -178,8 +176,7 @@ function AdminProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Role
-                    </p>
+                      {t('admin.profile.roleLabel')}</p>
 
                     <p className="font-medium capitalize">
                       {shownAdmin.role}
@@ -188,11 +185,10 @@ function AdminProfilePage() {
 
                   <div>
                     <p className="text-xs text-muted-foreground">
-                      Country
-                    </p>
+                      {t('admin.profile.countryLabel')}</p>
 
                     <p className="font-medium">
-                      {shownAdmin.country || "Not specified"}
+                      {shownAdmin.country || t('admin.profile.notSpecified')}
                     </p>
                   </div>
 
@@ -212,7 +208,7 @@ function AdminProfilePage() {
                       {t('admin.profile.biography')}</p>
 
                     <p className="font-medium">
-                      {shownAdmin.bio || "No biography provided."}
+                      {shownAdmin.bio || t('admin.profile.noBio')}
                     </p>
                   </div>
                 </div>

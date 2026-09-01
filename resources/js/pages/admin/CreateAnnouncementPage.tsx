@@ -40,7 +40,7 @@ const AUDIENCES = [
 ];
 
 function CreateAnnouncementPage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const [isDragging, setIsDragging] = useState(false);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -310,13 +310,12 @@ function CreateAnnouncementPage() {
 
                                                         <p className="text-sm font-medium">
                                                             {isDragging
-                                                                ? 'Drop your image here'
-                                                                : 'Drag & drop your image here'}
+                                                                ? t('admin.createAnnouncement.dropHere')
+                                                                : t('admin.createAnnouncement.dragDropText')}
                                                         </p>
 
                                                         <p className="mt-1 text-xs text-muted-foreground">
-                                                            or click to browse from your device
-                                                        </p>
+                                                            {t('admin.createAnnouncement.orClickToBrowse')}</p>
 
                                                         <p className="mt-2 text-xs text-muted-foreground">
                                                             {t('admin.createAnnouncement.pngJpgJpegWebpUp')}</p>
@@ -350,7 +349,7 @@ function CreateAnnouncementPage() {
                                             >
                                                 <Send className="h-4 w-4 mr-2" />
 
-                                                {processing ? 'Sending...' : 'Broadcast'}
+                                                {processing ? t('admin.createAnnouncement.sending') : t('admin.createAnnouncement.broadcastButton')}
                                             </Button>
 
                                             <Button
@@ -391,7 +390,7 @@ function CreateAnnouncementPage() {
 
                                             <div className="flex items-center justify-between gap-2">
                                                 <h3 className="font-semibold leading-snug">
-                                                    {data.title || 'Announcement title'}
+                                                    {data.title || t('admin.createAnnouncement.previewPlaceholderTitle')}
                                                 </h3>
 
                                                 {selectedPriority && (
@@ -410,7 +409,7 @@ function CreateAnnouncementPage() {
 
                                             <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                                                 {data.message ||
-                                                    'Your message will appear here as you type.'}
+                                                    t('admin.createAnnouncement.previewPlaceholderMessage')}
                                             </p>
                                         </div>
                                     </div>
@@ -420,7 +419,7 @@ function CreateAnnouncementPage() {
                                         <span className="font-medium text-foreground">
                                             {AUDIENCES.find(
                                                 (a) => a.value === data.target_group
-                                            )?.label ?? 'no one yet'}
+                                            )?.label ?? t('admin.createAnnouncement.visibleToNone')}
                                         </span>{' '}
                                         {t('admin.createAnnouncement.onceBroadcast')}</p>
 

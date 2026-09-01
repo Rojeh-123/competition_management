@@ -35,7 +35,7 @@ interface TeamForm {
 }
 
 function TeamsCreatePage({ competitions, participants }: CreateProps) {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { data, setData, post, processing, errors } = useForm<TeamForm>({
         name: '',
@@ -55,7 +55,7 @@ function TeamsCreatePage({ competitions, participants }: CreateProps) {
         e.preventDefault();
         post(route('admin.teams.store'));
     };
-    
+
     const [memberSearch, setMemberSearch] = useState("");
 
     const filteredParticipants = useMemo(() => {
@@ -161,7 +161,7 @@ function TeamsCreatePage({ competitions, participants }: CreateProps) {
                                     <div className="flex items-center gap-3 pt-1">
                                         <Button type="submit" className="cursor-pointer" disabled={processing}>
                                             <Save className="h-4 w-4 mr-2" />
-                                            {processing ? 'Saving...' : 'Save Team'}
+                                            {processing ? t('admin.teams.create.saving') : t('admin.teams.create.saveTeam')}
                                         </Button>
                                     </div>
                                 </form>

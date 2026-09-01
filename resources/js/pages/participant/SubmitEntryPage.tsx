@@ -59,7 +59,7 @@ type PageProps = {
 };
 
 export default function SubmitEntryPage() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { competition, errors, teamId } = usePage<PageProps>().props;
     const { data, setData, post, processing } =
@@ -209,8 +209,8 @@ export default function SubmitEntryPage() {
                                             disabled={processing || !data.original}
                                         >
                                             {processing
-                                                ? "Submitting..."
-                                                : "Submit Entry"}
+                                                ? t('participant.submitEntry.submitting')
+                                                : t('participant.submitEntry.submit')}
                                         </Button>
                                     </div>
                                 </form>

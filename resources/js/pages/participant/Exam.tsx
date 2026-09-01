@@ -60,8 +60,7 @@ type Props = {
 };
 
 export default function Exam() {
-  const { t } = useTranslation();
-
+    const { t } = useTranslation();
 
     const {
         competition,
@@ -575,13 +574,10 @@ export default function Exam() {
                                         </CardTitle>
 
                                         <span className="text-sm text-muted-foreground">
-                                            {
-                                                question.points
-                                            }{" "}
-                                            {t('participant.exam.point')}{question.points !==
-                                                1
-                                                ? "s"
-                                                : ""}
+                                            {question.points}{" "}
+                                            {question.points === 1
+                                                ? t('participant.exam.pointSingular')
+                                                : t('participant.exam.pointPlural')}
                                         </span>
 
                                     </div>
