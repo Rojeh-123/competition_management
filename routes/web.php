@@ -527,5 +527,5 @@ Route::middleware(['auth', 'status'])->group(function () {
 */
 
 Route::fallback(function () {
-    return Inertia::render('Errors/404NotFoundPage');
+    abort(404, 'errors.page_not_found');
 });

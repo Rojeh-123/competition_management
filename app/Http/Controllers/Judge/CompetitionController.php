@@ -96,6 +96,7 @@ class CompetitionController extends Controller
             ->pluck('competition_id');
 
         $competitions = Competition::with('judges')
+            ->with('category')
             ->whereIn('id', $competitionIds)
             ->get();
 

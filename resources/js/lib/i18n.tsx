@@ -349,6 +349,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': "You don't have permission to access this page. If you believe this is a mistake, please contact support.",
     'error.403GoBack': 'Go back',
     'error.403GoHome': 'Return to homepage',
+    'error.pageNotFound': 'The requested page could not be found.',
+    'error.resourceNotFound': 'The requested item could not be found.',
+    'error.featureNotFound': 'This feature is not available for the requested item.',
+    'error.downloadNotFound': 'The requested file is no longer available for download.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'Certificates – Awards & Earned Recognition',
@@ -1297,6 +1301,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': 'ليس لديك إذن للوصول إلى هذه الصفحة. إذا كنت تعتقد أن هذا خطأ، يرجى التواصل مع الدعم.',
     'error.403GoBack': 'العودة',
     'error.403GoHome': 'العودة إلى الصفحة الرئيسية',
+    'error.pageNotFound': 'تعذر العثور على الصفحة المطلوبة.',
+    'error.resourceNotFound': 'تعذر العثور على العنصر المطلوب.',
+    'error.featureNotFound': 'هذه الميزة غير متاحة للعنصر المطلوب.',
+    'error.downloadNotFound': 'الملف المطلوب لم يعد متاحاً للتنزيل.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'الشهادات – الجوائز والتقدير المكتسب',
@@ -2245,6 +2253,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen. Wenn Sie glauben, dass dies ein Fehler ist, kontaktieren Sie bitte den Support.',
     'error.403GoBack': 'Zurück',
     'error.403GoHome': 'Zur Startseite',
+    'error.pageNotFound': 'Die angeforderte Seite wurde nicht gefunden.',
+    'error.resourceNotFound': 'Das angeforderte Element wurde nicht gefunden.',
+    'error.featureNotFound': 'Diese Funktion ist für das angeforderte Element nicht verfügbar.',
+    'error.downloadNotFound': 'Die angeforderte Datei ist nicht mehr zum Download verfügbar.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'Zertifikate – Auszeichnungen & Anerkennung',
@@ -3193,6 +3205,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': "Vous n'avez pas la permission d'accéder à cette page. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le support.",
     'error.403GoBack': 'Retour',
     'error.403GoHome': "Retour à l'accueil",
+    'error.pageNotFound': 'La page demandée est introuvable.',
+    'error.resourceNotFound': "L'élément demandé est introuvable.",
+    'error.featureNotFound': "Cette fonctionnalité n'est pas disponible pour l'élément demandé.",
+    'error.downloadNotFound': 'Le fichier demandé n’est plus disponible au téléchargement.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'Certificats – Récompenses et reconnaissance obtenues',
@@ -4141,6 +4157,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': 'No tienes permiso para acceder a esta página. Si crees que esto es un error, por favor contacta a soporte.',
     'error.403GoBack': 'Volver',
     'error.403GoHome': 'Volver al inicio',
+    'error.pageNotFound': 'No se ha encontrado la página solicitada.',
+    'error.resourceNotFound': 'No se ha encontrado el elemento solicitado.',
+    'error.featureNotFound': 'Esta función no está disponible para el elemento solicitado.',
+    'error.downloadNotFound': 'El archivo solicitado ya no está disponible para descargar.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'Certificados – Reconocimientos y premios obtenidos',
@@ -5089,6 +5109,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': 'Non hai il permesso di accedere a questa pagina. Se ritieni che si tratti di un errore, contatta il supporto.',
     'error.403GoBack': 'Indietro',
     'error.403GoHome': 'Torna alla home',
+    'error.pageNotFound': 'La pagina richiesta non è stata trovata.',
+    'error.resourceNotFound': 'L’elemento richiesto non è stato trovato.',
+    'error.featureNotFound': 'Questa funzione non è disponibile per l’elemento richiesto.',
+    'error.downloadNotFound': 'Il file richiesto non è più disponibile per il download.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'Certificati – Riconoscimenti e premi ottenuti',
@@ -6037,6 +6061,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'error.403Desc': 'Você não tem permissão para acessar esta página. Se você acredita que isso é um erro, entre em contato com o suporte.',
     'error.403GoBack': 'Voltar',
     'error.403GoHome': 'Voltar para a página inicial',
+    'error.pageNotFound': 'A página solicitada não foi encontrada.',
+    'error.resourceNotFound': 'O item solicitado não foi encontrado.',
+    'error.featureNotFound': 'Este recurso não está disponível para o item solicitado.',
+    'error.downloadNotFound': 'O arquivo solicitado não está mais disponível para download.',
 
     // ==================== PARTICIPANT: CERTIFICATES ====================
     'participant.certificates.certificatesAwardsEarnedRecognition': 'Certificados – Reconhecimentos e prêmios conquistados',

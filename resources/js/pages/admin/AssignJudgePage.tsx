@@ -97,7 +97,7 @@ function AssignJudgePage() {
   }, [selected, competitions]);
 
   const estimatedWorkload =
-    totalAssignedSubmissions / Math.max(totalAssignedJudges, 1);
+    totalAssignedSubmissions / Math.max(totalAssignedJudges + 1, 1);
 
   return (
     <div className="flex min-h-screen flex-col">

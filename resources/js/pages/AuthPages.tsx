@@ -25,9 +25,11 @@ import {
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
+import { useTheme } from '@/components/layout';
 
 function LoginPage() {
     const { t } = useTranslation();
+    useTheme();
     const [showPassword, setShowPassword] = useState(false);
     const [activeTab, setActiveTab] = useState('login');
     const [PasswordsDontMatch, setPasswordsDontMatch] = useState(false);

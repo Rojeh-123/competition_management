@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "@/lib/i18n";
+import { useTheme } from "@/components/layout";
 
 interface ForbiddenPageProps {
     message?: string;
@@ -18,6 +19,8 @@ interface ForbiddenPageProps {
 
 export default function ForbiddenPage({ message }: ForbiddenPageProps) {
     const { t } = useTranslation();
+    useTheme();
+    const translatedMessage = message ? t(message, message) : t('error.403Desc');
 
     return (
         <div className="container mx-auto flex min-h-[calc(100vh-8rem)] items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
@@ -44,7 +47,7 @@ export default function ForbiddenPage({ message }: ForbiddenPageProps) {
                         </h2>
 
                         <p className="mx-auto mt-4 max-w-xl text-muted-foreground leading-relaxed">
-                            {message || t('error.403Desc')}
+                            {translatedMessage}
                         </p>
 
                         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

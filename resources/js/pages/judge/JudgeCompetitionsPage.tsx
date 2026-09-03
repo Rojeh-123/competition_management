@@ -22,7 +22,7 @@ interface PageProps {
 }
 
 function JudgeCompetitionsPage() {
-    const { t } = useTranslation();
+    const { t, language } = useTranslation();
 
     const { competitions } = usePage<PageProps>().props;
 
@@ -56,19 +56,24 @@ function JudgeCompetitionsPage() {
                                 <thead className="bg-muted">
                                     <tr>
                                         <th className="px-4 py-3 text-left font-medium">
-                                            {t('judge.judgeCompetitions.competition')}</th>
+                                            {t('judge.judgeCompetitions.competition')}
+                                        </th>
 
                                         <th className="hidden px-4 py-3 text-left font-medium sm:table-cell">
-                                            {t('common.category')}</th>
+                                            {t('common.category')}
+                                        </th>
 
                                         <th className="hidden px-4 py-3 text-left font-medium md:table-cell">
-                                            {t('judge.judgeCompetitions.deadline')}</th>
+                                            {t('judge.judgeCompetitions.deadline')}
+                                        </th>
 
                                         <th className="px-4 py-3 text-left font-medium">
-                                            {t('common.status')}</th>
+                                            {t('common.status')}
+                                        </th>
 
                                         <th className="px-4 py-3 text-left font-medium">
-                                            {t('judge.judgeCompetitions.action')}</th>
+                                            {t('judge.judgeCompetitions.action')}
+                                        </th>
                                     </tr>
                                 </thead>
 
@@ -92,7 +97,11 @@ function JudgeCompetitionsPage() {
                                             </td>
 
                                             <td className="text-muted-foreground hidden px-4 py-3 md:table-cell whitespace-nowrap">
-                                                {comp.end_date}
+                                                {new Date(comp.end_date).toLocaleDateString(language, {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                })}
                                             </td>
 
                                             <td className="px-4 py-3 whitespace-nowrap">

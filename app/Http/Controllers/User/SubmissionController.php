@@ -24,6 +24,11 @@ class SubmissionController extends Controller
 
         $isParticipant = $competition->participants()
             ->where('participant_id', Auth::id())
+            ->exists()
+            || Team::where('competition_id', $competition->id)
+            ->whereHas('members', function ($query) {
+                $query->where('users.id', Auth::id());
+            })
             ->exists();
 
         if (!$isParticipant) {

@@ -34,9 +34,8 @@ export function LanguageSelector() {
             <DropdownMenuItem
               key={item.code}
               onClick={() => setLanguage(item.code)}
-              className={`flex items-center justify-between cursor-pointer ${
-                isSelected ? 'bg-muted font-semibold' : ''
-              }`}
+              className={`flex items-center justify-between cursor-pointer ${isSelected ? 'bg-muted font-semibold' : ''
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <img
@@ -114,6 +113,11 @@ function getThemeSnapshot() {
 
 export function useTheme() {
   const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot);
+
+  useEffect(() => {
+    applyThemeClass(theme);
+  }, [theme]);
+
   return { theme, setTheme: setGlobalTheme };
 }
 
@@ -121,8 +125,8 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    applyThemeClass(currentTheme);
-  }, []);
+    applyThemeClass(theme);
+  }, [theme]);
 
   const cycleTheme = () => {
     const next = THEME_ORDER[(THEME_ORDER.indexOf(theme) + 1) % THEME_ORDER.length];
@@ -200,9 +204,8 @@ export function Navbar() {
                     <Link
                       key={link.path}
                       href={link.path}
-                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
-                        route().current(link.route) ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted hover:text-foreground'
-                      }`}
+                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${route().current(link.route) ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+                        }`}
                     >
                       <link.icon className="h-4 w-4 shrink-0" />
                       {link.label}
@@ -250,11 +253,10 @@ export function Navbar() {
             <Link
               key={link.route}
               href={link.path}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                route().current(link.route)
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${route().current(link.route)
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
             >
               {link.label}
             </Link>
@@ -399,11 +401,10 @@ export function DashboardSidebar({ collapsed = false }: { collapsed?: boolean })
               <Link
                 key={link.route}
                 href={link.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                  isActive
-                    ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-xs'
-                    : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent'
-                }`}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive
+                  ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-xs'
+                  : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent'
+                  }`}
               >
                 <link.icon className="h-4 w-4 shrink-0" />
                 {!collapsed && <span>{link.label}</span>}
@@ -465,11 +466,10 @@ export function DashboardSidebar({ collapsed = false }: { collapsed?: boolean })
                     key={link.route}
                     href={link.path}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                      isActive
-                        ? 'bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-xs'
-                        : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent'
-                    }`}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive
+                      ? 'bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-xs'
+                      : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent'
+                      }`}
                   >
                     <link.icon className="h-4 w-4 shrink-0" />
                     <span className="truncate">{link.label}</span>
@@ -667,7 +667,7 @@ export function StatsCard({ label, value, icon: Icon, trend }: { label: string; 
 }
 
 // Competition Card
-export function CompetitionCard({ competition, onClick }: { competition: { id: number; title: string; category: { id: number; name: string; }; submission_deadline: String; status: string; participants: { id: number;}[]; image: string; prizeDescription: string }; onClick?: () => void }) {
+export function CompetitionCard({ competition, onClick }: { competition: { id: number; title: string; category: { id: number; name: string; }; submission_deadline: String; status: string; participants: { id: number; }[]; image: string; prizeDescription: string }; onClick?: () => void }) {
   const { t } = useTranslation();
 
   const statusColors: Record<string, string> = {
@@ -684,19 +684,19 @@ export function CompetitionCard({ competition, onClick }: { competition: { id: n
 
   return (
     <div onClick={onClick} className="group bg-card border rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-    <div className="h-40 overflow-hidden">
+      <div className="h-40 overflow-hidden">
         {competition.image ? (
-            <img
-                src={`/competition_management/public/storage/${competition.image}`}
-                alt={competition.title}
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
+          <img
+            src={`/competition_management/public/storage/${competition.image}`}
+            alt={competition.title}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
         ) : (
-            <div className="h-full w-full flex items-center justify-center bg-muted">
-                <Trophy className="h-16 w-16 text-primary" />
-            </div>
+          <div className="h-full w-full flex items-center justify-center bg-muted">
+            <Trophy className="h-16 w-16 text-primary" />
+          </div>
         )}
-    </div>
+      </div>
       <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
           <Badge variant="secondary" className="text-xs">{competition.category.name}</Badge>
@@ -743,93 +743,92 @@ export function PageHeader({ title, description, actions }: { title: string; des
 
 // FileUpload component
 export function FileUpload({
-    accept,
-    maxSize,
-    onUpload,
+  accept,
+  maxSize,
+  onUpload,
 }: {
-    accept: string;
-    maxSize: number;
-    onUpload: (files: File[]) => void;
+  accept: string;
+  maxSize: number;
+  onUpload: (files: File[]) => void;
 }) {
-    const { t } = useTranslation();
-    const [dragOver, setDragOver] = useState(false);
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const { t } = useTranslation();
+  const [dragOver, setDragOver] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-    const handleFiles = (files: File[]) => {
-        setSelectedFiles(files);
-        onUpload(files);
-    };
+  const handleFiles = (files: File[]) => {
+    setSelectedFiles(files);
+    onUpload(files);
+  };
 
-    return (
-        <div
-            onDragOver={(e) => {
-                e.preventDefault();
-                setDragOver(true);
-            }}
-            onDragLeave={() => setDragOver(false)}
-            onDrop={(e) => {
-                e.preventDefault();
-                setDragOver(false);
-                handleFiles(Array.from(e.dataTransfer.files));
-            }}
-            className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors cursor-pointer ${
-                dragOver
-                    ? "border-primary bg-primary/5"
-                    : "border-border hover:border-primary/50"
-            }`}
-            onClick={() => {
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = accept;
-                input.multiple = true;
+  return (
+    <div
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragOver(true);
+      }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragOver(false);
+        handleFiles(Array.from(e.dataTransfer.files));
+      }}
+      className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors cursor-pointer ${dragOver
+        ? "border-primary bg-primary/5"
+        : "border-border hover:border-primary/50"
+        }`}
+      onClick={() => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = accept;
+        input.multiple = true;
 
-                input.onchange = (e) => {
-                    const files = (e.target as HTMLInputElement).files;
-                    if (files) {
-                        handleFiles(Array.from(files));
-                    }
-                };
+        input.onchange = (e) => {
+          const files = (e.target as HTMLInputElement).files;
+          if (files) {
+            handleFiles(Array.from(files));
+          }
+        };
 
-                input.click();
-            }}
-        >
-            <FileText className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+        input.click();
+      }}
+    >
+      <FileText className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
 
-            {selectedFiles.length === 0 ? (
-                <>
-                    <p className="font-medium mb-1">
-                        {t('common.dropFiles')}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        {t('common.accepted')}: {accept} {t('layout.index.max')}{maxSize} {t('layout.index.mb')}</p>
-                </>
-            ) : (
-                <>
-                    <p className="font-medium text-green-600 mb-3">
-                        {selectedFiles.length} {t('common.filesSelected')}
-                    </p>
+      {selectedFiles.length === 0 ? (
+        <>
+          <p className="font-medium mb-1">
+            {t('common.dropFiles')}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {t('common.accepted')}: {accept} {t('layout.index.max')}{maxSize} {t('layout.index.mb')}</p>
+        </>
+      ) : (
+        <>
+          <p className="font-medium text-green-600 mb-3">
+            {selectedFiles.length} {t('common.filesSelected')}
+          </p>
 
-                    <div className="space-y-1 text-sm">
-                        {selectedFiles.map((file, index) => (
-                            <div
-                                key={index}
-                                className="flex justify-between rounded bg-muted px-3 py-2"
-                            >
-                                <span className="truncate">
-                                    {file.name}
-                                </span>
+          <div className="space-y-1 text-sm">
+            {selectedFiles.map((file, index) => (
+              <div
+                key={index}
+                className="flex justify-between rounded bg-muted px-3 py-2"
+              >
+                <span className="truncate">
+                  {file.name}
+                </span>
 
-                                <span className="text-muted-foreground">
-                                    {(file.size / 1024 / 1024).toFixed(2)} {t('layout.index.mb')}</span>
-                            </div>
-                        ))}
-                    </div>
+                <span className="text-muted-foreground">
+                  {(file.size / 1024 / 1024).toFixed(2)} {t('layout.index.mb')}</span>
+              </div>
+            ))}
+          </div>
 
-                    <p className="mt-3 text-xs text-muted-foreground">
-                        {t('common.clickToReplace')}
-                    </p>
-                </>
-            )}
-        </div>
-    );
+          <p className="mt-3 text-xs text-muted-foreground">
+            {t('common.clickToReplace')}
+          </p>
+        </>
+      )}
+    </div>
+  );
 }

@@ -67,25 +67,25 @@ class SubmissionController extends Controller
                 'isPublic' => (bool) $submission->is_public,
                 'createdAt' => $submission->created_at?->format('Y-m-d H:i:s'),
                 'updatedAt' => $submission->updated_at?->format('Y-m-d H:i:s'),
-                'files' => $submission->files->map(fn ($file) => [
+                'files' => $submission->files->map(fn($file) => [
                     'id' => $file->id,
                     'fileName' => $file->file_name ?? 'Uploaded file',
                     'filePath' => $file->file_path,
                     'fileType' => $file->file_type,
                     'fileSize' => $file->file_size,
                 ])->values(),
-                'criteria' => $submission->competition?->scoreCriteria?->map(fn ($criterion) => [
+                'criteria' => $submission->competition?->scoreCriteria?->map(fn($criterion) => [
                     'id' => $criterion->id,
                     'name' => $criterion->name,
                     'maxScore' => (float) $criterion->max_score,
                     'weight' => $criterion->weight,
                 ])->values() ?? [],
-                'judges' => $submission->competition?->judges?->map(fn ($judge) => [
+                'judges' => $submission->competition?->judges?->map(fn($judge) => [
                     'id' => $judge->id,
                     'name' => $judge->full_name ?? $judge->username ?? $judge->name,
                     'email' => $judge->email,
                 ])->values() ?? [],
-                'scores' => $submission->scores->map(fn ($score) => [
+                'scores' => $submission->scores->map(fn($score) => [
                     'id' => $score->id,
                     'judgeName' => $score->judge?->full_name ?? $score->judge?->username ?? 'Judge',
                     'score' => (float) $score->score,
@@ -211,9 +211,10 @@ class SubmissionController extends Controller
 
     public function download(SubmissionFile $file)
     {
-        return Storage::disk('public')->download(
-            $file->file_path,
-            $file->file_name
-        );
+        $fullPath = Storage::disk('public')->path($file->file_path);
+        if (!file_exists($fullPath)) {
+            abort(404, 'errors.download_not_found');
+        }
+        return response()->download($fullPath, $file->file_name);
     }
 }

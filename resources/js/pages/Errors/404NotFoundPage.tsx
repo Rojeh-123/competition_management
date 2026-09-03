@@ -11,15 +11,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "@/lib/i18n";
+import { useTheme } from "@/components/layout";
 
-export default function NotFoundPage() {
+interface NotFoundPageProps {
+    message?: string;
+}
+
+export default function NotFoundPage({ message }: NotFoundPageProps) {
     const { t } = useTranslation();
+    useTheme();
+    const translatedMessage = message ? t(message, t('error.404Desc')) : t('error.404Desc');
 
     return (
         <>
             <Head title={`404 – ${t('error.404Title')}`} />
 
-            <div className="container mx-auto flex min-h-[calc(100vh-8rem)] items-center justify-center px-6 py-12">
+            <div className="bg-background text-foreground container mx-auto flex min-h-[calc(100vh-8rem)] items-center justify-center px-6 py-12">
                 <Card className="w-full max-w-3xl overflow-hidden border shadow-lg">
                     <CardContent className="relative px-8 py-16 text-center">
                         {/* Decorative Background */}
@@ -43,7 +50,7 @@ export default function NotFoundPage() {
                             </h2>
 
                             <p className="mx-auto mt-4 max-w-xl leading-relaxed text-muted-foreground">
-                                {t('error.404Desc')}
+                                {translatedMessage}
                             </p>
 
                             {/* Buttons */}

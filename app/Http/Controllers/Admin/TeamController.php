@@ -25,7 +25,7 @@ class TeamController extends Controller
     public function create()
     {
         return Inertia::render('admin/Teams/Create', [
-            'competitions' => Competition::select('id', 'title')->where('team_allowed', 1)->get(),
+            'competitions' => Competition::select('id', 'title')->where('team_allowed', 1)->where('registration_deadline', '>', now())->get(),
             'participants' => User::where('role', 'participant')->select('id', 'username', 'full_name')->get(),
         ]);
     }

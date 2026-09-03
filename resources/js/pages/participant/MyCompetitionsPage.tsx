@@ -77,15 +77,15 @@ function MyCompetitionsPage() {
                 <div className="overflow-x-auto pb-1 max-w-full">
                   <TabsList className="inline-flex w-auto min-w-full justify-start">
                     <TabsTrigger value="active">
-                        {t('participant.myCompetitions.active')}{activeCompetitions.length})
+                        {t('participant.myCompetitions.active')} {activeCompetitions.length}
                     </TabsTrigger>
 
                     <TabsTrigger value="evaluation">
-                        {t('participant.myCompetitions.underEvaluation')}{evaluationCompetitions.length})
+                        {t('participant.myCompetitions.underEvaluation')} {evaluationCompetitions.length}
                     </TabsTrigger>
 
                     <TabsTrigger value="all">
-                        {t('participant.myCompetitions.all')}{competitions.length})
+                        {t('participant.myCompetitions.all')} {competitions.length}
                     </TabsTrigger>
                   </TabsList>
                 </div>

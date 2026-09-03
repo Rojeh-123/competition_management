@@ -43,6 +43,7 @@ type Competition = {
 
   start_date: string;
   end_date: string;
+  submission_deadline: string;
 
   visibility: "public" | "private";
 
@@ -207,7 +208,7 @@ function ManageCompetitionsPage() {
                         </td>
 
                         <td className="px-6 py-3 flex gap-2 justify-center">
-                          {(comp.visibility === "private" && (comp.status === "upcoming" || comp.status === "open")) ? (
+                          {(comp.visibility === "private" && (new Date(comp.submission_deadline) > new Date())) ? (
                             <Button
                               size="sm"
                               className="cursor-pointer btn btn-primary"
